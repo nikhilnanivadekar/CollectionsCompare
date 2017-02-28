@@ -1,5 +1,8 @@
 package collections.compare.demo.protocols;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import org.eclipse.collections.api.bag.MutableBag;
 import org.eclipse.collections.api.block.predicate.Predicate;
 import org.eclipse.collections.api.list.MutableList;
@@ -13,9 +16,6 @@ import org.eclipse.collections.impl.factory.Multimaps;
 import org.eclipse.collections.impl.factory.Sets;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 public class EclipseCollectionsProtocolTest
 {

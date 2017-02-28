@@ -1,11 +1,11 @@
 package collections.compare.demo;
 
+import java.util.Arrays;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.eclipse.collections.impl.factory.Lists;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class IntroTest
 {

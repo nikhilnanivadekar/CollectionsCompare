@@ -1,5 +1,11 @@
 package collections.compare.demo.protocols;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.HashMultiset;
@@ -15,12 +21,6 @@ import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Function;
 
 public class GoogleGuavaProtocolTest
 {
@@ -77,5 +77,4 @@ public class GoogleGuavaProtocolTest
         expectedGroupedSet.put("THREE", "three");
         Assert.assertEquals(expectedGroupedSet, groupedSet);
     }
-
 }

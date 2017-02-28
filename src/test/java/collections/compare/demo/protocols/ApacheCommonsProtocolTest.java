@@ -1,5 +1,10 @@
 package collections.compare.demo.protocols;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.FluentIterable;
 import org.apache.commons.collections4.MultiSet;
@@ -8,11 +13,6 @@ import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.multiset.HashMultiSet;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class ApacheCommonsProtocolTest
 {

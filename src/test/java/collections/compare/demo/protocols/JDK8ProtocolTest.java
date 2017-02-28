@@ -1,14 +1,5 @@
 package collections.compare.demo.protocols;
 
-import org.eclipse.collections.api.bag.Bag;
-import org.eclipse.collections.api.bag.MutableBag;
-import org.eclipse.collections.impl.factory.Bags;
-import org.eclipse.collections.impl.factory.Lists;
-import org.eclipse.collections.impl.factory.Maps;
-import org.eclipse.collections.impl.factory.Sets;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +8,15 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import org.eclipse.collections.api.bag.Bag;
+import org.eclipse.collections.api.bag.MutableBag;
+import org.eclipse.collections.impl.factory.Bags;
+import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.impl.factory.Maps;
+import org.eclipse.collections.impl.factory.Sets;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class JDK8ProtocolTest
 {
