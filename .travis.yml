@@ -11,7 +11,7 @@ matrix:
     - jdk: oraclejdk8
       env:
         - DESC="compile"
-        - CMD="mvn install --projects --activate-profiles all -DskipTests=true --batch-mode --show-version --errors"
+        - CMD="mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
 
 script: eval $CMD
 
