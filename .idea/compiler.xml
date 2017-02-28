@@ -27,7 +27,7 @@
         <module name="CollectionsCompare" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8">
       <module name="CollectionsCompare" target="1.8" />
     </bytecodeTargetLevel>
   </component>
