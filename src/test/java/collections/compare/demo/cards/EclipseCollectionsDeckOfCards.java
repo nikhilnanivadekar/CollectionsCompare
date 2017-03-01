@@ -19,12 +19,12 @@ public class EclipseCollectionsDeckOfCards
 
     public EclipseCollectionsDeckOfCards()
     {
-        LazyIterable<Card> cardLazyIterable =
+        LazyIterable<Card> cardIterable =
                 Sets.cartesianProduct(
                         EnumSet.allOf(Rank.class),
                         EnumSet.allOf(Suit.class))
                 .collect(pair -> new Card(pair.getOne(), pair.getTwo()));
-        this.cards = cardLazyIterable.reduceInPlace(Collectors2.toImmutableSortedSet());
+        this.cards = cardIterable.toSortedSet().toImmutable();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
