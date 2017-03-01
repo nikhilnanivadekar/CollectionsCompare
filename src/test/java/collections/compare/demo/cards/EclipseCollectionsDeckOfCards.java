@@ -3,15 +3,14 @@ package collections.compare.demo.cards;
 import java.util.EnumSet;
 import java.util.Random;
 
+import org.eclipse.collections.api.LazyIterable;
 import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
-import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.collector.Collectors2;
 import org.eclipse.collections.impl.factory.Sets;
-import org.eclipse.collections.impl.factory.SortedSets;
 
 public class EclipseCollectionsDeckOfCards
 {
@@ -20,15 +19,13 @@ public class EclipseCollectionsDeckOfCards
 
     public EclipseCollectionsDeckOfCards()
     {
-        this.cards = Sets.cartesianProduct(EnumSet.allOf(Rank.class), EnumSet.allOf(Suit.class))
-                .collect(this::pairToCard)
-                .reduceInPlace(Collectors2.toImmutableSortedSet());
+        LazyIterable<Card> cardLazyIterable =
+                Sets.cartesianProduct(
+                        EnumSet.allOf(Rank.class),
+                        EnumSet.allOf(Suit.class))
+                .collect(pair -> new Card(pair.getOne(), pair.getTwo()));
+        this.cards = cardLazyIterable.reduceInPlace(Collectors2.toImmutableSortedSet());
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
-    }
-
-    public Card pairToCard(Pair<Rank, Suit> pair)
-    {
-        return new Card(pair.getOne(), pair.getTwo());
     }
 
     public MutableStack<Card> shuffle(Random random)

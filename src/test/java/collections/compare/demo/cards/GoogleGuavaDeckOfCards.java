@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 
 import java.util.ArrayDeque;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -20,6 +22,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class GoogleGuavaDeckOfCards
 {
@@ -28,13 +31,12 @@ public class GoogleGuavaDeckOfCards
 
     public GoogleGuavaDeckOfCards()
     {
-        SortedSet<Card> set = new TreeSet<>();
-        Arrays.stream(Suit.values()).forEach(
-                suit -> Arrays.stream(Rank.values()).forEach(
-                        rank -> set.add(new Card(rank, suit))));
-        this.cards = ImmutableSortedSet.copyOf(set);
+        Stream<Card> cardStream = EnumSet.allOf(Suit.class).stream()
+                .flatMap(suit -> EnumSet.allOf(Rank.class).stream()
+                        .map(rank -> new Card(rank, suit)));
+        this.cards = ImmutableSortedSet.copyOf(cardStream.iterator());
         this.cardsBySuit = Multimaps.unmodifiableSortedSetMultimap(
-                set.stream().collect(
+                this.cards.stream().collect(
                         Multimaps.toMultimap(
                                 Card::getSuit,
                                 c -> c,

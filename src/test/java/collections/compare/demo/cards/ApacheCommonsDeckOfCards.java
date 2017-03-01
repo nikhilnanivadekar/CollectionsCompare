@@ -2,9 +2,9 @@ package collections.compare.demo.cards;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -29,10 +29,10 @@ public class ApacheCommonsDeckOfCards
 
     public ApacheCommonsDeckOfCards()
     {
-        SortedSet<Card> set = new TreeSet<>();
-        Arrays.stream(Suit.values()).forEach(
-                suit -> Arrays.stream(Rank.values()).forEach(
-                        rank -> set.add(new Card(rank, suit))));
+        SortedSet<Card> set = EnumSet.allOf(Suit.class).stream()
+                .flatMap(suit -> EnumSet.allOf(Rank.class).stream()
+                        .map(rank -> new Card(rank, suit)))
+                .collect(Collectors.toCollection(TreeSet::new));
         this.cards = Collections.unmodifiableSortedSet(set);
         SetValuedMap<Suit, Card> cbs = MultiMapUtils.newSetValuedHashMap();
         set.stream().forEach(card -> cbs.put(card.getSuit(), card));
