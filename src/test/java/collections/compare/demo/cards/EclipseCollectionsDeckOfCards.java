@@ -8,10 +8,12 @@ import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.api.set.sorted.MutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.factory.Multimaps;
+import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.factory.SortedSets;
 import org.eclipse.collections.impl.utility.ArrayIterate;
 
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.Random;
 
 public class EclipseCollectionsDeckOfCards
@@ -21,14 +23,10 @@ public class EclipseCollectionsDeckOfCards
 
     public EclipseCollectionsDeckOfCards()
     {
-        MutableSortedSet<Card> set = SortedSets.mutable.of();  // need to add empty()
-        ArrayIterate.forEach(Suit.values(),
-                suit -> ArrayIterate.forEach(Rank.values(),
-                        rank -> set.add(new Card(rank, suit))));
-        this.cards = set.toImmutable();
-        MutableSortedSetMultimap<Suit, Card> target =
-                Multimaps.mutable.sortedSet.of(Comparator.comparing(Card::getRank));
-        this.cardsBySuit = set.groupBy(Card::getSuit, target).toImmutable();
+        this.cards = Sets.cartesianProduct(EnumSet.allOf(Rank.class), EnumSet.allOf(Suit.class))
+                .collect(pair -> new Card(pair.getOne(), pair.getTwo()), SortedSets.mutable.empty())
+                .toImmutable();
+        this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
     public MutableStack<Card> shuffle(Random random)
