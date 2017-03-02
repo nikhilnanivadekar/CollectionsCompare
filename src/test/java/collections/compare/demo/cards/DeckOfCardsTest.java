@@ -1,20 +1,28 @@
 package collections.compare.demo.cards;
 
+import java.net.PortUnreachableException;
+import java.util.Deque;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.SortedSetMultimap;
+import org.eclipse.collections.api.block.predicate.Predicate;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.stack.MutableStack;
+import org.eclipse.collections.impl.collector.Collectors2;
+import org.eclipse.collections.impl.factory.Bags;
+import org.eclipse.collections.impl.utility.Iterate;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Deque;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.SortedSet;
 
 public class DeckOfCardsTest
 {
@@ -110,5 +118,54 @@ public class DeckOfCardsTest
         Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), jdkCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(jdkCardsBySuit.get(Suit.CLUBS), ggCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(ggCardsBySuit.get(Suit.CLUBS), ecCardsBySuit.get(Suit.CLUBS));
+    }
+
+    @Test
+    public void countsBySuit()
+    {
+        Assert.assertEquals(13, ecDeck.countsBySuit().occurrencesOf(Suit.CLUBS));
+        Assert.assertEquals(13, acDeck.countsBySuit().getCount(Suit.CLUBS));
+        Assert.assertEquals(13, ggDeck.countsBySuit().count(Suit.CLUBS));
+        Assert.assertEquals(Long.valueOf(13), jdkDeck.countsBySuit().get(Suit.CLUBS));
+    }
+
+    @Test
+    public void countsByRank()
+    {
+        Assert.assertEquals(4, ecDeck.countsByRank().occurrencesOf(Rank.SEVEN));
+        Assert.assertEquals(4, acDeck.countsByRank().getCount(Rank.EIGHT));
+        Assert.assertEquals(4, ggDeck.countsByRank().count(Rank.NINE));
+        Assert.assertEquals(Long.valueOf(4), jdkDeck.countsByRank().get(Rank.TEN));
+    }
+
+    @Test
+    public void goodDeals()
+    {
+        Random random = new Random();
+        Predicate<Set<Card>> pair = each ->
+                each.stream().map(Card::getRank).collect(Collectors2.toBag()).sizeDistinct() == 4;
+        Supplier<ImmutableList<Set<Card>>> generator = () -> ecDeck.shuffleAndDeal(random, 5, 5);
+        Set<Card> pairOrBetter = Stream.generate(generator)
+                .filter(hands ->hands.anySatisfy(pair))
+                .findFirst()
+                .get()
+                .detect(pair);
+        System.out.println(pairOrBetter);
+        Predicate<Set<Card>> twoPairs = each ->
+                each.stream().map(Card::getRank).collect(Collectors2.toBag()).sizeDistinct() == 3;
+        Set<Card> twoPairsOrBetter = Stream.generate(generator)
+                .filter(hands ->hands.anySatisfy(twoPairs))
+                .findFirst()
+                .get()
+                .detect(twoPairs);
+        System.out.println(twoPairsOrBetter);
+        Predicate<Set<Card>> fullHouse = each ->
+                each.stream().map(Card::getRank).collect(Collectors2.toBag()).sizeDistinct() == 2;
+        Set<Card> fullHouseOrBetter = Stream.generate(generator)
+                .filter(hands ->hands.anySatisfy(fullHouse))
+                .findFirst()
+                .get()
+                .detect(fullHouse);
+        System.out.println(fullHouseOrBetter);
     }
 }
