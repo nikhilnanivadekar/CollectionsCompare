@@ -1,46 +1,41 @@
 package collections.compare.demo.cards;
 
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.MultimapBuilder;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.Sets;
-import com.google.common.collect.SortedSetMultimap;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Multiset;
+
 public class GoogleGuavaDeckOfCards
 {
     private ImmutableSortedSet<Card> cards;
-    private SortedSetMultimap<Suit, Card> cardsBySuit;
+    private ImmutableSetMultimap<Suit, Card> cardsBySuit;
 
     public GoogleGuavaDeckOfCards()
     {
-        Stream<Card> cardStream = EnumSet.allOf(Suit.class).stream()
-                .flatMap(suit -> EnumSet.allOf(Rank.class).stream()
-                        .map(rank -> new Card(rank, suit)));
+        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
+        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
+        Stream<Card> cardStream = suits.stream()
+                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)));
         this.cards = ImmutableSortedSet.copyOf(cardStream.iterator());
-        this.cardsBySuit = Multimaps.unmodifiableSortedSetMultimap(
-                this.cards.stream().collect(
-                        Multimaps.toMultimap(
-                                Card::getSuit,
-                                c -> c,
-                                MultimapBuilder.hashKeys().treeSetValues()::build)));
+        ImmutableSetMultimap.Builder<Suit, Card> builder =
+                new ImmutableSetMultimap.Builder<Suit, Card>().orderValuesBy(Comparator.naturalOrder());
+        this.cards.forEach(card -> builder.put(card.getSuit(), card));
+        this.cardsBySuit = builder.build();
     }
 
     public Deque<Card> shuffle(Random random)
@@ -61,24 +56,32 @@ public class GoogleGuavaDeckOfCards
         return hand;
     }
 
-    public SortedSet<Card> diamonds()
+    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
     {
-        return Collections.unmodifiableSortedSet(this.cardsBySuit.get(Suit.DIAMONDS));
+        Deque<Card> shuffle = this.shuffle(random);
+        return IntStream.range(0, hands)
+                .mapToObj(i -> this.deal(shuffle, cardsPerHand))
+                .collect(ImmutableList.toImmutableList());
     }
 
-    public SortedSet<Card> hearts()
+    public Set<Card> diamonds()
     {
-        return Collections.unmodifiableSortedSet(this.cardsBySuit.get(Suit.HEARTS));
+        return this.cardsBySuit.get(Suit.DIAMONDS);
     }
 
-    public SortedSet<Card> spades()
+    public Set<Card> hearts()
     {
-        return Collections.unmodifiableSortedSet(this.cardsBySuit.get(Suit.SPADES));
+        return this.cardsBySuit.get(Suit.HEARTS);
     }
 
-    public SortedSet<Card> clubs()
+    public Set<Card> spades()
     {
-        return Collections.unmodifiableSortedSet(this.cardsBySuit.get(Suit.CLUBS));
+        return this.cardsBySuit.get(Suit.SPADES);
+    }
+
+    public Set<Card> clubs()
+    {
+        return this.cardsBySuit.get(Suit.CLUBS);
     }
 
     public Multiset<Suit> countsBySuit()
@@ -96,7 +99,7 @@ public class GoogleGuavaDeckOfCards
         return this.cards;
     }
 
-    public SortedSetMultimap<Suit, Card> getCardsBySuit()
+    public ImmutableSetMultimap<Suit, Card> getCardsBySuit()
     {
         return this.cardsBySuit;
     }

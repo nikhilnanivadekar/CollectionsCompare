@@ -23,9 +23,10 @@ public class JDK8DeckOfCards
 
     public JDK8DeckOfCards()
     {
-        SortedSet<Card> set = EnumSet.allOf(Suit.class).stream()
-                .flatMap(suit -> EnumSet.allOf(Rank.class).stream()
-                        .map(rank -> new Card(rank, suit)))
+        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
+        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
+        SortedSet<Card> set = suits.stream()
+                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
                 .collect(Collectors.toCollection(TreeSet::new));
         this.cards = Collections.unmodifiableSortedSet(set);
         this.cardsBySuit =
@@ -54,6 +55,16 @@ public class JDK8DeckOfCards
         Set<Card> hand = new HashSet<>();
         IntStream.range(0, count).forEach(i -> hand.add(deque.pop()));
         return hand;
+    }
+
+    public List<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
+    {
+        Deque<Card> shuffle = this.shuffle(random);
+        return IntStream.range(0, hands)
+                .mapToObj(i -> this.deal(shuffle, cardsPerHand))
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        Collections::unmodifiableList));
     }
 
     public SortedSet<Card> diamonds()

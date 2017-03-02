@@ -1,6 +1,8 @@
 package collections.compare.demo.cards;
 
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SortedSetMultimap;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.stack.MutableStack;
@@ -8,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Deque;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -66,7 +69,7 @@ public class DeckOfCardsTest
     }
 
     @Test
-    public void deals()
+    public void deal()
     {
         MutableStack<Card> ecShuffle = ecDeck.shuffle(new Random(1));
         Deque<Card> jdkShuffle = jdkDeck.shuffle(new Random(1));
@@ -84,15 +87,28 @@ public class DeckOfCardsTest
     }
 
     @Test
+    public void shuffleAndDealHands()
+    {
+        ImmutableList<Set<Card>> ecHands = ecDeck.shuffleAndDeal(new Random(1), 5, 5);
+        List<Set<Card>> jdkHands = jdkDeck.shuffleAndDeal(new Random(1), 5, 5);
+        List<Set<Card>> ggHands = ggDeck.shuffleAndDeal(new Random(1), 5, 5);
+        List<Set<Card>> acHands = acDeck.shuffleAndDeal(new Random(1), 5, 5);
+
+        Assert.assertEquals(ecHands, jdkHands);
+        Assert.assertEquals(jdkHands, ggHands);
+        Assert.assertEquals(ggHands, ecHands);
+        Assert.assertEquals(ecHands, acHands);
+    }
+
+    @Test
     public void cardsBySuit()
     {
         ImmutableSortedSetMultimap<Suit, Card> ecCardsBySuit = ecDeck.getCardsBySuit();
         Map<Suit, SortedSet<Card>> jdkCardsBySuit = jdkDeck.getCardsBySuit();
-        SortedSetMultimap<Suit, Card> ggCardsBySuit = ggDeck.getCardsBySuit();
+        ImmutableSetMultimap<Suit, Card> ggCardsBySuit = ggDeck.getCardsBySuit();
 
         Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), jdkCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(jdkCardsBySuit.get(Suit.CLUBS), ggCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(ggCardsBySuit.get(Suit.CLUBS), ecCardsBySuit.get(Suit.CLUBS));
     }
-
 }

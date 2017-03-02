@@ -1,16 +1,21 @@
 package collections.compare.demo.cards;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.eclipse.collections.api.LazyIterable;
 import org.eclipse.collections.api.bag.Bag;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.collector.Collectors2;
+import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.Sets;
+import org.eclipse.collections.impl.list.primitive.IntInterval;
 
 public class EclipseCollectionsDeckOfCards
 {
@@ -19,12 +24,12 @@ public class EclipseCollectionsDeckOfCards
 
     public EclipseCollectionsDeckOfCards()
     {
-        LazyIterable<Card> cardIterable =
-                Sets.cartesianProduct(
-                        EnumSet.allOf(Rank.class),
-                        EnumSet.allOf(Suit.class))
-                .collect(pair -> new Card(pair.getOne(), pair.getTwo()));
-        this.cards = cardIterable.toSortedSet().toImmutable();
+        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
+        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
+        this.cards = Sets.cartesianProduct(ranks, suits)
+                .collect(pair -> new Card(pair.getOne(), pair.getTwo()))
+                .toSortedSet()
+                .toImmutable();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
@@ -39,6 +44,12 @@ public class EclipseCollectionsDeckOfCards
     public MutableSet<Card> deal(MutableStack<Card> stack, int count)
     {
         return stack.pop(count).toSet();
+    }
+
+    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
+    {
+        MutableStack<Card> shuffle = this.shuffle(random);
+        return IntInterval.oneTo(hands).collect(i -> this.deal(shuffle, cardsPerHand));
     }
 
     public ImmutableSortedSet<Card> diamonds()
