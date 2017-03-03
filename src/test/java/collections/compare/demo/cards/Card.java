@@ -15,12 +15,12 @@ public class Card implements Comparable<Card>
 
     public Rank getRank()
     {
-        return rank;
+        return this.rank;
     }
 
     public Suit getSuit()
     {
-        return suit;
+        return this.suit;
     }
 
     @Override
@@ -60,19 +60,19 @@ public class Card implements Comparable<Card>
             return false;
         }
         Card card = (Card) object;
-        return rank == card.rank && suit == card.suit;
+        return this.rank == card.rank && this.suit == card.suit;
     }
 
     public int hashCode()
     {
-        int result = 31 + rank.hashCode();
-        result = 31 * result + suit.hashCode();
+        int result = 31 + this.rank.hashCode();
+        result = 31 * result + this.suit.hashCode();
         return result;
     }
 
     @Override
     public String toString()
     {
-        return rank + " of " + suit;
+        return this.rank + " of " + this.suit;
     }
 }

@@ -34,26 +34,26 @@ public class GoogleGuavaProtocolTest
         // extends java.util.function.Predicate
         Predicate<String> equals = "one"::equals;
         ImmutableList<String> actualListOne =
-                FluentIterable.from(stringMutableList).filter(equals).toList();
+                FluentIterable.from(this.stringMutableList).filter(equals).toList();
         Assert.assertEquals(Arrays.asList("one"), actualListOne);
 
         ImmutableList<String> actualListTwo =
-                FluentIterable.from(stringMutableList).filter(e -> !"one".equals(e)).toList();
+                FluentIterable.from(this.stringMutableList).filter(e -> !"one".equals(e)).toList();
         Assert.assertEquals(Arrays.asList("two", "three"), actualListTwo);
 
         ImmutableSet<String> actualSetOne =
-                FluentIterable.from(stringMutableSet).filter(equals).toSet();
+                FluentIterable.from(this.stringMutableSet).filter(equals).toSet();
         Assert.assertEquals(new HashSet<>(Arrays.asList("one")), actualSetOne);
 
         ImmutableMultiset<String> actualMultisetOne =
-                FluentIterable.from(stringMutableBag).filter(equals).toMultiset();
+                FluentIterable.from(this.stringMutableBag).filter(equals).toMultiset();
         Assert.assertEquals(HashMultiset.create(Arrays.asList("one")), actualMultisetOne);
     }
 
     @Test
     public void groupBy()
     {
-        ListMultimap<String, String> groupedList = stringMutableList.stream().collect(
+        ListMultimap<String, String> groupedList = this.stringMutableList.stream().collect(
                 Multimaps.toMultimap(
                         String::toUpperCase,
                         Function.identity(),
@@ -65,7 +65,7 @@ public class GoogleGuavaProtocolTest
         expectedGroupedList.put("THREE", "three");
         Assert.assertEquals(expectedGroupedList, groupedList);
 
-        SetMultimap<String, String> groupedSet = stringMutableSet.stream().collect(
+        SetMultimap<String, String> groupedSet = this.stringMutableSet.stream().collect(
                 Multimaps.toMultimap(
                         String::toUpperCase,
                         Function.identity(),

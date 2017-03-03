@@ -29,19 +29,19 @@ public class EclipseCollectionsProtocolTest
         // extends java.util.function.Predicate
         Predicate<String> equals = "one"::equals;
         MutableList<String> actualListOne =
-                stringMutableList.select(equals);
+                this.stringMutableList.select(equals);
         Assert.assertEquals(Arrays.asList("one"), actualListOne);
 
         MutableList<String> actualListTwo =
-                stringMutableList.reject(equals);
+                this.stringMutableList.reject(equals);
         Assert.assertEquals(Arrays.asList("two", "three"), actualListTwo);
 
         MutableSet<String> actualSetOne =
-                stringMutableSet.select(equals);
+                this.stringMutableSet.select(equals);
         Assert.assertEquals(new HashSet<>(Arrays.asList("one")), actualSetOne);
 
         MutableBag<String> actualBagOne =
-                stringMutableBag.select(equals);
+                this.stringMutableBag.select(equals);
         Assert.assertEquals(Bags.mutable.with("one"), actualBagOne);
     }
 
@@ -49,19 +49,19 @@ public class EclipseCollectionsProtocolTest
     public void groupBy()
     {
         MutableListMultimap<String, String> groupedList =
-                stringMutableList.groupBy(String::toUpperCase);
+                this.stringMutableList.groupBy(String::toUpperCase);
         MutableListMultimap<String, String> expectedGroupedList =
                 Multimaps.mutable.list.with("ONE", "one", "TWO", "two", "THREE", "three");
         Assert.assertEquals(expectedGroupedList, groupedList);
 
         MutableSetMultimap<String, String> groupedSet =
-                stringMutableSet.groupBy(String::toUpperCase);
+                this.stringMutableSet.groupBy(String::toUpperCase);
         MutableSetMultimap<String, String> expectedGroupedSet =
                 Multimaps.mutable.set.with("ONE", "one", "TWO", "two", "THREE", "three");
         Assert.assertEquals(expectedGroupedSet, groupedSet);
 
         MutableBagMultimap<String, String> groupedBag =
-                stringMutableBag.groupBy(String::toUpperCase);
+                this.stringMutableBag.groupBy(String::toUpperCase);
         MutableBagMultimap<String, String> expectedGroupedBag =
                 Multimaps.mutable.bag.with("ONE", "one", "TWO", "two", "THREE", "three");
         Assert.assertEquals(expectedGroupedSet, groupedSet);

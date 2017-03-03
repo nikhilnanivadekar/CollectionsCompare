@@ -33,60 +33,60 @@ public class DeckOfCardsTest
     @Test
     public void allCards()
     {
-        Assert.assertEquals(ecDeck.getCards(), jdkDeck.getCards());
-        Assert.assertEquals(jdkDeck.getCards(), ggDeck.getCards());
-        Assert.assertEquals(ggDeck.getCards(), ecDeck.getCards());
-        Assert.assertEquals(ecDeck.getCards(), acDeck.getCards());
+        Assert.assertEquals(this.ecDeck.getCards(), this.jdkDeck.getCards());
+        Assert.assertEquals(this.jdkDeck.getCards(), this.ggDeck.getCards());
+        Assert.assertEquals(this.ggDeck.getCards(), this.ecDeck.getCards());
+        Assert.assertEquals(this.ecDeck.getCards(), this.acDeck.getCards());
     }
 
     @Test
     public void diamonds()
     {
-        Assert.assertEquals(ecDeck.diamonds(), jdkDeck.diamonds());
-        Assert.assertEquals(jdkDeck.diamonds(), ggDeck.diamonds());
-        Assert.assertEquals(ggDeck.diamonds(), ecDeck.diamonds());
-        Assert.assertEquals(ecDeck.diamonds(), acDeck.diamonds());
+        Assert.assertEquals(this.ecDeck.diamonds(), this.jdkDeck.diamonds());
+        Assert.assertEquals(this.jdkDeck.diamonds(), this.ggDeck.diamonds());
+        Assert.assertEquals(this.ggDeck.diamonds(), this.ecDeck.diamonds());
+        Assert.assertEquals(this.ecDeck.diamonds(), this.acDeck.diamonds());
     }
 
     @Test
     public void hearts()
     {
-        Assert.assertEquals(ecDeck.hearts(), jdkDeck.hearts());
-        Assert.assertEquals(jdkDeck.hearts(), ggDeck.hearts());
-        Assert.assertEquals(ggDeck.hearts(), ecDeck.hearts());
-        Assert.assertEquals(ecDeck.hearts(), acDeck.hearts());
+        Assert.assertEquals(this.ecDeck.hearts(), this.jdkDeck.hearts());
+        Assert.assertEquals(this.jdkDeck.hearts(), this.ggDeck.hearts());
+        Assert.assertEquals(this.ggDeck.hearts(), this.ecDeck.hearts());
+        Assert.assertEquals(this.ecDeck.hearts(), this.acDeck.hearts());
     }
 
     @Test
     public void spades()
     {
-        Assert.assertEquals(ecDeck.spades(), jdkDeck.spades());
-        Assert.assertEquals(jdkDeck.spades(), ggDeck.spades());
-        Assert.assertEquals(ggDeck.spades(), ecDeck.spades());
-        Assert.assertEquals(ecDeck.spades(), acDeck.spades());
+        Assert.assertEquals(this.ecDeck.spades(), this.jdkDeck.spades());
+        Assert.assertEquals(this.jdkDeck.spades(), this.ggDeck.spades());
+        Assert.assertEquals(this.ggDeck.spades(), this.ecDeck.spades());
+        Assert.assertEquals(this.ecDeck.spades(), this.acDeck.spades());
     }
 
     @Test
     public void clubs()
     {
-        Assert.assertEquals(ecDeck.clubs(), jdkDeck.clubs());
-        Assert.assertEquals(jdkDeck.clubs(), ggDeck.clubs());
-        Assert.assertEquals(ggDeck.clubs(), ecDeck.clubs());
-        Assert.assertEquals(ecDeck.clubs(), acDeck.clubs());
+        Assert.assertEquals(this.ecDeck.clubs(), this.jdkDeck.clubs());
+        Assert.assertEquals(this.jdkDeck.clubs(), this.ggDeck.clubs());
+        Assert.assertEquals(this.ggDeck.clubs(), this.ecDeck.clubs());
+        Assert.assertEquals(this.ecDeck.clubs(), this.acDeck.clubs());
     }
 
     @Test
     public void deal()
     {
-        MutableStack<Card> ecShuffle = ecDeck.shuffle(new Random(1));
-        Deque<Card> jdkShuffle = jdkDeck.shuffle(new Random(1));
-        Deque<Card> ggShuffle = ggDeck.shuffle(new Random(1));
-        Deque<Card> acShuffle = acDeck.shuffle(new Random(1));
+        MutableStack<Card> ecShuffle = this.ecDeck.shuffle(new Random(1));
+        Deque<Card> jdkShuffle = this.jdkDeck.shuffle(new Random(1));
+        Deque<Card> ggShuffle = this.ggDeck.shuffle(new Random(1));
+        Deque<Card> acShuffle = this.acDeck.shuffle(new Random(1));
 
-        MutableSet<Card> ecHand = ecDeck.deal(ecShuffle, 5);
-        Set<Card> jdkHand = jdkDeck.deal(jdkShuffle, 5);
-        Set<Card> ggHand = ggDeck.deal(ggShuffle, 5);
-        Set<Card> acHand = acDeck.deal(acShuffle, 5);
+        MutableSet<Card> ecHand = this.ecDeck.deal(ecShuffle, 5);
+        Set<Card> jdkHand = this.jdkDeck.deal(jdkShuffle, 5);
+        Set<Card> ggHand = this.ggDeck.deal(ggShuffle, 5);
+        Set<Card> acHand = this.acDeck.deal(acShuffle, 5);
         Assert.assertEquals(ecHand, jdkHand);
         Assert.assertEquals(jdkHand, ggHand);
         Assert.assertEquals(ggHand, ecHand);
@@ -96,10 +96,10 @@ public class DeckOfCardsTest
     @Test
     public void shuffleAndDealHands()
     {
-        ImmutableList<Set<Card>> ecHands = ecDeck.shuffleAndDeal(new Random(1), 5, 5);
-        List<Set<Card>> jdkHands = jdkDeck.shuffleAndDeal(new Random(1), 5, 5);
-        List<Set<Card>> ggHands = ggDeck.shuffleAndDeal(new Random(1), 5, 5);
-        List<Set<Card>> acHands = acDeck.shuffleAndDeal(new Random(1), 5, 5);
+        ImmutableList<Set<Card>> ecHands = this.ecDeck.shuffleAndDeal(new Random(1), 5, 5);
+        List<Set<Card>> jdkHands = this.jdkDeck.shuffleAndDeal(new Random(1), 5, 5);
+        List<Set<Card>> ggHands = this.ggDeck.shuffleAndDeal(new Random(1), 5, 5);
+        List<Set<Card>> acHands = this.acDeck.shuffleAndDeal(new Random(1), 5, 5);
 
         Assert.assertEquals(ecHands, jdkHands);
         Assert.assertEquals(jdkHands, ggHands);
@@ -110,9 +110,9 @@ public class DeckOfCardsTest
     @Test
     public void cardsBySuit()
     {
-        ImmutableSortedSetMultimap<Suit, Card> ecCardsBySuit = ecDeck.getCardsBySuit();
-        Map<Suit, SortedSet<Card>> jdkCardsBySuit = jdkDeck.getCardsBySuit();
-        ImmutableSetMultimap<Suit, Card> ggCardsBySuit = ggDeck.getCardsBySuit();
+        ImmutableSortedSetMultimap<Suit, Card> ecCardsBySuit = this.ecDeck.getCardsBySuit();
+        Map<Suit, SortedSet<Card>> jdkCardsBySuit = this.jdkDeck.getCardsBySuit();
+        ImmutableSetMultimap<Suit, Card> ggCardsBySuit = this.ggDeck.getCardsBySuit();
 
         Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), jdkCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(jdkCardsBySuit.get(Suit.CLUBS), ggCardsBySuit.get(Suit.CLUBS));
@@ -122,19 +122,19 @@ public class DeckOfCardsTest
     @Test
     public void countsBySuit()
     {
-        Assert.assertEquals(13, ecDeck.countsBySuit().occurrencesOf(Suit.CLUBS));
-        Assert.assertEquals(13, acDeck.countsBySuit().getCount(Suit.CLUBS));
-        Assert.assertEquals(13, ggDeck.countsBySuit().count(Suit.CLUBS));
-        Assert.assertEquals(Long.valueOf(13), jdkDeck.countsBySuit().get(Suit.CLUBS));
+        Assert.assertEquals(13, this.ecDeck.countsBySuit().occurrencesOf(Suit.CLUBS));
+        Assert.assertEquals(13, this.acDeck.countsBySuit().getCount(Suit.CLUBS));
+        Assert.assertEquals(13, this.ggDeck.countsBySuit().count(Suit.CLUBS));
+        Assert.assertEquals(Long.valueOf(13), this.jdkDeck.countsBySuit().get(Suit.CLUBS));
     }
 
     @Test
     public void countsByRank()
     {
-        Assert.assertEquals(4, ecDeck.countsByRank().occurrencesOf(Rank.SEVEN));
-        Assert.assertEquals(4, acDeck.countsByRank().getCount(Rank.EIGHT));
-        Assert.assertEquals(4, ggDeck.countsByRank().count(Rank.NINE));
-        Assert.assertEquals(Long.valueOf(4), jdkDeck.countsByRank().get(Rank.TEN));
+        Assert.assertEquals(4, this.ecDeck.countsByRank().occurrencesOf(Rank.SEVEN));
+        Assert.assertEquals(4, this.acDeck.countsByRank().getCount(Rank.EIGHT));
+        Assert.assertEquals(4, this.ggDeck.countsByRank().count(Rank.NINE));
+        Assert.assertEquals(Long.valueOf(4), this.jdkDeck.countsByRank().get(Rank.TEN));
     }
 
     @Test
@@ -143,7 +143,7 @@ public class DeckOfCardsTest
         Random random = new Random();
         Predicate<Set<Card>> pair = each ->
                 each.stream().map(Card::getRank).collect(Collectors2.toBag()).sizeDistinct() == 4;
-        Supplier<ImmutableList<Set<Card>>> generator = () -> ecDeck.shuffleAndDeal(random, 5, 5);
+        Supplier<ImmutableList<Set<Card>>> generator = () -> this.ecDeck.shuffleAndDeal(random, 5, 5);
         Set<Card> pairOrBetter = Stream.generate(generator)
                 .filter(hands -> hands.anySatisfy(pair))
                 .findFirst()
