@@ -16,9 +16,9 @@ import org.junit.Test;
 
 public class ApacheCommonsProtocolTest
 {
-    private List<String> stringMutableList = Arrays.asList("one", "two", "three");
-    private Set<String> stringMutableSet = new HashSet<>(this.stringMutableList);
-    private Bag<String> stringMutableBag = new HashBag<>(this.stringMutableList);
+    private List<String> list = Arrays.asList("one", "two", "three");
+    private Set<String> set = new HashSet<>(this.list);
+    private Bag<String> bag = new HashBag<>(this.list);
 
     @Test
     public void filter()
@@ -26,19 +26,19 @@ public class ApacheCommonsProtocolTest
         // does not extend java.util.function.Predicate
         Predicate<String> equals = "one"::equals;
         List<String> actualListOne =
-                FluentIterable.of(this.stringMutableList).filter(equals).toList();
+                FluentIterable.of(this.list).filter(equals).toList();
         Assert.assertEquals(Arrays.asList("one"), actualListOne);
 
         List<String> actualListTwo =
-                FluentIterable.of(this.stringMutableList).filter(e -> !"one".equals(e)).toList();
+                FluentIterable.of(this.list).filter(e -> !"one".equals(e)).toList();
         Assert.assertEquals(Arrays.asList("two", "three"), actualListTwo);
 
         Set<String> actualSetOne = new HashSet<>();
-        FluentIterable.of(this.stringMutableSet).filter(equals).copyInto(actualSetOne);
+        FluentIterable.of(this.set).filter(equals).copyInto(actualSetOne);
         Assert.assertEquals(new HashSet<>(Arrays.asList("one")), actualSetOne);
 
         MultiSet<String> actualMultiSetOne = new HashMultiSet<>();
-        FluentIterable.of(this.stringMutableBag).filter(equals).copyInto(actualMultiSetOne);
+        FluentIterable.of(this.bag).filter(equals).copyInto(actualMultiSetOne);
         Assert.assertEquals(new HashMultiSet<>(Arrays.asList("one")), actualMultiSetOne);
     }
 

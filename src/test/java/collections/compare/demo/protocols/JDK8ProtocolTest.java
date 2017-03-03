@@ -20,28 +20,28 @@ import org.junit.Test;
 
 public class JDK8ProtocolTest
 {
-    private List<String> stringMutableList = Arrays.asList("one", "two", "three");
-    private Set<String> stringMutableSet = new HashSet<>(this.stringMutableList);
-    private MutableBag<String> stringMutableBag = Bags.mutable.with("one", "two", "three");
+    private List<String> list = Arrays.asList("one", "two", "three");
+    private Set<String> set = new HashSet<>(this.list);
+    private MutableBag<String> bag = Bags.mutable.with("one", "two", "three");
 
     @Test
     public void filter()
     {
         Predicate<String> equals = "one"::equals;
         List<String> actualListOne =
-                this.stringMutableList.stream().filter(equals).collect(Collectors.toList());
+                this.list.stream().filter(equals).collect(Collectors.toList());
         Assert.assertEquals(Arrays.asList("one"), actualListOne);
 
         List<String> actualListTwo =
-                this.stringMutableList.stream().filter(equals.negate()).collect(Collectors.toList());
+                this.list.stream().filter(equals.negate()).collect(Collectors.toList());
         Assert.assertEquals(Arrays.asList("two", "three"), actualListTwo);
 
         Set<String> actualSetOne =
-                this.stringMutableSet.stream().filter(equals).collect(Collectors.toSet());
+                this.set.stream().filter(equals).collect(Collectors.toSet());
         Assert.assertEquals(new HashSet<>(Arrays.asList("one")), actualSetOne);
 
         Bag<String> actualBagOne =
-                this.stringMutableBag.stream().filter(equals).collect(Collectors.toCollection(Bags.mutable::empty));
+                this.bag.stream().filter(equals).collect(Collectors.toCollection(Bags.mutable::empty));
         Assert.assertEquals(Bags.mutable.with("one"), actualBagOne);
     }
 
@@ -49,13 +49,13 @@ public class JDK8ProtocolTest
     public void groupBy()
     {
         Map<String, List<String>> groupedList =
-                this.stringMutableList.stream().collect(Collectors.groupingBy(String::toUpperCase));
+                this.list.stream().collect(Collectors.groupingBy(String::toUpperCase));
         Assert.assertEquals(Maps.mutable.with(
                 "ONE", Lists.mutable.with("one"),
                 "TWO", Lists.mutable.with("two"),
                 "THREE", Lists.mutable.with("three")), groupedList);
 
-        Map<String, Set<String>> groupedSet = this.stringMutableSet.stream().collect(
+        Map<String, Set<String>> groupedSet = this.set.stream().collect(
                 Collectors.groupingBy(String::toUpperCase,
                         Collectors.mapping(Function.identity(), Collectors.toSet())));
         Assert.assertEquals(Maps.mutable.with(
@@ -63,7 +63,7 @@ public class JDK8ProtocolTest
                 "TWO", Sets.mutable.with("two"),
                 "THREE", Sets.mutable.with("three")), groupedSet);
 
-        Map<String, Map<String, Long>> groupedBag = this.stringMutableBag.stream().collect(
+        Map<String, Map<String, Long>> groupedBag = this.bag.stream().collect(
                 Collectors.groupingBy(String::toUpperCase,
                         Collectors.groupingBy(Function.identity(), Collectors.counting())));
         Assert.assertEquals(Maps.mutable.with(

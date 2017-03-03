@@ -19,9 +19,9 @@ import org.junit.Test;
 
 public class EclipseCollectionsProtocolTest
 {
-    private MutableList<String> stringMutableList = Lists.mutable.with("one", "two", "three");
-    private MutableSet<String> stringMutableSet = Sets.mutable.with("one", "two", "three");
-    private MutableBag<String> stringMutableBag = Bags.mutable.with("one", "two", "three");
+    private MutableList<String> list = Lists.mutable.with("one", "two", "three");
+    private MutableSet<String> set = Sets.mutable.with("one", "two", "three");
+    private MutableBag<String> bag = Bags.mutable.with("one", "two", "three");
 
     @Test
     public void filter()
@@ -29,19 +29,19 @@ public class EclipseCollectionsProtocolTest
         // extends java.util.function.Predicate
         Predicate<String> equals = "one"::equals;
         MutableList<String> actualListOne =
-                this.stringMutableList.select(equals);
+                this.list.select(equals);
         Assert.assertEquals(Arrays.asList("one"), actualListOne);
 
         MutableList<String> actualListTwo =
-                this.stringMutableList.reject(equals);
+                this.list.reject(equals);
         Assert.assertEquals(Arrays.asList("two", "three"), actualListTwo);
 
         MutableSet<String> actualSetOne =
-                this.stringMutableSet.select(equals);
+                this.set.select(equals);
         Assert.assertEquals(new HashSet<>(Arrays.asList("one")), actualSetOne);
 
         MutableBag<String> actualBagOne =
-                this.stringMutableBag.select(equals);
+                this.bag.select(equals);
         Assert.assertEquals(Bags.mutable.with("one"), actualBagOne);
     }
 
@@ -49,19 +49,19 @@ public class EclipseCollectionsProtocolTest
     public void groupBy()
     {
         MutableListMultimap<String, String> groupedList =
-                this.stringMutableList.groupBy(String::toUpperCase);
+                this.list.groupBy(String::toUpperCase);
         MutableListMultimap<String, String> expectedGroupedList =
                 Multimaps.mutable.list.with("ONE", "one", "TWO", "two", "THREE", "three");
         Assert.assertEquals(expectedGroupedList, groupedList);
 
         MutableSetMultimap<String, String> groupedSet =
-                this.stringMutableSet.groupBy(String::toUpperCase);
+                this.set.groupBy(String::toUpperCase);
         MutableSetMultimap<String, String> expectedGroupedSet =
                 Multimaps.mutable.set.with("ONE", "one", "TWO", "two", "THREE", "three");
         Assert.assertEquals(expectedGroupedSet, groupedSet);
 
         MutableBagMultimap<String, String> groupedBag =
-                this.stringMutableBag.groupBy(String::toUpperCase);
+                this.bag.groupBy(String::toUpperCase);
         MutableBagMultimap<String, String> expectedGroupedBag =
                 Multimaps.mutable.bag.with("ONE", "one", "TWO", "two", "THREE", "three");
         Assert.assertEquals(expectedGroupedSet, groupedSet);

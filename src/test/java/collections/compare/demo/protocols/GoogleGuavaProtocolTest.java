@@ -24,9 +24,9 @@ import org.junit.Test;
 
 public class GoogleGuavaProtocolTest
 {
-    private List<String> stringMutableList = Lists.newArrayList("one", "two", "three");
-    private Set<String> stringMutableSet = Sets.newHashSet("one", "two", "three");
-    private Multiset<String> stringMutableBag = HashMultiset.create(Lists.newArrayList("one", "two", "three"));
+    private List<String> list = Lists.newArrayList("one", "two", "three");
+    private Set<String> set = Sets.newHashSet("one", "two", "three");
+    private Multiset<String> multiset = HashMultiset.create(Lists.newArrayList("one", "two", "three"));
 
     @Test
     public void filter()
@@ -34,26 +34,26 @@ public class GoogleGuavaProtocolTest
         // extends java.util.function.Predicate
         Predicate<String> equals = "one"::equals;
         ImmutableList<String> actualListOne =
-                FluentIterable.from(this.stringMutableList).filter(equals).toList();
+                FluentIterable.from(this.list).filter(equals).toList();
         Assert.assertEquals(Arrays.asList("one"), actualListOne);
 
         ImmutableList<String> actualListTwo =
-                FluentIterable.from(this.stringMutableList).filter(e -> !"one".equals(e)).toList();
+                FluentIterable.from(this.list).filter(e -> !"one".equals(e)).toList();
         Assert.assertEquals(Arrays.asList("two", "three"), actualListTwo);
 
         ImmutableSet<String> actualSetOne =
-                FluentIterable.from(this.stringMutableSet).filter(equals).toSet();
+                FluentIterable.from(this.set).filter(equals).toSet();
         Assert.assertEquals(new HashSet<>(Arrays.asList("one")), actualSetOne);
 
         ImmutableMultiset<String> actualMultisetOne =
-                FluentIterable.from(this.stringMutableBag).filter(equals).toMultiset();
+                FluentIterable.from(this.multiset).filter(equals).toMultiset();
         Assert.assertEquals(HashMultiset.create(Arrays.asList("one")), actualMultisetOne);
     }
 
     @Test
     public void groupBy()
     {
-        ListMultimap<String, String> groupedList = this.stringMutableList.stream().collect(
+        ListMultimap<String, String> groupedList = this.list.stream().collect(
                 Multimaps.toMultimap(
                         String::toUpperCase,
                         Function.identity(),
@@ -65,7 +65,7 @@ public class GoogleGuavaProtocolTest
         expectedGroupedList.put("THREE", "three");
         Assert.assertEquals(expectedGroupedList, groupedList);
 
-        SetMultimap<String, String> groupedSet = this.stringMutableSet.stream().collect(
+        SetMultimap<String, String> groupedSet = this.set.stream().collect(
                 Multimaps.toMultimap(
                         String::toUpperCase,
                         Function.identity(),
