@@ -49,6 +49,11 @@ public class Card implements Comparable<Card>
         return this.suit == Suit.CLUBS;
     }
 
+    public boolean isSameRank(Rank rank)
+    {
+        return this.rank == rank;
+    }
+
     public boolean equals(Object object)
     {
         if (this == object)
