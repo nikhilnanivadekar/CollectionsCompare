@@ -1,19 +1,15 @@
 package collections.compare.demo.cards;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.eclipse.collections.api.LazyIterable;
 import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
-import org.eclipse.collections.impl.collector.Collectors2;
-import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
 
