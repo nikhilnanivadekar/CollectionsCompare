@@ -51,8 +51,14 @@ public class Card implements Comparable<Card>
 
     public boolean equals(Object object)
     {
-        if (this == object) return true;
-        if (!(object instanceof Card)) return false;
+        if (this == object)
+        {
+            return true;
+        }
+        if (!(object instanceof Card))
+        {
+            return false;
+        }
         Card card = (Card) object;
         return rank == card.rank && suit == card.suit;
     }

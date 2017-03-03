@@ -255,7 +255,7 @@
     </module>
 
     <module name="RegexpMultiline">
-        <property name="format" value="lf"/>
+        <property name="format" value="\r"/>
         <property name="message" value="Carriage return."/>
     </module>
 
