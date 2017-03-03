@@ -254,9 +254,11 @@
         <property name="message" value="Extra newline."/>
     </module>
 
+<!--
     <module name="RegexpMultiline">
         <property name="format" value="\r"/>
         <property name="message" value="Carriage return."/>
     </module>
+-->
 
 </module>
