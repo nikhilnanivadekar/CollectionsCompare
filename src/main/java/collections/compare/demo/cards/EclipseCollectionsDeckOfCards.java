@@ -42,6 +42,11 @@ public class EclipseCollectionsDeckOfCards
         return stack.pop(count).toSet();
     }
 
+    public Card dealOneCard(MutableStack<Card> stack)
+    {
+        return stack.pop();
+    }
+
     public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
     {
         MutableStack<Card> shuffle = this.shuffle(random);

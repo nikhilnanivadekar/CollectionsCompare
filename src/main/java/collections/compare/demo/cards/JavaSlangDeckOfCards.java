@@ -56,6 +56,13 @@ public class JavaSlangDeckOfCards
         return Tuple.of(hand, stack);
     }
 
+    public Card dealOneCard(Stack<Card> stack)
+    {
+        Tuple2<Card, ? extends Stack<Card>> cardTuple2 = stack.pop2();
+        stack = cardTuple2._2();
+        return cardTuple2._1();
+    }
+
     public List<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
     {
         List<Set<Card>> list = List.empty();

@@ -57,6 +57,11 @@ public class JDK8DeckOfCards
         return hand;
     }
 
+    public Card dealOneCard(Deque<Card> deque)
+    {
+        return deque.pop();
+    }
+
     public List<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
     {
         Deque<Card> shuffle = this.shuffle(random);

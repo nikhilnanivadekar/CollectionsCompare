@@ -49,7 +49,7 @@ public class FishUsingEclipseCollections extends Fish
         {
             for (int j = 1; j <= this.numberOfPlayers; j++)
             {
-                this.cardsPerPlayer.put(j, this.deck.deal(this.shuffledCards, 1).getOnly());
+                this.cardsPerPlayer.put(j, this.deck.dealOneCard(this.shuffledCards));
             }
         }
         LOGGER.info("Here are the cards which each player has:");
@@ -91,7 +91,7 @@ public class FishUsingEclipseCollections extends Fish
                 this.outcome = Outcome.POND_DRY;
                 return false;
             }
-            Card cardFromPond = this.deck.deal(this.shuffledCards, 1).getOnly();
+            Card cardFromPond = this.deck.dealOneCard(this.shuffledCards);
             LOGGER.info("Card from Pond:{}", cardFromPond);
             this.cardsPerPlayer.put(playerNumber, cardFromPond);
             this.logCardsPerPlayer();
