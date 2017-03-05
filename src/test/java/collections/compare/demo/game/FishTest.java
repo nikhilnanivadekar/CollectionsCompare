@@ -18,13 +18,18 @@ public class FishTest
     {
         FishUsingEclipseCollections ec = new FishUsingEclipseCollections(numberOfPlayersSmallSet, seed1);
         FishUsingGoogleGuava gg = new FishUsingGoogleGuava(numberOfPlayersSmallSet, seed1);
+        FishUsingJDK8 jdk8 = new FishUsingJDK8(numberOfPlayersSmallSet, seed1);
 
         ec.deal();
         gg.deal();
+        jdk8.deal();
 
         Outcome ecOutcome = this.playFish(ec);
         Outcome ggOutcome = this.playFish(gg);
+        Outcome jdk8Outcome = this.playFish(jdk8);
+
         Assert.assertEquals(ecOutcome, ggOutcome);
+        Assert.assertEquals(ggOutcome, jdk8Outcome);
     }
 
     @Test
@@ -32,13 +37,18 @@ public class FishTest
     {
         FishUsingEclipseCollections ec = new FishUsingEclipseCollections(numberOfPlayersSmallSet, seed2);
         FishUsingGoogleGuava gg = new FishUsingGoogleGuava(numberOfPlayersSmallSet, seed2);
+        FishUsingJDK8 jdk8 = new FishUsingJDK8(numberOfPlayersSmallSet, seed2);
 
         ec.deal();
         gg.deal();
+        jdk8.deal();
 
         Outcome ecOutcome = this.playFish(ec);
         Outcome ggOutcome = this.playFish(gg);
+        Outcome jdk8Outcome = this.playFish(jdk8);
+
         Assert.assertEquals(ecOutcome, ggOutcome);
+        Assert.assertEquals(ggOutcome, jdk8Outcome);
     }
 
     private Outcome playFish(Fish game)
