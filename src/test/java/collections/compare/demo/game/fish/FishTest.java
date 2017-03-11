@@ -1,5 +1,6 @@
-package collections.compare.demo.game;
+package collections.compare.demo.game.fish;
 
+import collections.compare.demo.game.Outcome;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

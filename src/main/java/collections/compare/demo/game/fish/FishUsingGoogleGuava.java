@@ -1,34 +1,33 @@
-package collections.compare.demo.game;
+package collections.compare.demo.game.fish;
 
 import java.util.Deque;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import collections.compare.demo.cards.ApacheCommonsDeckOfCards;
 import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.GoogleGuavaDeckOfCards;
 import collections.compare.demo.cards.Rank;
-import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.MultiMapUtils;
-import org.apache.commons.collections4.SetValuedMap;
-import org.apache.commons.collections4.bag.HashBag;
+import collections.compare.demo.game.Outcome;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FishUsingApacheCommons extends Fish
+public class FishUsingGoogleGuava extends Fish
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FishUsingApacheCommons.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FishUsingGoogleGuava.class);
 
-    private final ApacheCommonsDeckOfCards deck = new ApacheCommonsDeckOfCards();
+    private final GoogleGuavaDeckOfCards deck = new GoogleGuavaDeckOfCards();
     private final Deque<Card> shuffledCards;
-    private final SetValuedMap<Integer, Card> cardsPerPlayer = MultiMapUtils.newSetValuedHashMap();
+    private final HashMultimap<Integer, Card> cardsPerPlayer = HashMultimap.create();
 
     private final int numberOfPlayers;
     private final long seed;
 
     private Outcome outcome;
 
-    public FishUsingApacheCommons(int numberOfPlayers, long seed)
+    public FishUsingGoogleGuava(int numberOfPlayers, long seed)
     {
         this.numberOfPlayers = numberOfPlayers;
         this.seed = seed;
@@ -61,7 +60,7 @@ public class FishUsingApacheCommons extends Fish
     {
         Set<Card> cards = this.cardsPerPlayer.get(playerNumber);
 
-        Bag<Rank> ranks = this.getRanks(cards);
+        Multiset<Rank> ranks = this.getRanks(cards);
         Rank probableBook = this.getProbableBook(ranks);
         LOGGER.info("Player:{} can have a probable Book for Rank:{}", playerNumber, probableBook);
 
@@ -81,6 +80,7 @@ public class FishUsingApacheCommons extends Fish
                 .filter(each -> each.isSameRank(probableBook))
                 .findFirst()
                 .orElse(null);
+
         LOGGER.info("Next Player:{} " + (card == null ? "No card for Rank:" + probableBook : "has Card:" + card), nextPlayer);
 
         if (card == null)
@@ -90,7 +90,7 @@ public class FishUsingApacheCommons extends Fish
             {
                 LOGGER.info("Pond is dry. GAME OVER!!!");
                 this.logCardsPerPlayer();
-                logCardCountPerPlayer();
+                this.logCardCountPerPlayer();
                 this.outcome = Outcome.POND_DRY;
                 return false;
             }
@@ -103,7 +103,7 @@ public class FishUsingApacheCommons extends Fish
         }
         else
         {
-            this.cardsPerPlayer.removeMapping(nextPlayer, card);
+            this.cardsPerPlayer.remove(nextPlayer, card);
             this.cardsPerPlayer.put(playerNumber, card);
             this.logCardsPerPlayer();
             this.logCardCountPerPlayer();
@@ -122,9 +122,9 @@ public class FishUsingApacheCommons extends Fish
 
     private boolean checkIfPlayerWins(int playerNumber)
     {
-        Bag<Rank> newRanks = this.getRanks(this.cardsPerPlayer.get(playerNumber));
-        Rank rank = this.getProbableBook(newRanks);
-        int rankCount = newRanks.getCount(rank);
+        Multiset<Rank> newRanks = this.getRanks(this.cardsPerPlayer.get(playerNumber));
+        Rank probableBook = this.getProbableBook(newRanks);
+        int rankCount = newRanks.count(probableBook);
         if (rankCount == 4)
         {
             LOGGER.info("Player:{} has a BOOK! Player:{} WINS!!!", playerNumber, playerNumber);
@@ -135,24 +135,26 @@ public class FishUsingApacheCommons extends Fish
         return true;
     }
 
-    private Rank getProbableBook(Bag<Rank> ranks)
+    private Rank getProbableBook(Multiset<Rank> ranks)
     {
         int count = 0;
         Rank topOccurrence = null;
         for (Rank rank : ranks)
         {
-            if (ranks.getCount(rank) > count)
+            if (ranks.count(rank) > count)
             {
-                count = ranks.getCount(rank);
+                count = ranks.count(rank);
                 topOccurrence = rank;
             }
         }
         return topOccurrence;
     }
 
-    private Bag<Rank> getRanks(Set<Card> cards)
+    private Multiset<Rank> getRanks(Set<Card> cards)
     {
-        return cards.stream().map(Card::getRank).collect(Collectors.toCollection(HashBag::new));
+        Multiset<Rank> ranks = HashMultiset.create();
+        cards.forEach(card -> ranks.add(card.getRank()));
+        return ranks;
     }
 
     private void logCardsPerPlayer()

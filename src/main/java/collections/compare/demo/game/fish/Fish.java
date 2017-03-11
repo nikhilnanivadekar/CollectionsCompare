@@ -1,4 +1,6 @@
-package collections.compare.demo.game;
+package collections.compare.demo.game.fish;
+
+import collections.compare.demo.game.Outcome;
 
 public abstract class Fish
 {

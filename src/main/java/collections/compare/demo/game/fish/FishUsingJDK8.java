@@ -1,4 +1,4 @@
-package collections.compare.demo.game;
+package collections.compare.demo.game.fish;
 
 import java.util.Deque;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import java.util.Set;
 import collections.compare.demo.cards.Card;
 import collections.compare.demo.cards.JDK8DeckOfCards;
 import collections.compare.demo.cards.Rank;
+import collections.compare.demo.game.Outcome;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

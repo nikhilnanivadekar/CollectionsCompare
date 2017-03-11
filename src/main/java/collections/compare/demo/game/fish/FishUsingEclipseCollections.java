@@ -1,32 +1,35 @@
-package collections.compare.demo.game;
+package collections.compare.demo.game.fish;
 
-import java.util.Deque;
 import java.util.Random;
-import java.util.Set;
 
 import collections.compare.demo.cards.Card;
-import collections.compare.demo.cards.GoogleGuavaDeckOfCards;
+import collections.compare.demo.cards.EclipseCollectionsDeckOfCards;
 import collections.compare.demo.cards.Rank;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
+import collections.compare.demo.game.Outcome;
+import org.eclipse.collections.api.bag.MutableBag;
+import org.eclipse.collections.api.multimap.set.MutableSetMultimap;
+import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.api.stack.MutableStack;
+import org.eclipse.collections.api.tuple.primitive.ObjectIntPair;
+import org.eclipse.collections.impl.factory.Bags;
+import org.eclipse.collections.impl.factory.Multimaps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FishUsingGoogleGuava extends Fish
+public class FishUsingEclipseCollections extends Fish
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FishUsingGoogleGuava.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FishUsingEclipseCollections.class);
 
-    private final GoogleGuavaDeckOfCards deck = new GoogleGuavaDeckOfCards();
-    private final Deque<Card> shuffledCards;
-    private final HashMultimap<Integer, Card> cardsPerPlayer = HashMultimap.create();
+    private final EclipseCollectionsDeckOfCards deck = new EclipseCollectionsDeckOfCards();
+    private final MutableStack<Card> shuffledCards;
+    private final MutableSetMultimap<Integer, Card> cardsPerPlayer = Multimaps.mutable.set.empty();
 
     private final int numberOfPlayers;
     private final long seed;
 
     private Outcome outcome;
 
-    public FishUsingGoogleGuava(int numberOfPlayers, long seed)
+    public FishUsingEclipseCollections(int numberOfPlayers, long seed)
     {
         this.numberOfPlayers = numberOfPlayers;
         this.seed = seed;
@@ -57,15 +60,15 @@ public class FishUsingGoogleGuava extends Fish
     @Override
     public boolean playTurn(int playerNumber)
     {
-        Set<Card> cards = this.cardsPerPlayer.get(playerNumber);
+        MutableSet<Card> cards = this.cardsPerPlayer.get(playerNumber);
 
-        Multiset<Rank> ranks = this.getRanks(cards);
-        Rank probableBook = this.getProbableBook(ranks);
+        MutableBag<Rank> ranks = this.getRanks(cards);
+        Rank probableBook = this.getProbableBook(ranks).getOne();
         LOGGER.info("Player:{} can have a probable Book for Rank:{}", playerNumber, probableBook);
 
         int nextPlayer = playerNumber == this.numberOfPlayers ? 1 : playerNumber + 1;
 
-        Set<Card> cardsWithNextPlayer = this.cardsPerPlayer.get(nextPlayer);
+        MutableSet<Card> cardsWithNextPlayer = this.cardsPerPlayer.get(nextPlayer);
         if (cardsWithNextPlayer.isEmpty())
         {
             LOGGER.info("Player:{} has no cards left! GAME OVER!!!", nextPlayer);
@@ -75,11 +78,7 @@ public class FishUsingGoogleGuava extends Fish
             return false;
         }
 
-        Card card = cardsWithNextPlayer.stream()
-                .filter(each -> each.isSameRank(probableBook))
-                .findFirst()
-                .orElse(null);
-
+        Card card = cardsWithNextPlayer.detectWith(Card::isSameRank, probableBook);
         LOGGER.info("Next Player:{} " + (card == null ? "No card for Rank:" + probableBook : "has Card:" + card), nextPlayer);
 
         if (card == null)
@@ -89,7 +88,7 @@ public class FishUsingGoogleGuava extends Fish
             {
                 LOGGER.info("Pond is dry. GAME OVER!!!");
                 this.logCardsPerPlayer();
-                this.logCardCountPerPlayer();
+                logCardCountPerPlayer();
                 this.outcome = Outcome.POND_DRY;
                 return false;
             }
@@ -112,18 +111,13 @@ public class FishUsingGoogleGuava extends Fish
 
     private void logCardCountPerPlayer()
     {
-        for (int player : this.cardsPerPlayer.keySet())
-        {
-            Set<Card> cards = this.cardsPerPlayer.get(player);
-            LOGGER.info("Player:{} has {} cards", player, cards.size());
-        }
+        this.cardsPerPlayer.forEachKeyMultiValues((player, cardsPerPlayer) -> LOGGER.info("Player:{} has {} cards", player, ((MutableSet<Card>) cardsPerPlayer).size()));
     }
 
     private boolean checkIfPlayerWins(int playerNumber)
     {
-        Multiset<Rank> newRanks = this.getRanks(this.cardsPerPlayer.get(playerNumber));
-        Rank probableBook = this.getProbableBook(newRanks);
-        int rankCount = newRanks.count(probableBook);
+        MutableBag<Rank> newRanks = this.getRanks(this.cardsPerPlayer.get(playerNumber));
+        int rankCount = this.getProbableBook(newRanks).getTwo();
         if (rankCount == 4)
         {
             LOGGER.info("Player:{} has a BOOK! Player:{} WINS!!!", playerNumber, playerNumber);
@@ -134,34 +128,18 @@ public class FishUsingGoogleGuava extends Fish
         return true;
     }
 
-    private Rank getProbableBook(Multiset<Rank> ranks)
+    private ObjectIntPair<Rank> getProbableBook(MutableBag<Rank> ranks)
     {
-        int count = 0;
-        Rank topOccurrence = null;
-        for (Rank rank : ranks)
-        {
-            if (ranks.count(rank) > count)
-            {
-                count = ranks.count(rank);
-                topOccurrence = rank;
-            }
-        }
-        return topOccurrence;
+        return ranks.topOccurrences(1).getFirst();
     }
 
-    private Multiset<Rank> getRanks(Set<Card> cards)
+    private MutableBag<Rank> getRanks(MutableSet<Card> cards)
     {
-        Multiset<Rank> ranks = HashMultiset.create();
-        cards.forEach(card -> ranks.add(card.getRank()));
-        return ranks;
+        return cards.collect(Card::getRank, Bags.mutable.empty());
     }
 
     private void logCardsPerPlayer()
     {
-        for (int player : this.cardsPerPlayer.keySet())
-        {
-            Set<Card> cards = this.cardsPerPlayer.get(player);
-            LOGGER.info("Player:{}, cards:{}", player, cards.toString());
-        }
+        this.cardsPerPlayer.forEachKeyMultiValues((player, cards) -> LOGGER.info("Player:{}, cards:{}", player, cards.toString()));
     }
 }
