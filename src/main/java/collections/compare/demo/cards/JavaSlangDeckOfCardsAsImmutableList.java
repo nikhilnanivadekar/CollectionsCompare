@@ -13,12 +13,12 @@ import javaslang.collection.Map;
 import javaslang.collection.Set;
 import javaslang.collection.Stack;
 
-public class JavaSlangDeckOfCardsAsList
+public class JavaSlangDeckOfCardsAsImmutableList
 {
     private List<Card> cards;
     private Map<Suit, ? extends List<Card>> cardsBySuit;
 
-    public JavaSlangDeckOfCardsAsList()
+    public JavaSlangDeckOfCardsAsImmutableList()
     {
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);

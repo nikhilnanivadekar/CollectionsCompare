@@ -20,12 +20,12 @@ import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Multiset;
 
-public class GoogleGuavaDeckOfCardsAsList
+public class GoogleGuavaDeckOfCardsAsImmutableList
 {
     private ImmutableList<Card> cards;
     private ImmutableListMultimap<Suit, Card> cardsBySuit;
 
-    public GoogleGuavaDeckOfCardsAsList()
+    public GoogleGuavaDeckOfCardsAsImmutableList()
     {
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);

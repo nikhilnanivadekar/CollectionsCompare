@@ -1,10 +1,16 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.jmh;
 
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import collections.compare.demo.cards.ApacheCommonsDeckOfCards;
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.EclipseCollectionsDeckOfCards;
+import collections.compare.demo.cards.GoogleGuavaDeckOfCards;
+import collections.compare.demo.cards.JDK8DeckOfCards;
+import collections.compare.demo.cards.JavaSlangDeckOfCards;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.Assert;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -14,11 +20,12 @@ import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Threads;
 
 @State(Scope.Thread)
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
-@Fork(4)
+@Fork(1)
 public class DeckOfCardsJMHTest
 {
     @Benchmark

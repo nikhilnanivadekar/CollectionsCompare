@@ -6,25 +6,24 @@ import java.util.Set;
 
 import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
+import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
 import org.eclipse.collections.api.set.MutableSet;
-import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
-import org.eclipse.collections.impl.factory.SortedSets;
+import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
-import org.eclipse.collections.impl.utility.LazyIterate;
 
-public class EclipseCollectionsDeckOfCards
+public class EclipseCollectionsDeckOfCardsAsImmutableList
 {
-    private ImmutableSortedSet<Card> cards;
-    private ImmutableSortedSetMultimap<Suit, Card> cardsBySuit;
+    private ImmutableList<Card> cards;
+    private ImmutableListMultimap<Suit, Card> cardsBySuit;
 
-    public EclipseCollectionsDeckOfCards()
+    public EclipseCollectionsDeckOfCardsAsImmutableList()
     {
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        this.cards = SortedSets.immutable.withAll(LazyIterate
-                .flatCollect(ranks, rank -> LazyIterate.collect(suits, suit ->  new Card(rank, suit))));
+        this.cards = Lists.mutable.with(suits.stream()
+                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
+                .toArray(Card[]::new)).sortThis().toImmutable();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
@@ -52,22 +51,22 @@ public class EclipseCollectionsDeckOfCards
         return IntInterval.oneTo(hands).collect(i -> this.deal(shuffle, cardsPerHand));
     }
 
-    public ImmutableSortedSet<Card> diamonds()
+    public ImmutableList<Card> diamonds()
     {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }
 
-    public ImmutableSortedSet<Card> hearts()
+    public ImmutableList<Card> hearts()
     {
         return this.cardsBySuit.get(Suit.HEARTS);
     }
 
-    public ImmutableSortedSet<Card> spades()
+    public ImmutableList<Card> spades()
     {
         return this.cardsBySuit.get(Suit.SPADES);
     }
 
-    public ImmutableSortedSet<Card> clubs()
+    public ImmutableList<Card> clubs()
     {
         return this.cardsBySuit.get(Suit.CLUBS);
     }
@@ -82,12 +81,12 @@ public class EclipseCollectionsDeckOfCards
         return this.cards.asLazy().collect(Card::getRank).toBag();
     }
 
-    public ImmutableSortedSet<Card> getCards()
+    public ImmutableList<Card> getCards()
     {
         return this.cards;
     }
 
-    public ImmutableSortedSetMultimap<Suit, Card> getCardsBySuit()
+    public ImmutableListMultimap<Suit, Card> getCardsBySuit()
     {
         return this.cardsBySuit;
     }

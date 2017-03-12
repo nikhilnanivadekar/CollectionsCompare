@@ -25,7 +25,7 @@ public class JavaSlangDeckOfCards
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         this.cards = TreeSet.ofAll(suits)
-                .flatMap(suit -> TreeSet.ofAll(ranks).map(rank -> new Card(rank, suit)));
+                .flatMap(suit -> List.ofAll(ranks).map(rank -> new Card(rank, suit)));
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 

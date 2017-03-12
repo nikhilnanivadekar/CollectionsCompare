@@ -25,13 +25,14 @@ public class JDK8DeckOfCards
     {
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        SortedSet<Card> set = suits.stream()
+        this.cards = suits.stream()
                 .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
-                .collect(Collectors.toCollection(TreeSet::new));
-        this.cards = Collections.unmodifiableSortedSet(set);
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toCollection(TreeSet::new),
+                        Collections::unmodifiableSortedSet));
         this.cardsBySuit =
                 Collections.unmodifiableMap(
-                        set.stream().collect(Collectors.groupingBy(
+                        this.cards.stream().collect(Collectors.groupingBy(
                                 Card::getSuit,
                                 Collectors.mapping(Function.identity(),
                                         Collectors.collectingAndThen(

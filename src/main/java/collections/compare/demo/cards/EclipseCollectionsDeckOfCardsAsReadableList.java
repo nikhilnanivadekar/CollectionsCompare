@@ -5,26 +5,26 @@ import java.util.Random;
 import java.util.Set;
 
 import org.eclipse.collections.api.bag.Bag;
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
+import org.eclipse.collections.api.list.ListIterable;
+import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.multimap.list.ListMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.stack.MutableStack;
-import org.eclipse.collections.impl.collector.Collectors2;
+import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
-import org.eclipse.collections.impl.utility.LazyIterate;
 
-public class EclipseCollectionsDeckOfCardsAsList
+public class EclipseCollectionsDeckOfCardsAsReadableList
 {
-    private ImmutableList<Card> cards;
-    private ImmutableListMultimap<Suit, Card> cardsBySuit;
+    private ListIterable<Card> cards;
+    private ListMultimap<Suit, Card> cardsBySuit;
 
-    public EclipseCollectionsDeckOfCardsAsList()
+    public EclipseCollectionsDeckOfCardsAsReadableList()
     {
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        this.cards = LazyIterate
-                .flatCollect(ranks, rank -> LazyIterate.collect(suits, suit -> new Card(rank, suit)))
-                .reduceInPlace(Collectors2.toImmutableSortedList());
+        this.cards = Lists.mutable.with(suits.stream()
+                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
+                .toArray(Card[]::new)).sortThis().asUnmodifiable();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
@@ -46,28 +46,31 @@ public class EclipseCollectionsDeckOfCardsAsList
         return stack.pop();
     }
 
-    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
+    public ListIterable<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
     {
         MutableStack<Card> shuffle = this.shuffle(random);
-        return IntInterval.oneTo(hands).collect(i -> this.deal(shuffle, cardsPerHand));
+        MutableList<Set<Card>> result = Lists.mutable.empty();
+        IntInterval.oneTo(hands)
+                .forEach(i -> result.add(this.deal(shuffle, cardsPerHand)));
+        return result.asUnmodifiable();
     }
 
-    public ImmutableList<Card> diamonds()
+    public ListIterable<Card> diamonds()
     {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }
 
-    public ImmutableList<Card> hearts()
+    public ListIterable<Card> hearts()
     {
         return this.cardsBySuit.get(Suit.HEARTS);
     }
 
-    public ImmutableList<Card> spades()
+    public ListIterable<Card> spades()
     {
         return this.cardsBySuit.get(Suit.SPADES);
     }
 
-    public ImmutableList<Card> clubs()
+    public ListIterable<Card> clubs()
     {
         return this.cardsBySuit.get(Suit.CLUBS);
     }
@@ -82,12 +85,12 @@ public class EclipseCollectionsDeckOfCardsAsList
         return this.cards.asLazy().collect(Card::getRank).toBag();
     }
 
-    public ImmutableList<Card> getCards()
+    public ListIterable<Card> getCards()
     {
         return this.cards;
     }
 
-    public ImmutableListMultimap<Suit, Card> getCardsBySuit()
+    public ListMultimap<Suit, Card> getCardsBySuit()
     {
         return this.cardsBySuit;
     }
