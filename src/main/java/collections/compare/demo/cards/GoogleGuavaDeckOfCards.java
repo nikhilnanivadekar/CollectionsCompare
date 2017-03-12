@@ -12,13 +12,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Multimaps;
 import com.google.common.collect.Multiset;
 
 public class GoogleGuavaDeckOfCards
@@ -30,9 +28,9 @@ public class GoogleGuavaDeckOfCards
     {
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        Stream<Card> cardStream = suits.stream()
-                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)));
-        this.cards = ImmutableSortedSet.copyOf(cardStream.iterator());
+        this.cards = suits.stream()
+                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
+                .collect(ImmutableSortedSet.toImmutableSortedSet(Comparator.naturalOrder()));
         ImmutableSetMultimap.Builder<Suit, Card> builder =
                 new ImmutableSetMultimap.Builder<Suit, Card>().orderValuesBy(Comparator.naturalOrder());
         this.cards.forEach(card -> builder.put(card.getSuit(), card));
