@@ -2,41 +2,42 @@ package collections.compare.demo.cards;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiMapUtils;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.SetValuedMap;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.multiset.HashMultiSet;
 
-public class ApacheCommonsDeckOfCards
+public class ApacheCommonsDeckOfCardsAsList
 {
-    private SortedSet<Card> cards;
+    private List<Card> cards;
     private MultiValuedMap<Suit, Card> cardsBySuit;
 
-    public ApacheCommonsDeckOfCards()
+    public ApacheCommonsDeckOfCardsAsList()
     {
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         this.cards = suits.stream()
                 .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
+                .sorted()
                 .collect(Collectors.collectingAndThen(
-                        Collectors.toCollection(TreeSet::new),
-                        Collections::unmodifiableSortedSet));
-        SetValuedMap<Suit, Card> cbs = MultiMapUtils.newSetValuedHashMap();
+                        Collectors.toList(),
+                        Collections::unmodifiableList));
+        ListValuedMap<Suit, Card> cbs = MultiMapUtils.newListValuedHashMap();
         this.cards.forEach(card -> cbs.put(card.getSuit(), card));
         this.cardsBySuit = MultiMapUtils.unmodifiableMultiValuedMap(cbs);
     }
@@ -74,24 +75,24 @@ public class ApacheCommonsDeckOfCards
                         Collections::unmodifiableList));
     }
 
-    public SortedSet<Card> diamonds()
+    public List<Card> diamonds()
     {
-        return new TreeSet<>(this.cardsBySuit.get(Suit.DIAMONDS));
+        return this.cardsBySuit.get(Suit.DIAMONDS).stream().collect(Collectors.toList());
     }
 
-    public SortedSet<Card> hearts()
+    public List<Card> hearts()
     {
-        return new TreeSet<>(this.cardsBySuit.get(Suit.HEARTS));
+        return this.cardsBySuit.get(Suit.HEARTS).stream().collect(Collectors.toList());
     }
 
-    public SortedSet<Card> spades()
+    public List<Card> spades()
     {
-        return new TreeSet<>(this.cardsBySuit.get(Suit.SPADES));
+        return this.cardsBySuit.get(Suit.SPADES).stream().collect(Collectors.toList());
     }
 
-    public SortedSet<Card> clubs()
+    public List<Card> clubs()
     {
-        return new TreeSet<>(this.cardsBySuit.get(Suit.CLUBS));
+        return this.cardsBySuit.get(Suit.CLUBS).stream().collect(Collectors.toList());
     }
 
     public Bag<Suit> countsBySuit()
@@ -104,7 +105,7 @@ public class ApacheCommonsDeckOfCards
         return this.cards.stream().map(Card::getRank).collect(Collectors.toCollection(HashMultiSet::new));
     }
 
-    public SortedSet<Card> getCards()
+    public List<Card> getCards()
     {
         return this.cards;
     }
