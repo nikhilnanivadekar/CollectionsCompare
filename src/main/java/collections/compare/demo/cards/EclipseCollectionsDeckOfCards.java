@@ -23,8 +23,9 @@ public class EclipseCollectionsDeckOfCards
     {
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        this.cards = SortedSets.immutable.withAll(LazyIterate
-                .flatCollect(ranks, rank -> LazyIterate.collect(suits, suit ->  new Card(rank, suit))));
+        this.cards = SortedSets.immutable.withAll(
+                LazyIterate.flatCollect(ranks, rank ->
+                        LazyIterate.collect(suits, suit ->  new Card(rank, suit))));
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
