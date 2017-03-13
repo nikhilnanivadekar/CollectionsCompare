@@ -1,4 +1,6 @@
 .idea/**
 .idea/workspace.xml
-.idea/codeStyleSettings.xml
 target/**
+target
+cards/target/**
+cards/target

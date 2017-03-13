@@ -24,10 +24,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="CollectionsCompare" />
+        <module name="cards" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="cards" target="1.8" />
       <module name="CollectionsCompare" target="1.8" />
     </bytecodeTargetLevel>
   </component>

@@ -4,5 +4,5 @@
         "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-
+    <suppress files="[\\/]generated-test-sources[\\/]" checks="[a-zA-Z0-9]*"/>
 </suppressions>
