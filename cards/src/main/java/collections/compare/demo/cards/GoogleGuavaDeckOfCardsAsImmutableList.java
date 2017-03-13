@@ -1,12 +1,5 @@
 package collections.compare.demo.cards;
 
-import com.google.common.base.Function;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.Multiset;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +11,13 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import com.google.common.base.Function;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.Multiset;
 
 public class GoogleGuavaDeckOfCardsAsImmutableList
 {
