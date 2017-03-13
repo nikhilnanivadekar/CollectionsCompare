@@ -25,7 +25,7 @@ public class EclipseCollectionsDeckOfCardsAsReadableList
         this.cards = Lists.mutable.with(
                 suits.stream().flatMap(suit ->
                         ranks.stream().map(rank -> new Card(rank, suit)))
-                .toArray(Card[]::new))
+                        .toArray(Card[]::new))
                 .sortThis()
                 .asUnmodifiable();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
@@ -33,10 +33,12 @@ public class EclipseCollectionsDeckOfCardsAsReadableList
 
     public MutableStack<Card> shuffle(Random random)
     {
-        return this.cards.toList()
+        return this.cards
+                .toList()
                 .shuffleThis(random)
                 .shuffleThis(random)
-                .shuffleThis(random).toStack();
+                .shuffleThis(random)
+                .toStack();
     }
 
     public MutableSet<Card> deal(MutableStack<Card> stack, int count)
