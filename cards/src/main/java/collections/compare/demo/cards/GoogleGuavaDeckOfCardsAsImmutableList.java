@@ -1,24 +1,11 @@
 package collections.compare.demo.cards;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import com.google.common.base.Function;
+import com.google.common.collect.*;
+
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.Multiset;
 
 public class GoogleGuavaDeckOfCardsAsImmutableList
 {
@@ -35,7 +22,8 @@ public class GoogleGuavaDeckOfCardsAsImmutableList
                 .collect(Collectors.collectingAndThen(
                         Collectors.toList(),
                         ImmutableList::copyOf));
-        this.cardsBySuit = Multimaps.index(this.cards, Card::getSuit);
+        //noinspection RedundantCast
+        this.cardsBySuit = Multimaps.index(this.cards, (Function<Card, Suit>) card -> card.getSuit());
     }
 
     public Deque<Card> shuffle(Random random)
