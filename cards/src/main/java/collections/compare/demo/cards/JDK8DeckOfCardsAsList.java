@@ -3,7 +3,6 @@ package collections.compare.demo.cards;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Deque;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -63,6 +62,14 @@ public class JDK8DeckOfCardsAsList {
         Deque<Card> shuffle = this.shuffle(random);
         return IntStream.range(0, hands)
                 .mapToObj(i -> this.deal(shuffle, cardsPerHand))
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        Collections::unmodifiableList));
+    }
+
+    public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand) {
+        return IntStream.range(0, hands)
+                .mapToObj(i -> this.deal(shuffled, cardsPerHand))
                 .collect(Collectors.collectingAndThen(
                         Collectors.toList(),
                         Collections::unmodifiableList));

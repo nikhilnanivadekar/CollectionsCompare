@@ -54,6 +54,13 @@ public class EclipseCollectionsDeckOfCardsAsReadableList {
         return result.asUnmodifiable();
     }
 
+    public ListIterable<Set<Card>> dealHands(MutableStack<Card> shuffled, int hands, int cardsPerHand) {
+        MutableList<Set<Card>> result = Lists.mutable.empty();
+        IntInterval.oneTo(hands)
+                .forEach(i -> result.add(this.deal(shuffled, cardsPerHand)));
+        return result.asUnmodifiable();
+    }
+
     public ListIterable<Card> diamonds() {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }

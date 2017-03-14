@@ -12,7 +12,6 @@ import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.factory.SortedSets;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
-import org.eclipse.collections.impl.utility.LazyIterate;
 
 public class EclipseCollectionsDeckOfCards {
     private ImmutableSortedSet<Card> cards;
@@ -21,9 +20,10 @@ public class EclipseCollectionsDeckOfCards {
     public EclipseCollectionsDeckOfCards() {
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        this.cards = SortedSets.immutable.withAll(
-                LazyIterate.flatCollect(ranks, rank ->
-                        LazyIterate.collect(suits, suit -> new Card(rank, suit))));
+        this.cards = SortedSets.immutable.with(
+                suits.stream().flatMap(suit ->
+                        ranks.stream().map(rank -> new Card(rank, suit)))
+                        .toArray(Card[]::new));
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
@@ -45,6 +45,10 @@ public class EclipseCollectionsDeckOfCards {
     public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
         MutableStack<Card> shuffle = this.shuffle(random);
         return IntInterval.oneTo(hands).collect(i -> this.deal(shuffle, cardsPerHand));
+    }
+
+    public ImmutableList<Set<Card>> dealHands(MutableStack<Card> shuffled, int hands, int cardsPerHand) {
+        return IntInterval.oneTo(hands).collect(i -> this.deal(shuffled, cardsPerHand));
     }
 
     public ImmutableSortedSet<Card> diamonds() {

@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 import javaslang.collection.Stack;
 import org.eclipse.collections.api.block.predicate.Predicate;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.stack.MutableStack;
@@ -107,12 +106,35 @@ public class DeckOfCardsAsListTest {
     @Test
     public void shuffleAndDealHands() {
         ImmutableList<Set<Card>> ec1Hands = this.ecDeck1.shuffleAndDeal(new Random(1), 5, 5);
-        ListIterable<Set<Card>> ec2Hands = this.ecDeck2.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> jdkHands = this.jdkDeck.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> ggHands = this.ggDeck.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> acHands = this.acDeck.shuffleAndDeal(new Random(1), 5, 5);
         javaslang.collection.List<javaslang.collection.Set<Card>> jsHands =
                 this.jsDeck.shuffleAndDeal(new Random(1), 5, 5);
+        Assert.assertEquals(ec1Hands, jdkHands);
+        Assert.assertEquals(jdkHands, ggHands);
+        Assert.assertEquals(ggHands, ec1Hands);
+        Assert.assertEquals(ec1Hands, acHands);
+        Assert.assertEquals(acHands.get(0), jsHands.get(0).toJavaSet());
+        Assert.assertEquals(acHands.get(1), jsHands.get(1).toJavaSet());
+        Assert.assertEquals(acHands.get(2), jsHands.get(2).toJavaSet());
+        Assert.assertEquals(acHands.get(3), jsHands.get(3).toJavaSet());
+        Assert.assertEquals(acHands.get(4), jsHands.get(4).toJavaSet());
+    }
+
+    @Test
+    public void dealHands() {
+        MutableStack<Card> ecShuffled = this.ecDeck1.shuffle(new Random(1));
+        Deque<Card> jdkShuffled = this.jdkDeck.shuffle(new Random(1));
+        Deque<Card> ggShuffled = this.ggDeck.shuffle(new Random(1));
+        Deque<Card> acShuffled = this.acDeck.shuffle(new Random(1));
+        Stack<Card> jsShuffled = this.jsDeck.shuffle(new Random(1));
+        ImmutableList<Set<Card>> ec1Hands = this.ecDeck1.dealHands(ecShuffled, 5, 5);
+        List<Set<Card>> jdkHands = this.jdkDeck.dealHands(jdkShuffled, 5, 5);
+        List<Set<Card>> ggHands = this.ggDeck.dealHands(ggShuffled, 5, 5);
+        List<Set<Card>> acHands = this.acDeck.dealHands(acShuffled, 5, 5);
+        javaslang.collection.List<javaslang.collection.Set<Card>> jsHands =
+                this.jsDeck.dealHands(jsShuffled, 5, 5);
         Assert.assertEquals(ec1Hands, jdkHands);
         Assert.assertEquals(jdkHands, ggHands);
         Assert.assertEquals(ggHands, ec1Hands);

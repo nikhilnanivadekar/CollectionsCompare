@@ -67,6 +67,14 @@ public class JDK8DeckOfCards {
                         Collections::unmodifiableList));
     }
 
+    public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand) {
+        return IntStream.range(0, hands)
+                .mapToObj(i -> this.deal(shuffled, cardsPerHand))
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        Collections::unmodifiableList));
+    }
+
     public SortedSet<Card> diamonds() {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }

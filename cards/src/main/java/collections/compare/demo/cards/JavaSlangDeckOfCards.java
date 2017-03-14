@@ -69,6 +69,17 @@ public class JavaSlangDeckOfCards {
         return list;
     }
 
+    public List<Set<Card>> dealHands(Stack<Card> shuffled, int hands, int cardsPerHand) {
+        List<Set<Card>> list = List.empty();
+        for (int i = 0; i < hands; i++) {
+            Tuple2<Set<Card>, ? extends Stack<Card>> tuple2 =
+                    this.deal(shuffled, cardsPerHand);
+            shuffled = tuple2._2();
+            list = list.append(tuple2._1());
+        }
+        return list;
+    }
+
     public SortedSet<Card> diamonds() {
         return this.cardsBySuit.get(Suit.DIAMONDS).get();
     }
