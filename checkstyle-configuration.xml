@@ -101,15 +101,11 @@
         <module name="ModifierOrder"/>
         <module name="RedundantModifier"/>
 
-        <module name="LeftCurly">
-            <property name="option" value="nl"/>
-        </module>
+        <module name="LeftCurly"/>
 
         <module name="NeedBraces"/>
 
-        <module name="RightCurly">
-            <property name="option" value="alone"/>
-        </module>
+        <module name="RightCurly"/>
 
         <!-- Checks for common coding problems               -->
         <!-- See http://checkstyle.sf.net/config_coding.html -->
@@ -254,11 +250,11 @@
         <property name="message" value="Extra newline."/>
     </module>
 
-<!--
-    <module name="RegexpMultiline">
-        <property name="format" value="\r"/>
-        <property name="message" value="Carriage return."/>
-    </module>
--->
+    <!--
+        <module name="RegexpMultiline">
+            <property name="format" value="\r"/>
+            <property name="message" value="Carriage return."/>
+        </module>
+    -->
 
 </module>

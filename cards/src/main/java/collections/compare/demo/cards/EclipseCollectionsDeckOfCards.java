@@ -14,82 +14,68 @@ import org.eclipse.collections.impl.factory.SortedSets;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
 import org.eclipse.collections.impl.utility.LazyIterate;
 
-public class EclipseCollectionsDeckOfCards
-{
+public class EclipseCollectionsDeckOfCards {
     private ImmutableSortedSet<Card> cards;
     private ImmutableSortedSetMultimap<Suit, Card> cardsBySuit;
 
-    public EclipseCollectionsDeckOfCards()
-    {
+    public EclipseCollectionsDeckOfCards() {
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         this.cards = SortedSets.immutable.withAll(
                 LazyIterate.flatCollect(ranks, rank ->
-                        LazyIterate.collect(suits, suit ->  new Card(rank, suit))));
+                        LazyIterate.collect(suits, suit -> new Card(rank, suit))));
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
-    public MutableStack<Card> shuffle(Random random)
-    {
+    public MutableStack<Card> shuffle(Random random) {
         return this.cards.toList()
                 .shuffleThis(random)
                 .shuffleThis(random)
                 .shuffleThis(random).toStack();
     }
 
-    public MutableSet<Card> deal(MutableStack<Card> stack, int count)
-    {
+    public MutableSet<Card> deal(MutableStack<Card> stack, int count) {
         return stack.pop(count).toSet();
     }
 
-    public Card dealOneCard(MutableStack<Card> stack)
-    {
+    public Card dealOneCard(MutableStack<Card> stack) {
         return stack.pop();
     }
 
-    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
-    {
+    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
         MutableStack<Card> shuffle = this.shuffle(random);
         return IntInterval.oneTo(hands).collect(i -> this.deal(shuffle, cardsPerHand));
     }
 
-    public ImmutableSortedSet<Card> diamonds()
-    {
+    public ImmutableSortedSet<Card> diamonds() {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }
 
-    public ImmutableSortedSet<Card> hearts()
-    {
+    public ImmutableSortedSet<Card> hearts() {
         return this.cardsBySuit.get(Suit.HEARTS);
     }
 
-    public ImmutableSortedSet<Card> spades()
-    {
+    public ImmutableSortedSet<Card> spades() {
         return this.cardsBySuit.get(Suit.SPADES);
     }
 
-    public ImmutableSortedSet<Card> clubs()
-    {
+    public ImmutableSortedSet<Card> clubs() {
         return this.cardsBySuit.get(Suit.CLUBS);
     }
 
-    public Bag<Suit> countsBySuit()
-    {
+    public Bag<Suit> countsBySuit() {
         return this.cards.asLazy().collect(Card::getSuit).toBag();
     }
 
-    public Bag<Rank> countsByRank()
-    {
+    public Bag<Rank> countsByRank() {
         return this.cards.asLazy().collect(Card::getRank).toBag();
     }
 
-    public ImmutableSortedSet<Card> getCards()
-    {
+    public ImmutableSortedSet<Card> getCards() {
         return this.cards;
     }
 
-    public ImmutableSortedSetMultimap<Suit, Card> getCardsBySuit()
-    {
+    public ImmutableSortedSetMultimap<Suit, Card> getCardsBySuit() {
         return this.cardsBySuit;
     }
 }

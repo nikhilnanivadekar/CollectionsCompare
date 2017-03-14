@@ -19,13 +19,11 @@ import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Multiset;
 
-public class GoogleGuavaDeckOfCards
-{
+public class GoogleGuavaDeckOfCards {
     private ImmutableSortedSet<Card> cards;
     private ImmutableSetMultimap<Suit, Card> cardsBySuit;
 
-    public GoogleGuavaDeckOfCards()
-    {
+    public GoogleGuavaDeckOfCards() {
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         this.cards = suits.stream()
@@ -37,8 +35,7 @@ public class GoogleGuavaDeckOfCards
         this.cardsBySuit = builder.build();
     }
 
-    public Deque<Card> shuffle(Random random)
-    {
+    public Deque<Card> shuffle(Random random) {
         List<Card> shuffled = new ArrayList<>(this.cards);
         Collections.shuffle(shuffled, random);
         Collections.shuffle(shuffled, random);
@@ -48,63 +45,52 @@ public class GoogleGuavaDeckOfCards
         return cards;
     }
 
-    public Set<Card> deal(Deque<Card> deque, int count)
-    {
+    public Set<Card> deal(Deque<Card> deque, int count) {
         Set<Card> hand = new HashSet<>();
         IntStream.range(0, count).forEach(i -> hand.add(deque.pop()));
         return hand;
     }
 
-    public Card dealOneCard(Deque<Card> deque)
-    {
+    public Card dealOneCard(Deque<Card> deque) {
         return deque.pop();
     }
 
-    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
-    {
+    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
         Deque<Card> shuffle = this.shuffle(random);
         return IntStream.range(0, hands)
                 .mapToObj(i -> this.deal(shuffle, cardsPerHand))
                 .collect(ImmutableList.toImmutableList());
     }
 
-    public Set<Card> diamonds()
-    {
+    public Set<Card> diamonds() {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }
 
-    public Set<Card> hearts()
-    {
+    public Set<Card> hearts() {
         return this.cardsBySuit.get(Suit.HEARTS);
     }
 
-    public Set<Card> spades()
-    {
+    public Set<Card> spades() {
         return this.cardsBySuit.get(Suit.SPADES);
     }
 
-    public Set<Card> clubs()
-    {
+    public Set<Card> clubs() {
         return this.cardsBySuit.get(Suit.CLUBS);
     }
 
-    public Multiset<Suit> countsBySuit()
-    {
+    public Multiset<Suit> countsBySuit() {
         return this.cards.stream().map(Card::getSuit).collect(Collectors.toCollection(HashMultiset::create));
     }
 
-    public Multiset<Rank> countsByRank()
-    {
+    public Multiset<Rank> countsByRank() {
         return this.cards.stream().map(Card::getRank).collect(Collectors.toCollection(HashMultiset::create));
     }
 
-    public ImmutableSortedSet<Card> getCards()
-    {
+    public ImmutableSortedSet<Card> getCards() {
         return this.cards;
     }
 
-    public ImmutableSetMultimap<Suit, Card> getCardsBySuit()
-    {
+    public ImmutableSetMultimap<Suit, Card> getCardsBySuit() {
         return this.cardsBySuit;
     }
 }

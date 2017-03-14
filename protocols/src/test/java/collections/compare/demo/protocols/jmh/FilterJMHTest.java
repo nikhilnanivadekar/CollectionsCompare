@@ -25,8 +25,7 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class FilterJMHTest
-{
+public class FilterJMHTest {
     private List<Integer> jdkList = new ArrayList<>(Interval.oneTo(100));
     private Set<Integer> jdkSet = new HashSet<>(jdkList);
 
@@ -37,19 +36,17 @@ public class FilterJMHTest
     private javaslang.collection.Set<Integer> jsSet = jsList.toSet();
 
     @Benchmark
-    public void filterJDKLazy()
-    {
+    public void filterJDKLazy() {
         List<Integer> evensList = jdkList.stream().filter(integer -> integer % 2 == 0).collect(Collectors.toList());
         List<Integer> oddsList = jdkList.stream().filter(integer -> integer % 2 == 1).collect(Collectors.toList());
         Set<Integer> evensSet = jdkSet.stream().filter(integer -> integer % 2 == 0).collect(Collectors.toSet());
         Set<Integer> oddsSet = jdkSet.stream().filter(integer -> integer % 2 == 1).collect(Collectors.toSet());
         Assert.assertEquals(evensList.size(), evensSet.size());
         Assert.assertEquals(oddsList.size(), oddsSet.size());
-     }
+    }
 
     @Benchmark
-    public void filterApacheFluentIterable()
-    {
+    public void filterApacheFluentIterable() {
         List<Integer> evensList = FluentIterable.of(jdkList).filter(integer -> integer % 2 == 0).toList();
         List<Integer> oddsList = FluentIterable.of(jdkList).filter(integer -> integer % 2 == 1).toList();
         Set<Integer> evensSet = new HashSet<>();
@@ -61,8 +58,7 @@ public class FilterJMHTest
     }
 
     @Benchmark
-    public void filterGuavaFluentIterable()
-    {
+    public void filterGuavaFluentIterable() {
         List<Integer> evensList =
                 com.google.common.collect.FluentIterable.from(jdkList).filter(integer -> integer % 2 == 0).toList();
         List<Integer> oddsList =
@@ -76,8 +72,7 @@ public class FilterJMHTest
     }
 
     @Benchmark
-    public void filterEclipseCollectionsEager()
-    {
+    public void filterEclipseCollectionsEager() {
         List<Integer> evensList = ecList.select(integer -> integer % 2 == 0);
         List<Integer> oddsList = ecList.select(integer -> integer % 2 == 1);
         Set<Integer> evensSet = ecSet.select(integer -> integer % 2 == 0);
@@ -87,8 +82,7 @@ public class FilterJMHTest
     }
 
     @Benchmark
-    public void filterEclipseCollectionsLazy()
-    {
+    public void filterEclipseCollectionsLazy() {
         List<Integer> evensList = ecList.asLazy().select(integer -> integer % 2 == 0).toList();
         List<Integer> oddsList = ecList.asLazy().select(integer -> integer % 2 == 1).toList();
         Set<Integer> evensSet = ecSet.asLazy().select(integer -> integer % 2 == 0).toSet();
@@ -98,8 +92,7 @@ public class FilterJMHTest
     }
 
     @Benchmark
-    public void filterJavaSlang()
-    {
+    public void filterJavaSlang() {
         javaslang.collection.List<Integer> evensList = jsList.filter(integer -> integer % 2 == 0);
         javaslang.collection.List<Integer> oddsList = jsList.filter(integer -> integer % 2 == 1);
         javaslang.collection.Set<Integer> evensSet = jsSet.filter(integer -> integer % 2 == 0);

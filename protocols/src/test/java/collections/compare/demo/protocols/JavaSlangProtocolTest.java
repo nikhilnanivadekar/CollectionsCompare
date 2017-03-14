@@ -11,14 +11,12 @@ import org.eclipse.collections.impl.factory.Maps;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class JavaSlangProtocolTest
-{
+public class JavaSlangProtocolTest {
     private List<String> list = List.of("one", "two", "three");
     private Set<String> set = list.toSet();
 
     @Test
-    public void filter()
-    {
+    public void filter() {
         Predicate<String> equals = "one"::equals;
         List<String> actualListOne =
                 this.list.filter(equals);
@@ -34,8 +32,7 @@ public class JavaSlangProtocolTest
     }
 
     @Test
-    public void groupBy()
-    {
+    public void groupBy() {
         Map<String, List<String>> groupedList =
                 this.list.groupBy(String::toUpperCase);
         Assert.assertEquals(Maps.mutable.with(

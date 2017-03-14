@@ -1,7 +1,6 @@
 package collections.compare.demo.game;
 
-public enum Outcome
-{
+public enum Outcome {
     CONTINUE,
     WINNER,
     POND_DRY,

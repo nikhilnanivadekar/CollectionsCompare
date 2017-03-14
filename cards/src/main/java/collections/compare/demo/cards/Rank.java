@@ -1,7 +1,6 @@
 package collections.compare.demo.cards;
 
-public enum Rank
-{
+public enum Rank {
     ACE,
     TWO,
     THREE,

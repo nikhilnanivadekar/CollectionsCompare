@@ -27,11 +27,9 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class DeckOfCardsAsListJMHTest
-{
+public class DeckOfCardsAsListJMHTest {
     @Benchmark
-    public List<Set<Card>> dealJDKUnmodifiable()
-    {
+    public List<Set<Card>> dealJDKUnmodifiable() {
         JDK8DeckOfCardsAsList deck = new JDK8DeckOfCardsAsList();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         Assert.assertEquals(5, hands.size());
@@ -39,8 +37,7 @@ public class DeckOfCardsAsListJMHTest
     }
 
     @Benchmark
-    public List<Set<Card>> dealGuavaImmutable()
-    {
+    public List<Set<Card>> dealGuavaImmutable() {
         GoogleGuavaDeckOfCardsAsImmutableList deck = new GoogleGuavaDeckOfCardsAsImmutableList();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         Assert.assertEquals(5, hands.size());
@@ -48,8 +45,7 @@ public class DeckOfCardsAsListJMHTest
     }
 
     @Benchmark
-    public List<Set<Card>> dealApacheUnmodifiable()
-    {
+    public List<Set<Card>> dealApacheUnmodifiable() {
         ApacheCommonsDeckOfCardsAsList deck = new ApacheCommonsDeckOfCardsAsList();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         Assert.assertEquals(5, hands.size());
@@ -57,8 +53,7 @@ public class DeckOfCardsAsListJMHTest
     }
 
     @Benchmark
-    public javaslang.collection.List<javaslang.collection.Set<Card>> dealJavaslang()
-    {
+    public javaslang.collection.List<javaslang.collection.Set<Card>> dealJavaslang() {
         JavaSlangDeckOfCardsAsImmutableList deck = new JavaSlangDeckOfCardsAsImmutableList();
         javaslang.collection.List<javaslang.collection.Set<Card>> hands =
                 deck.shuffleAndDeal(new Random(1), 5, 5);
@@ -67,8 +62,7 @@ public class DeckOfCardsAsListJMHTest
     }
 
     @Benchmark
-    public ImmutableList<Set<Card>> dealECImmutable()
-    {
+    public ImmutableList<Set<Card>> dealECImmutable() {
         EclipseCollectionsDeckOfCardsAsImmutableList deck = new EclipseCollectionsDeckOfCardsAsImmutableList();
         ImmutableList<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         Assert.assertEquals(5, hands.size());
@@ -76,8 +70,7 @@ public class DeckOfCardsAsListJMHTest
     }
 
     @Benchmark
-    public ListIterable<Set<Card>> dealECReadable()
-    {
+    public ListIterable<Set<Card>> dealECReadable() {
         EclipseCollectionsDeckOfCardsAsReadableList deck = new EclipseCollectionsDeckOfCardsAsReadableList();
         ListIterable<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         Assert.assertEquals(5, hands.size());

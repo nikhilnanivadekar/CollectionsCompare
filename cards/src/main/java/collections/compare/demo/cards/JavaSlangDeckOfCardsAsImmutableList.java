@@ -13,13 +13,11 @@ import javaslang.collection.Map;
 import javaslang.collection.Set;
 import javaslang.collection.Stack;
 
-public class JavaSlangDeckOfCardsAsImmutableList
-{
+public class JavaSlangDeckOfCardsAsImmutableList {
     private List<Card> cards;
     private Map<Suit, ? extends List<Card>> cardsBySuit;
 
-    public JavaSlangDeckOfCardsAsImmutableList()
-    {
+    public JavaSlangDeckOfCardsAsImmutableList() {
         EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
         this.cards = List.ofAll(suits)
@@ -28,8 +26,7 @@ public class JavaSlangDeckOfCardsAsImmutableList
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
-    public Stack<Card> shuffle(Random random)
-    {
+    public Stack<Card> shuffle(Random random) {
         java.util.List<Card> shuffled = this.cards.toJavaList();
         Collections.shuffle(shuffled, random);
         Collections.shuffle(shuffled, random);
@@ -37,11 +34,9 @@ public class JavaSlangDeckOfCardsAsImmutableList
         return List.<Card>empty().pushAll(shuffled);
     }
 
-    public Tuple2<Set<Card>, ? extends Stack<Card>> deal(Stack<Card> stack, int count)
-    {
+    public Tuple2<Set<Card>, ? extends Stack<Card>> deal(Stack<Card> stack, int count) {
         Set<Card> hand = HashSet.empty();
-        for (int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             Tuple2<Card, ? extends Stack<Card>> cardTuple2 = stack.pop2();
             stack = cardTuple2._2();
             hand = hand.add(cardTuple2._1());
@@ -49,19 +44,16 @@ public class JavaSlangDeckOfCardsAsImmutableList
         return Tuple.of(hand, stack);
     }
 
-    public Card dealOneCard(Stack<Card> stack)
-    {
+    public Card dealOneCard(Stack<Card> stack) {
         Tuple2<Card, ? extends Stack<Card>> cardTuple2 = stack.pop2();
         stack = cardTuple2._2();
         return cardTuple2._1();
     }
 
-    public List<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
-    {
+    public List<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
         List<Set<Card>> list = List.empty();
         Stack<Card> shuffle = this.shuffle(random);
-        for (int i = 0; i < hands; i++)
-        {
+        for (int i = 0; i < hands; i++) {
             Tuple2<Set<Card>, ? extends Stack<Card>> tuple2 =
                     this.deal(shuffle, cardsPerHand);
             shuffle = tuple2._2();
@@ -70,43 +62,35 @@ public class JavaSlangDeckOfCardsAsImmutableList
         return list;
     }
 
-    public List<Card> diamonds()
-    {
+    public List<Card> diamonds() {
         return this.cardsBySuit.get(Suit.DIAMONDS).get();
     }
 
-    public List<Card> hearts()
-    {
+    public List<Card> hearts() {
         return this.cardsBySuit.get(Suit.HEARTS).get();
     }
 
-    public List<Card> spades()
-    {
+    public List<Card> spades() {
         return this.cardsBySuit.get(Suit.SPADES).get();
     }
 
-    public List<Card> clubs()
-    {
+    public List<Card> clubs() {
         return this.cardsBySuit.get(Suit.CLUBS).get();
     }
 
-    public java.util.Map<Suit, Long> countsBySuit()
-    {
+    public java.util.Map<Suit, Long> countsBySuit() {
         return this.cards.toJavaStream().collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
     }
 
-    public java.util.Map<Rank, Long> countsByRank()
-    {
+    public java.util.Map<Rank, Long> countsByRank() {
         return this.cards.toJavaStream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
     }
 
-    public List<Card> getCards()
-    {
+    public List<Card> getCards() {
         return this.cards;
     }
 
-    public Map<Suit, ? extends List<Card>> getCardsBySuit()
-    {
+    public Map<Suit, ? extends List<Card>> getCardsBySuit() {
         return this.cardsBySuit;
     }
 }
