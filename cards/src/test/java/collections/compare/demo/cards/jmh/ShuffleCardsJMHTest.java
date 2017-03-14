@@ -31,7 +31,6 @@ import org.openjdk.jmh.annotations.State;
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
 public class ShuffleCardsJMHTest {
-
     @State(Scope.Thread)
     public static class Deck {
         public ApacheCommonsDeckOfCards apacheCommonsDeckOfCards = new ApacheCommonsDeckOfCards();
