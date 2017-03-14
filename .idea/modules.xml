@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/CollectionsCompare.iml" filepath="$PROJECT_DIR$/.idea/CollectionsCompare.iml" />
       <module fileurl="file://$PROJECT_DIR$/cards/cards.iml" filepath="$PROJECT_DIR$/cards/cards.iml" />
       <module fileurl="file://$PROJECT_DIR$/maps/maps.iml" filepath="$PROJECT_DIR$/maps/maps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/protocols/protocols.iml" filepath="$PROJECT_DIR$/protocols/protocols.iml" />
     </modules>
   </component>
 </project>
