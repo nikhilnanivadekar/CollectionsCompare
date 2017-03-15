@@ -1,16 +1,10 @@
-package collections.compare.demo.cards.jmh;
+package collections.compare.demo.cards;
 
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import collections.compare.demo.cards.ApacheCommonsDeckOfCards;
-import collections.compare.demo.cards.Card;
-import collections.compare.demo.cards.EclipseCollectionsDeckOfCards;
-import collections.compare.demo.cards.GoogleGuavaDeckOfCards;
-import collections.compare.demo.cards.JDK8DeckOfCards;
-import collections.compare.demo.cards.JavaSlangDeckOfCards;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.Assert;
 import org.openjdk.jmh.annotations.Benchmark;

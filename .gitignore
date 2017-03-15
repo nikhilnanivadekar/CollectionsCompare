@@ -4,6 +4,8 @@ target/**
 target
 cards/target/**
 cards/target
+jmh-tests/target/**
+jmh-tests/target
 maps/target/**
 maps/target
 protocols/target/**

@@ -25,6 +25,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="cards" />
+        <module name="jmh-tests" />
         <module name="maps" />
         <module name="protocols" />
       </profile>
@@ -32,6 +33,7 @@
     <bytecodeTargetLevel target="1.8">
       <module name="cards" target="1.8" />
       <module name="CollectionsCompare" target="1.8" />
+      <module name="jmh-tests" target="1.8" />
       <module name="maps" target="1.8" />
       <module name="protocols" target="1.8" />
     </bytecodeTargetLevel>

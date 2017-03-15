@@ -1,4 +1,4 @@
-package collections.compare.demo.protocols.jmh;
+package collections.compare.demo.protocol;
 
 import java.util.ArrayList;
 import java.util.HashSet;
