@@ -1,4 +1,4 @@
-package collections.compare.demo.demo.cards;
+package collections.compare.demo.cards;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,9 +8,6 @@ import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import collections.compare.demo.cards.Card;
-import collections.compare.demo.cards.Rank;
-import collections.compare.demo.cards.Suit;
 import javaslang.collection.List;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.impl.collector.Collectors2;
