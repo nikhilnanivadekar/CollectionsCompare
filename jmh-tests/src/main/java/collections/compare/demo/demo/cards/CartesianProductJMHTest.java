@@ -1,4 +1,4 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.demo.cards;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,11 +8,13 @@ import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
 import javaslang.collection.List;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.impl.collector.Collectors2;
 import org.eclipse.collections.impl.factory.SortedSets;
-import org.junit.Assert;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -36,7 +38,6 @@ public class CartesianProductJMHTest {
                 .collect(Collectors.collectingAndThen(
                         Collectors.toCollection(TreeSet::new),
                         Collections::unmodifiableSortedSet));
-        Assert.assertEquals(52, set.size());
         return set;
     }
 
@@ -45,7 +46,6 @@ public class CartesianProductJMHTest {
         ImmutableSortedSet<Card> set = ranks.stream()
                 .flatMap(rank -> suits.stream().map(suit -> new Card(rank, suit)))
                 .collect(Collectors2.toImmutableSortedSet());
-        Assert.assertEquals(52, set.size());
         return set;
     }
 
@@ -54,7 +54,6 @@ public class CartesianProductJMHTest {
         ImmutableSortedSet<Card> set = SortedSets.immutable.with(ranks.stream()
                 .flatMap(rank -> suits.stream().map(suit -> new Card(rank, suit)))
                 .toArray(Card[]::new));
-        Assert.assertEquals(52, set.size());
         return set;
     }
 
@@ -63,7 +62,6 @@ public class CartesianProductJMHTest {
         com.google.common.collect.ImmutableSortedSet<Card> set = suits.stream()
                 .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
                 .collect(com.google.common.collect.ImmutableSortedSet.toImmutableSortedSet(Comparator.naturalOrder()));
-        Assert.assertEquals(52, set.size());
         return set;
     }
 
@@ -74,7 +72,6 @@ public class CartesianProductJMHTest {
                 .collect(Collectors.collectingAndThen(
                         Collectors.toCollection(TreeSet::new),
                         Collections::unmodifiableSortedSet));
-        Assert.assertEquals(52, set.size());
         return set;
     }
 
@@ -82,7 +79,6 @@ public class CartesianProductJMHTest {
     public javaslang.collection.SortedSet<Card> dealJavaslang() {
         javaslang.collection.TreeSet<Card> set = javaslang.collection.TreeSet.ofAll(suits)
                 .flatMap(suit -> List.ofAll(ranks).map(rank -> new Card(rank, suit)));
-        Assert.assertEquals(52, set.size());
         return set;
     }
 }
