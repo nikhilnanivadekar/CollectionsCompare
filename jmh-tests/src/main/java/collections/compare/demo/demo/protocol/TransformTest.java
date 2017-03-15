@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import com.google.common.base.Function;
 import org.apache.commons.collections4.FluentIterable;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.set.MutableSet;
@@ -20,6 +21,7 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 
+@SuppressWarnings("RedundantCast")
 @State(Scope.Thread)
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
@@ -85,13 +87,13 @@ public class TransformTest {
 
     @Benchmark
     public int guavaFluentIterable_List(Input input) {
-        List<Integer> evensList = input.guavaFluentList.transform(integer -> integer * 2).toList();
+        List<Integer> evensList = input.guavaFluentList.transform((Function<Integer, Integer>) integer -> integer * 2).toList();
         return evensList.size();
     }
 
     @Benchmark
     public int guavaFluentIterable_Set(Input input) {
-        Set<Integer> evensSet = input.guavaFluentSet.transform(integer -> integer * 2).toSet();
+        Set<Integer> evensSet = input.guavaFluentSet.transform((Function<Integer, Integer>) integer -> integer * 2).toSet();
         return evensSet.size();
     }
 
