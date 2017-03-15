@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.base.Function;
 import org.apache.commons.collections4.FluentIterable;
-import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
@@ -84,7 +83,9 @@ public class TransformTest {
 
     @Benchmark
     public int eclipseCollectionsImmutableSortedSetEager(Input input) {
-        ImmutableList<Integer> evensSet = input.ecImmutableSortedSet.collect(integer -> integer * 2);
+        // Purposely using the target collection variant since other frameworks do not return an immutable collection.
+        // Creating an immutable collection is a O(n) operation, and we are not trying to test that.
+        List<Integer> evensSet = input.ecImmutableSortedSet.collect(integer -> integer * 2, Lists.mutable.empty());
         return evensSet.size();
     }
 
@@ -102,7 +103,7 @@ public class TransformTest {
 
     @Benchmark
     public int eclipseCollectionsImmutableSortedSetLazy(Input input) {
-        Set<Integer> evensList = input.ecImmutableSortedSet.asLazy().collect(integer -> integer * 2).toSortedSet();
+        List<Integer> evensList = input.ecImmutableSortedSet.asLazy().collect(integer -> integer * 2).toList();
         return evensList.size();
     }
 

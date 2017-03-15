@@ -14,6 +14,7 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.factory.SortedSets;
 import org.eclipse.collections.impl.list.Interval;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -81,7 +82,9 @@ public class FilterTest {
 
     @Benchmark
     public int eclipseCollectionsImmutableSortedSetEager(Input input) {
-        ImmutableSortedSet<Integer> evensSet = input.ecImmutableSortedSet.select(integer -> integer % 2 == 0);
+        // Purposely using the target collection variant since other frameworks do not return an immutable collection.
+        // Creating an immutable collection is a O(n) operation, and we are not trying to test that.
+        Set<Integer> evensSet = input.ecImmutableSortedSet.select(integer -> integer % 2 == 0, Sets.mutable.empty());
         return evensSet.size();
     }
 
