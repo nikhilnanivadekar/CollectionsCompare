@@ -36,7 +36,7 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class DealCardsJMHTest {
+public class DealCardsTest {
     @State(Scope.Thread)
     public static class Deck {
         public ApacheCommonsDeckOfCards apacheCommonsDeckOfCards;

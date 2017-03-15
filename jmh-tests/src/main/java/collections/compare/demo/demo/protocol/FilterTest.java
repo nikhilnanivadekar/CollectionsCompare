@@ -24,7 +24,7 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class FilterJMHTest {
+public class FilterTest {
     @State(Scope.Thread)
     public static class Input {
         public List<Integer> jdkList = new ArrayList<>(Interval.oneTo(100));

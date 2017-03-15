@@ -1,12 +1,10 @@
 package collections.compare.demo.demo.cards;
 
-import java.util.Deque;
-import java.util.Random;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import collections.compare.demo.cards.ApacheCommonsDeckOfCards;
 import collections.compare.demo.cards.ApacheCommonsDeckOfCardsAsList;
-import collections.compare.demo.cards.Card;
 import collections.compare.demo.cards.EclipseCollectionsDeckOfCards;
 import collections.compare.demo.cards.EclipseCollectionsDeckOfCardsAsImmutableList;
 import collections.compare.demo.cards.EclipseCollectionsDeckOfCardsAsReadableList;
@@ -16,8 +14,9 @@ import collections.compare.demo.cards.JDK8DeckOfCards;
 import collections.compare.demo.cards.JDK8DeckOfCardsAsList;
 import collections.compare.demo.cards.JavaSlangDeckOfCards;
 import collections.compare.demo.cards.JavaSlangDeckOfCardsAsImmutableList;
-import javaslang.collection.Stack;
-import org.eclipse.collections.api.stack.MutableStack;
+import collections.compare.demo.cards.Suit;
+import com.google.common.collect.Multiset;
+import org.eclipse.collections.api.bag.Bag;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -30,7 +29,7 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class ShuffleCardsJMHTest {
+public class CountsBySuitTest {
     @State(Scope.Thread)
     public static class Deck {
         public ApacheCommonsDeckOfCards apacheCommonsDeckOfCards = new ApacheCommonsDeckOfCards();
@@ -47,57 +46,57 @@ public class ShuffleCardsJMHTest {
     }
 
     @Benchmark
-    public Deque<Card> shuffleApache(Deck deck) {
-        return deck.apacheCommonsDeckOfCards.shuffle(new Random(123456789L));
+    public org.apache.commons.collections4.Bag<Suit> countsBySuitApache(Deck deck) {
+        return deck.apacheCommonsDeckOfCards.countsBySuit();
     }
 
     @Benchmark
-    public Deque<Card> shuffleApacheUnmodifiable(Deck deck) {
-        return deck.apacheCommonsDeckOfCardsAsList.shuffle(new Random(123456789L));
+    public org.apache.commons.collections4.Bag<Suit> countsBySuitApacheUnmodifiable(Deck deck) {
+        return deck.apacheCommonsDeckOfCardsAsList.countsBySuit();
     }
 
     @Benchmark
-    public MutableStack<Card> shuffleEC(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCards.shuffle(new Random(123456789L));
+    public Bag<Suit> countsBySuitEC(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCards.countsBySuit();
     }
 
     @Benchmark
-    public MutableStack<Card> shuffleECImmutable(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
+    public Bag<Suit> countsBySuitECImmutable(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCardsAsImmutableList.countsBySuit();
     }
 
     @Benchmark
-    public MutableStack<Card> shuffleECReadable(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCardsAsReadableList.shuffle(new Random(123456789L));
+    public Bag<Suit> countsBySuitECReadable(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCardsAsReadableList.countsBySuit();
     }
 
     @Benchmark
-    public Deque<Card> shuffleGuava(Deck deck) {
-        return deck.googleGuavaDeckOfCards.shuffle(new Random(123456789L));
+    public Multiset<Suit> countsBySuitGuava(Deck deck) {
+        return deck.googleGuavaDeckOfCards.countsBySuit();
     }
 
     @Benchmark
-    public Deque<Card> shuffleGuavaImmutable(Deck deck) {
-        return deck.googleGuavaDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
+    public Multiset<Suit> countsBySuitGuavaImmutable(Deck deck) {
+        return deck.googleGuavaDeckOfCardsAsImmutableList.countsBySuit();
     }
 
     @Benchmark
-    public Deque<Card> shuffleJDK(Deck deck) {
-        return deck.jdk8DeckOfCards.shuffle(new Random(123456789L));
+    public Map<Suit, Long> countsBySuitJDK(Deck deck) {
+        return deck.jdk8DeckOfCards.countsBySuit();
     }
 
     @Benchmark
-    public Deque<Card> shuffleJDKUnmodifiable(Deck deck) {
-        return deck.jdk8DeckOfCardsAsList.shuffle(new Random(123456789L));
+    public Map<Suit, Long> countsBySuitJDKUnmodifiable(Deck deck) {
+        return deck.jdk8DeckOfCardsAsList.countsBySuit();
     }
 
     @Benchmark
-    public Stack<Card> shuffleJavaslang(Deck deck) {
-        return deck.javaslangDeckOfCards.shuffle(new Random(123456789L));
+    public Map<Suit, Long> countsBySuitJavaslang(Deck deck) {
+        return deck.javaslangDeckOfCards.countsBySuit();
     }
 
     @Benchmark
-    public Stack<Card> shuffleJavaslangImmutable(Deck deck) {
-        return deck.javaslangDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
+    public Map<Suit, Long> countsBySuitJavaslangImmutable(Deck deck) {
+        return deck.javaslangDeckOfCardsAsImmutableList.countsBySuit();
     }
 }

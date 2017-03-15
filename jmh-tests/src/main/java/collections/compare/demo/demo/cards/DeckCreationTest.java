@@ -25,7 +25,7 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class DeckCreationJMHTest {
+public class DeckCreationTest {
     @Benchmark
     public ApacheCommonsDeckOfCards deckApache() {
         return new ApacheCommonsDeckOfCards();

@@ -27,7 +27,7 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class CartesianProductJMHTest {
+public class CartesianProductTest {
     private EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
     private EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
 

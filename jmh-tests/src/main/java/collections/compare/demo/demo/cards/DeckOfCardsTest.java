@@ -24,7 +24,7 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(1)
-public class DeckOfCardsJMHTest {
+public class DeckOfCardsTest {
     @Benchmark
     public List<Set<Card>> dealJDK() {
         JDK8DeckOfCards deck = new JDK8DeckOfCards();
