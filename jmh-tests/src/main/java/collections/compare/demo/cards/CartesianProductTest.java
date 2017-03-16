@@ -90,7 +90,7 @@ public class CartesianProductTest
     }
 
     @Benchmark
-    public javaslang.collection.SortedSet<Card> dealJavaslang()
+    public javaslang.collection.SortedSet<Card> cartesianProductJavaslang()
     {
         javaslang.collection.TreeSet<Card> set = javaslang.collection.TreeSet.ofAll(suits)
                 .flatMap(suit -> List.ofAll(ranks).map(rank -> new Card(rank, suit)));
