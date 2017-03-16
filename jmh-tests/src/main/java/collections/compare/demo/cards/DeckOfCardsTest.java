@@ -17,7 +17,7 @@ import org.openjdk.jmh.annotations.State;
 @State(Scope.Thread)
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
-@Fork(1)
+@Fork(2)
 public class DeckOfCardsTest {
     @Benchmark
     public List<Set<Card>> dealJDK() {
