@@ -42,7 +42,7 @@ public class CartesianProductTest
     }
 
     @Benchmark
-    public ImmutableSortedSet<Card> cartesianProductECImmutableSortedSet()
+    public ImmutableSortedSet<Card> cartesianProductECImmutableSortedSet1()
     {
         ImmutableSortedSet<Card> set = ranks.stream()
                 .flatMap(rank -> suits.stream().map(suit -> new Card(rank, suit)))
@@ -62,10 +62,9 @@ public class CartesianProductTest
     @Benchmark
     public ImmutableSortedSet<Card> cartesianProductECImmutableSortedSet3()
     {
-        ImmutableSortedSet<Card> set = SortedSets.immutable.with(
-                Sets.cartesianProduct(ranks, suits)
-                        .collect(pair -> new Card(pair.getOne(), pair.getTwo()))
-                        .toArray(new Card[52]));
+        ImmutableSortedSet<Card> set = Sets.cartesianProduct(ranks, suits)
+                .collect(pair -> new Card(pair.getOne(), pair.getTwo()))
+                .reduceInPlace(Collectors2.toImmutableSortedSet());
         return set;
     }
 
