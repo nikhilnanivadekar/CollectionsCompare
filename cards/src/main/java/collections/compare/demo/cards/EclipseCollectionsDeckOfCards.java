@@ -43,8 +43,8 @@ public class EclipseCollectionsDeckOfCards {
     }
 
     public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
-        MutableStack<Card> shuffle = this.shuffle(random);
-        return IntInterval.oneTo(hands).collect(i -> this.deal(shuffle, cardsPerHand));
+        MutableStack<Card> shuffled = this.shuffle(random);
+        return this.dealHands(shuffled, hands, cardsPerHand);
     }
 
     public ImmutableList<Set<Card>> dealHands(MutableStack<Card> shuffled, int hands, int cardsPerHand) {

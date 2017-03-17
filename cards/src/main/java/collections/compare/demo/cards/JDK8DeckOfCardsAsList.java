@@ -59,12 +59,8 @@ public class JDK8DeckOfCardsAsList {
     }
 
     public List<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
-        Deque<Card> shuffle = this.shuffle(random);
-        return IntStream.range(0, hands)
-                .mapToObj(i -> this.deal(shuffle, cardsPerHand))
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        Collections::unmodifiableList));
+        Deque<Card> shuffled = this.shuffle(random);
+        return this.dealHands(shuffled, hands, cardsPerHand);
     }
 
     public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand) {

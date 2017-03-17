@@ -57,10 +57,8 @@ public class GoogleGuavaDeckOfCardsAsImmutableList {
     }
 
     public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
-        Deque<Card> shuffle = this.shuffle(random);
-        return IntStream.range(0, hands)
-                .mapToObj(i -> this.deal(shuffle, cardsPerHand))
-                .collect(ImmutableList.toImmutableList());
+        Deque<Card> shuffled = this.shuffle(random);
+        return this.dealHands(shuffled, hands, cardsPerHand);
     }
 
     public ImmutableList<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand) {
