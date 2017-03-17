@@ -20,38 +20,38 @@ import org.openjdk.jmh.annotations.State;
 @Fork(2)
 public class DeckOfCardsTest {
     @Benchmark
-    public List<Set<Card>> dealJDK() {
+    public int dealJDK() {
         JDK8DeckOfCards deck = new JDK8DeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
-        return hands;
+        return hands.size();
     }
 
     @Benchmark
-    public ImmutableList<Set<Card>> dealEC() {
+    public int dealEC() {
         EclipseCollectionsDeckOfCards deck = new EclipseCollectionsDeckOfCards();
         ImmutableList<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
-        return hands;
+        return hands.size();
     }
 
     @Benchmark
-    public List<Set<Card>> dealGuava() {
+    public int dealGuava() {
         GoogleGuavaDeckOfCards deck = new GoogleGuavaDeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
-        return hands;
+        return hands.size();
     }
 
     @Benchmark
-    public List<Set<Card>> dealApache() {
+    public int dealApache() {
         ApacheCommonsDeckOfCards deck = new ApacheCommonsDeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
-        return hands;
+        return hands.size();
     }
 
     @Benchmark
-    public javaslang.collection.List<javaslang.collection.Set<Card>> dealJavaslang() {
+    public int dealJavaslang() {
         JavaSlangDeckOfCards deck = new JavaSlangDeckOfCards();
         javaslang.collection.List<javaslang.collection.Set<Card>> hands =
                 deck.shuffleAndDeal(new Random(1), 5, 5);
-        return hands;
+        return hands.size();
     }
 }

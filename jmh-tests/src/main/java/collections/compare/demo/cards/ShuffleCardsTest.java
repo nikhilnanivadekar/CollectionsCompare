@@ -1,11 +1,8 @@
 package collections.compare.demo.cards;
 
-import java.util.Deque;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import javaslang.collection.Stack;
-import org.eclipse.collections.api.stack.MutableStack;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -35,57 +32,68 @@ public class ShuffleCardsTest {
     }
 
     @Benchmark
-    public Deque<Card> shuffleApache(Deck deck) {
-        return deck.apacheCommonsDeckOfCards.shuffle(new Random(123456789L));
+    public int shuffleApache(Deck deck) {
+        return deck.apacheCommonsDeckOfCards.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public Deque<Card> shuffleApacheUnmodifiable(Deck deck) {
-        return deck.apacheCommonsDeckOfCardsAsList.shuffle(new Random(123456789L));
+    public int shuffleApacheUnmodifiable(Deck deck) {
+        return deck.apacheCommonsDeckOfCardsAsList.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public MutableStack<Card> shuffleEC(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCards.shuffle(new Random(123456789L));
+    public int shuffleEC(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCards.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public MutableStack<Card> shuffleECImmutable(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
+    public int shuffleECImmutable(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCardsAsImmutableList.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public MutableStack<Card> shuffleECReadable(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCardsAsReadableList.shuffle(new Random(123456789L));
+    public int shuffleECReadable(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCardsAsReadableList.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public Deque<Card> shuffleGuava(Deck deck) {
-        return deck.googleGuavaDeckOfCards.shuffle(new Random(123456789L));
+    public int shuffleGuava(Deck deck) {
+        return deck.googleGuavaDeckOfCards.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public Deque<Card> shuffleGuavaImmutable(Deck deck) {
-        return deck.googleGuavaDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
+    public int shuffleGuavaImmutable(Deck deck) {
+        return deck.googleGuavaDeckOfCardsAsImmutableList.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public Deque<Card> shuffleJDK(Deck deck) {
-        return deck.jdk8DeckOfCards.shuffle(new Random(123456789L));
+    public int shuffleJDK(Deck deck) {
+        return deck.jdk8DeckOfCards.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public Deque<Card> shuffleJDKUnmodifiable(Deck deck) {
-        return deck.jdk8DeckOfCardsAsList.shuffle(new Random(123456789L));
+    public int shuffleJDKUnmodifiable(Deck deck) {
+        return deck.jdk8DeckOfCardsAsList.shuffle(new Random(123456789L))
+                .size();
     }
 
     @Benchmark
-    public Stack<Card> shuffleJavaslang(Deck deck) {
-        return deck.javaslangDeckOfCards.shuffle(new Random(123456789L));
+    public boolean shuffleJavaslang(Deck deck) {
+        return deck.javaslangDeckOfCards.shuffle(new Random(123456789L))
+                .isEmpty();
     }
 
     @Benchmark
-    public Stack<Card> shuffleJavaslangImmutable(Deck deck) {
-        return deck.javaslangDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
+    public boolean shuffleJavaslangImmutable(Deck deck) {
+        return deck.javaslangDeckOfCardsAsImmutableList.shuffle(new Random(123456789L))
+                .isEmpty();
     }
 }

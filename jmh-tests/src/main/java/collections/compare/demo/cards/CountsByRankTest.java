@@ -1,11 +1,7 @@
 package collections.compare.demo.cards;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.collect.Multiset;
-import org.apache.commons.collections4.MultiSet;
-import org.eclipse.collections.api.bag.Bag;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -35,57 +31,68 @@ public class CountsByRankTest {
     }
 
     @Benchmark
-    public MultiSet<Rank> countsByRankApache(Deck deck) {
-        return deck.apacheCommonsDeckOfCards.countsByRank();
+    public int countsByRankApache(Deck deck) {
+        return deck.apacheCommonsDeckOfCards.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public MultiSet<Rank> countsByRankApacheUnmodifiable(Deck deck) {
-        return deck.apacheCommonsDeckOfCardsAsList.countsByRank();
+    public int countsByRankApacheUnmodifiable(Deck deck) {
+        return deck.apacheCommonsDeckOfCardsAsList.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Bag<Rank> countsByRankEC(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCards.countsByRank();
+    public int countsByRankEC(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCards.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Bag<Rank> countsByRankECImmutable(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCardsAsImmutableList.countsByRank();
+    public int countsByRankECImmutable(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCardsAsImmutableList.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Bag<Rank> countsByRankECReadable(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCardsAsReadableList.countsByRank();
+    public int countsByRankECReadable(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCardsAsReadableList.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Multiset<Rank> countsByRankGuava(Deck deck) {
-        return deck.googleGuavaDeckOfCards.countsByRank();
+    public int countsByRankGuava(Deck deck) {
+        return deck.googleGuavaDeckOfCards.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Multiset<Rank> countsByRankGuavaImmutable(Deck deck) {
-        return deck.googleGuavaDeckOfCardsAsImmutableList.countsByRank();
+    public int countsByRankGuavaImmutable(Deck deck) {
+        return deck.googleGuavaDeckOfCardsAsImmutableList.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Map<Rank, Long> countsByRankJDK(Deck deck) {
-        return deck.jdk8DeckOfCards.countsByRank();
+    public int countsByRankJDK(Deck deck) {
+        return deck.jdk8DeckOfCards.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Map<Rank, Long> countsByRankJDKUnmodifiable(Deck deck) {
-        return deck.jdk8DeckOfCardsAsList.countsByRank();
+    public int countsByRankJDKUnmodifiable(Deck deck) {
+        return deck.jdk8DeckOfCardsAsList.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Map<Rank, Long> countsByRankJavaslang(Deck deck) {
-        return deck.javaslangDeckOfCards.countsByRank();
+    public int countsByRankJavaslang(Deck deck) {
+        return deck.javaslangDeckOfCards.countsByRank()
+                .size();
     }
 
     @Benchmark
-    public Map<Rank, Long> countsByRankJavaslangImmutable(Deck deck) {
-        return deck.javaslangDeckOfCardsAsImmutableList.countsByRank();
+    public int countsByRankJavaslangImmutable(Deck deck) {
+        return deck.javaslangDeckOfCardsAsImmutableList.countsByRank()
+                .size();
     }
 }

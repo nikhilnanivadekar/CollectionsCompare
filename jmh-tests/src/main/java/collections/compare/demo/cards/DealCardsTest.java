@@ -1,14 +1,10 @@
 package collections.compare.demo.cards;
 
 import java.util.Deque;
-import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javaslang.collection.Stack;
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -80,57 +76,68 @@ public class DealCardsTest {
     }
 
     @Benchmark
-    public List<Set<Card>> dealApache(Deck deck) {
-        return deck.apacheCommonsDeckOfCards.dealHands(deck.shuffledApacheCommonsDeckOfCards, 5, 5);
+    public int dealApache(Deck deck) {
+        return deck.apacheCommonsDeckOfCards.dealHands(deck.shuffledApacheCommonsDeckOfCards, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public List<Set<Card>> dealApacheUnmodifiable(Deck deck) {
-        return deck.apacheCommonsDeckOfCardsAsList.dealHands(deck.shuffledApachedCommonsDeckOfCardsAsList, 5, 5);
+    public int dealApacheUnmodifiable(Deck deck) {
+        return deck.apacheCommonsDeckOfCardsAsList.dealHands(deck.shuffledApachedCommonsDeckOfCardsAsList, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public ImmutableList<Set<Card>> dealEC(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCards.dealHands(deck.shuffledEclipseCollectionsDeckOfCards, 5, 5);
+    public int dealEC(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCards.dealHands(deck.shuffledEclipseCollectionsDeckOfCards, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public ImmutableList<Set<Card>> dealECImmutable(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCardsAsImmutableList.dealHands(deck.shuffledEclipseCollectionsDeckOfCardsAsImmutableList, 5, 5);
+    public int dealECImmutable(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCardsAsImmutableList.dealHands(deck.shuffledEclipseCollectionsDeckOfCardsAsImmutableList, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public ListIterable<Set<Card>> dealECReadable(Deck deck) {
-        return deck.eclipseCollectionsDeckOfCardsAsReadableList.dealHands(deck.shuffledEclipseCollectionsDeckOfCardsAsReadableList, 5, 5);
+    public int dealECReadable(Deck deck) {
+        return deck.eclipseCollectionsDeckOfCardsAsReadableList.dealHands(deck.shuffledEclipseCollectionsDeckOfCardsAsReadableList, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public com.google.common.collect.ImmutableList<Set<Card>> dealGuava(Deck deck) {
-        return deck.googleGuavaDeckOfCards.dealHands(deck.shuffledGoogleGuavaDeckOfCards, 5, 5);
+    public int dealGuava(Deck deck) {
+        return deck.googleGuavaDeckOfCards.dealHands(deck.shuffledGoogleGuavaDeckOfCards, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public com.google.common.collect.ImmutableList<Set<Card>> dealGuavaImmutable(Deck deck) {
-        return deck.googleGuavaDeckOfCardsAsImmutableList.dealHands(deck.shuffledGoogleGuavaDeckOfCardsAsImmutableList, 5, 5);
+    public int dealGuavaImmutable(Deck deck) {
+        return deck.googleGuavaDeckOfCardsAsImmutableList.dealHands(deck.shuffledGoogleGuavaDeckOfCardsAsImmutableList, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public List<Set<Card>> dealJDK(Deck deck) {
-        return deck.jdk8DeckOfCards.dealHands(deck.shuffledJdk8DeckOfCards, 5, 5);
+    public int dealJDK(Deck deck) {
+        return deck.jdk8DeckOfCards.dealHands(deck.shuffledJdk8DeckOfCards, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public List<Set<Card>> dealJDKUnmodifiable(Deck deck) {
-        return deck.jdk8DeckOfCardsAsList.dealHands(deck.shuffledJdk8DeckOfCardsAsList, 5, 5);
+    public int dealJDKUnmodifiable(Deck deck) {
+        return deck.jdk8DeckOfCardsAsList.dealHands(deck.shuffledJdk8DeckOfCardsAsList, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public javaslang.collection.List<javaslang.collection.Set<Card>> dealJavaslang(Deck deck) {
-        return deck.javaslangDeckOfCards.dealHands(deck.shuffledJavaslangDeckOfCards, 5, 5);
+    public int dealJavaslang(Deck deck) {
+        return deck.javaslangDeckOfCards.dealHands(deck.shuffledJavaslangDeckOfCards, 5, 5)
+                .size();
     }
 
     @Benchmark
-    public javaslang.collection.List<javaslang.collection.Set<Card>> dealJavaslangImmutable(Deck deck) {
-        return deck.javaslangDeckOfCardsAsImmutableList.dealHands(deck.shuffledJavaslangDeckOfCardsAsImmutableList, 5, 5);
+    public int dealJavaslangImmutable(Deck deck) {
+        return deck.javaslangDeckOfCardsAsImmutableList.dealHands(deck.shuffledJavaslangDeckOfCardsAsImmutableList, 5, 5)
+                .size();
     }
 }
