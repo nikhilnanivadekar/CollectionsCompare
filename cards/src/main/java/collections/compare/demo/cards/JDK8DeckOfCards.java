@@ -92,11 +92,19 @@ public class JDK8DeckOfCards {
     }
 
     public Map<Suit, Long> countsBySuit() {
-        return this.cards.stream().collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
+        return this.cards.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Card::getSuit,
+                                Collectors.counting()));
     }
 
     public Map<Rank, Long> countsByRank() {
-        return this.cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
+        return this.cards.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Card::getRank,
+                                Collectors.counting()));
     }
 
     public SortedSet<Card> getCards() {

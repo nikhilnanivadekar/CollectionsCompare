@@ -97,11 +97,17 @@ public class JavaSlangDeckOfCards {
     }
 
     public java.util.Map<Suit, Long> countsBySuit() {
-        return this.cards.toJavaStream().collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
+        return this.cards.collect(
+                Collectors.groupingBy(
+                        Card::getSuit,
+                        Collectors.counting()));
     }
 
     public java.util.Map<Rank, Long> countsByRank() {
-        return this.cards.toJavaStream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
+        return this.cards.collect(
+                Collectors.groupingBy(
+                        Card::getRank,
+                        Collectors.counting()));
     }
 
     public SortedSet<Card> getCards() {

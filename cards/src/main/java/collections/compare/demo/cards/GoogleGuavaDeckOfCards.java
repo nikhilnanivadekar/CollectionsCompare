@@ -85,11 +85,15 @@ public class GoogleGuavaDeckOfCards {
     }
 
     public Multiset<Suit> countsBySuit() {
-        return this.cards.stream().map(Card::getSuit).collect(Collectors.toCollection(HashMultiset::create));
+        return this.cards.stream()
+                .map(Card::getSuit)
+                .collect(Collectors.toCollection(HashMultiset::create));
     }
 
     public Multiset<Rank> countsByRank() {
-        return this.cards.stream().map(Card::getRank).collect(Collectors.toCollection(HashMultiset::create));
+        return this.cards.stream()
+                .map(Card::getRank)
+                .collect(Collectors.toCollection(HashMultiset::create));
     }
 
     public ImmutableSortedSet<Card> getCards() {

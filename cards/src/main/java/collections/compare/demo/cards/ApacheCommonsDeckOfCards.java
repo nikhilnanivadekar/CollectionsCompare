@@ -93,11 +93,15 @@ public class ApacheCommonsDeckOfCards {
     }
 
     public Bag<Suit> countsBySuit() {
-        return this.cards.stream().map(Card::getSuit).collect(Collectors.toCollection(HashBag::new));
+        return this.cards.stream()
+                .map(Card::getSuit)
+                .collect(Collectors.toCollection(HashBag::new));
     }
 
     public MultiSet<Rank> countsByRank() {
-        return this.cards.stream().map(Card::getRank).collect(Collectors.toCollection(HashMultiSet::new));
+        return this.cards.stream()
+                .map(Card::getRank)
+                .collect(Collectors.toCollection(HashMultiSet::new));
     }
 
     public SortedSet<Card> getCards() {

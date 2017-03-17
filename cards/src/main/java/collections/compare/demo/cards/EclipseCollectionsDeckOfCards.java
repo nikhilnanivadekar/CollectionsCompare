@@ -68,11 +68,15 @@ public class EclipseCollectionsDeckOfCards {
     }
 
     public Bag<Suit> countsBySuit() {
-        return this.cards.asLazy().collect(Card::getSuit).toBag();
+        return this.cards.asLazy()
+                .collect(Card::getSuit)
+                .toBag();
     }
 
     public Bag<Rank> countsByRank() {
-        return this.cards.asLazy().collect(Card::getRank).toBag();
+        return this.cards.asLazy()
+                .collect(Card::getRank)
+                .toBag();
     }
 
     public ImmutableSortedSet<Card> getCards() {
