@@ -62,7 +62,10 @@ public class JavaSlangDeckOfCards {
         return this.dealHands(shuffled, hands, cardsPerHand);
     }
 
-    public List<Set<Card>> dealHands(Stack<Card> shuffled, int hands, int cardsPerHand) {
+    public List<Set<Card>> dealHands(
+            Stack<Card> shuffled,
+            int hands,
+            int cardsPerHand) {
         List<Set<Card>> list = List.empty();
         for (int i = 0; i < hands; i++) {
             Tuple2<Set<Card>, ? extends Stack<Card>> tuple2 =

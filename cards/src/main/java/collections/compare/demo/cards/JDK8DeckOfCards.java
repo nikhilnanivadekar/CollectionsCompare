@@ -63,7 +63,10 @@ public class JDK8DeckOfCards {
         return this.dealHands(shuffled, hands, cardsPerHand);
     }
 
-    public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand) {
+    public List<Set<Card>> dealHands(
+            Deque<Card> shuffled,
+            int hands,
+            int cardsPerHand) {
         return IntStream.range(0, hands)
                 .mapToObj(i -> this.deal(shuffled, cardsPerHand))
                 .collect(Collectors.collectingAndThen(
