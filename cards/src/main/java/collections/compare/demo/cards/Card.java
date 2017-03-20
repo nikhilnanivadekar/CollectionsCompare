@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import javaslang.Function2;
+import org.eclipse.collections.api.block.function.Function2;
 
 public class Card implements Comparable<Card> {
     private final Rank rank;
@@ -16,8 +16,7 @@ public class Card implements Comparable<Card> {
         this.suit = suit;
     }
 
-    public static Stream<Card> streamCards()
-    {
+    public static Stream<Card> streamCards() {
         return Card.cartesianProduct(
                 EnumSet.allOf(Rank.class),
                 EnumSet.allOf(Suit.class),
