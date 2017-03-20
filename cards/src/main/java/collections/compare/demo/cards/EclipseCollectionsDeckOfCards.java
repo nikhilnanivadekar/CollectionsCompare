@@ -3,14 +3,19 @@ package collections.compare.demo.cards;
 import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collector;
 
 import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
+import org.eclipse.collections.api.set.sorted.MutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
+import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.SortedSets;
+import org.eclipse.collections.impl.list.mutable.FastList;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
 
 public class EclipseCollectionsDeckOfCards {
@@ -18,11 +23,8 @@ public class EclipseCollectionsDeckOfCards {
     private ImmutableSortedSetMultimap<Suit, Card> cardsBySuit;
 
     public EclipseCollectionsDeckOfCards() {
-        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         this.cards = SortedSets.immutable.with(
-                suits.stream().flatMap(suit ->
-                        ranks.stream().map(rank -> new Card(rank, suit)))
+                Card.streamCards()
                         .toArray(Card[]::new));
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }

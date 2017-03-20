@@ -24,10 +24,7 @@ public class GoogleGuavaDeckOfCards {
     private ImmutableSetMultimap<Suit, Card> cardsBySuit;
 
     public GoogleGuavaDeckOfCards() {
-        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        this.cards = suits.stream()
-                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
+        this.cards = Card.streamCards()
                 .collect(ImmutableSortedSet.toImmutableSortedSet(Comparator.naturalOrder()));
         ImmutableSetMultimap.Builder<Suit, Card> builder =
                 new ImmutableSetMultimap.Builder<Suit, Card>().orderValuesBy(Comparator.naturalOrder());

@@ -1,6 +1,11 @@
 package collections.compare.demo.cards;
 
 import java.util.Comparator;
+import java.util.EnumSet;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import javaslang.Function2;
 
 public class Card implements Comparable<Card> {
     private final Rank rank;
@@ -9,6 +14,20 @@ public class Card implements Comparable<Card> {
     public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
+    }
+
+    public static Stream<Card> streamCards()
+    {
+        return Card.cartesianProduct(
+                EnumSet.allOf(Rank.class),
+                EnumSet.allOf(Suit.class),
+                Card::new);
+    }
+
+    private static <A, B, C> Stream<C> cartesianProduct(Set<A> set1, Set<B> set2, Function2<A, B, C> function)
+    {
+        return set1.stream().flatMap(first ->
+                set2.stream().map(second -> function.apply(first, second)));
     }
 
     public Rank getRank() {

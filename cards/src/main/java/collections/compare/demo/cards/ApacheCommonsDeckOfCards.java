@@ -27,10 +27,7 @@ public class ApacheCommonsDeckOfCards {
     private MultiValuedMap<Suit, Card> cardsBySuit;
 
     public ApacheCommonsDeckOfCards() {
-        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        this.cards = suits.stream()
-                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
+        this.cards = Card.streamCards()
                 .collect(Collectors.collectingAndThen(
                         Collectors.toCollection(TreeSet::new),
                         Collections::unmodifiableSortedSet));

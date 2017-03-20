@@ -20,15 +20,12 @@ public class JavaSlangDeckOfCards {
     private Map<Suit, ? extends SortedSet<Card>> cardsBySuit;
 
     public JavaSlangDeckOfCards() {
-        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        this.cards = TreeSet.ofAll(suits)
-                .flatMap(suit -> List.ofAll(ranks).map(rank -> new Card(rank, suit)));
+        this.cards = Card.streamCards().collect(TreeSet.collector());
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
     public Stack<Card> shuffle(Random random) {
-        // Unfortunatley shuffle does not take Random as a parameter
+        // Unfortunately shuffle does not take Random as a parameter
         // so can't be easily tested
         //        return this.cards.toList()
         //                .shuffle()
