@@ -23,8 +23,7 @@ public class Card implements Comparable<Card> {
                 Card::new);
     }
 
-    private static <A, B, C> Stream<C> cartesianProduct(Set<A> set1, Set<B> set2, Function2<A, B, C> function)
-    {
+    private static <A, B, C> Stream<C> cartesianProduct(Set<A> set1, Set<B> set2, Function2<A, B, C> function) {
         return set1.stream().flatMap(first ->
                 set2.stream().map(second -> function.apply(first, second)));
     }
