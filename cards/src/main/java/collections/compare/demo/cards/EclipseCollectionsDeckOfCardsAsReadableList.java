@@ -18,11 +18,8 @@ public class EclipseCollectionsDeckOfCardsAsReadableList {
     private ListMultimap<Suit, Card> cardsBySuit;
 
     public EclipseCollectionsDeckOfCardsAsReadableList() {
-        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
         this.cards = Lists.mutable.with(
-                suits.stream().flatMap(suit ->
-                        ranks.stream().map(rank -> new Card(rank, suit)))
+                Card.streamCards()
                         .toArray(Card[]::new))
                 .sortThis()
                 .asUnmodifiable();

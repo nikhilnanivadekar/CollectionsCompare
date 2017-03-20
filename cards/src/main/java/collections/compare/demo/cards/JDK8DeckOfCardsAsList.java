@@ -19,10 +19,7 @@ public class JDK8DeckOfCardsAsList {
     private Map<Suit, List<Card>> cardsBySuit;
 
     public JDK8DeckOfCardsAsList() {
-        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        this.cards = suits.stream()
-                .flatMap(suit -> ranks.stream().map(rank -> new Card(rank, suit)))
+        this.cards = Card.streamCards()
                 .sorted()
                 .collect(Collectors.collectingAndThen(
                         Collectors.toList(),

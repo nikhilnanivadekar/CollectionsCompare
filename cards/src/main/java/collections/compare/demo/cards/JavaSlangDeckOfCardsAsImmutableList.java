@@ -18,10 +18,8 @@ public class JavaSlangDeckOfCardsAsImmutableList {
     private Map<Suit, ? extends List<Card>> cardsBySuit;
 
     public JavaSlangDeckOfCardsAsImmutableList() {
-        EnumSet<Suit> suits = EnumSet.allOf(Suit.class);
-        EnumSet<Rank> ranks = EnumSet.allOf(Rank.class);
-        this.cards = List.ofAll(suits)
-                .flatMap(suit -> List.ofAll(ranks).map(rank -> new Card(rank, suit)))
+        this.cards = Card.streamCards()
+                .collect(List.collector())
                 .sorted();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }

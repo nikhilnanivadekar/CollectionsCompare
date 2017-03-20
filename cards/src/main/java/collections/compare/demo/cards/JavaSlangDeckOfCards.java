@@ -20,7 +20,8 @@ public class JavaSlangDeckOfCards {
     private Map<Suit, ? extends SortedSet<Card>> cardsBySuit;
 
     public JavaSlangDeckOfCards() {
-        this.cards = Card.streamCards().collect(TreeSet.collector());
+        this.cards = Card.streamCards()
+                .collect(TreeSet.collector());
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
