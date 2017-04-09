@@ -17,13 +17,15 @@ import org.eclipse.collections.impl.factory.Sets;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class EclipseCollectionsProtocolTest {
+public class EclipseCollectionsProtocolTest
+{
     private MutableList<String> list = Lists.mutable.with("one", "two", "three");
     private MutableSet<String> set = Sets.mutable.with("one", "two", "three");
     private MutableBag<String> bag = Bags.mutable.with("one", "two", "three");
 
     @Test
-    public void filter() {
+    public void filter()
+    {
         // extends java.util.function.Predicate
         Predicate<String> equals = "one"::equals;
         MutableList<String> actualListOne =
@@ -44,7 +46,8 @@ public class EclipseCollectionsProtocolTest {
     }
 
     @Test
-    public void groupBy() {
+    public void groupBy()
+    {
         MutableListMultimap<String, String> groupedList =
                 this.list.groupBy(String::toUpperCase);
         MutableListMultimap<String, String> expectedGroupedList =

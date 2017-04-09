@@ -14,59 +14,71 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class DeckCreationTest {
+public class DeckCreationTest
+{
     @Benchmark
-    public ApacheCommonsDeckOfCards deckApache() {
+    public ApacheCommonsDeckOfCards deckApache()
+    {
         return new ApacheCommonsDeckOfCards();
     }
 
     @Benchmark
-    public ApacheCommonsDeckOfCardsAsList deckApacheUnmodifiable() {
+    public ApacheCommonsDeckOfCardsAsList deckApacheUnmodifiable()
+    {
         return new ApacheCommonsDeckOfCardsAsList();
     }
 
     @Benchmark
-    public EclipseCollectionsDeckOfCards deckEC() {
+    public EclipseCollectionsDeckOfCards deckEC()
+    {
         return new EclipseCollectionsDeckOfCards();
     }
 
     @Benchmark
-    public EclipseCollectionsDeckOfCardsAsImmutableList deckECImmutable() {
+    public EclipseCollectionsDeckOfCardsAsImmutableList deckECImmutable()
+    {
         return new EclipseCollectionsDeckOfCardsAsImmutableList();
     }
 
     @Benchmark
-    public EclipseCollectionsDeckOfCardsAsReadableList deckECReadable() {
+    public EclipseCollectionsDeckOfCardsAsReadableList deckECReadable()
+    {
         return new EclipseCollectionsDeckOfCardsAsReadableList();
     }
 
     @Benchmark
-    public GoogleGuavaDeckOfCards deckGuava() {
+    public GoogleGuavaDeckOfCards deckGuava()
+    {
         return new GoogleGuavaDeckOfCards();
     }
 
     @Benchmark
-    public GoogleGuavaDeckOfCardsAsImmutableList deckGuavaImmutable() {
+    public GoogleGuavaDeckOfCardsAsImmutableList deckGuavaImmutable()
+    {
         return new GoogleGuavaDeckOfCardsAsImmutableList();
     }
 
     @Benchmark
-    public JDK8DeckOfCards deckJDK() {
+    public JDK8DeckOfCards deckJDK()
+    {
         return new JDK8DeckOfCards();
     }
 
     @Benchmark
-    public JDK8DeckOfCardsAsList deckJDKUnmodifiable() {
+    public JDK8DeckOfCardsAsList deckJDKUnmodifiable()
+    {
         return new JDK8DeckOfCardsAsList();
     }
 
     @Benchmark
-    public JavaSlangDeckOfCards deckJavaslang() {
+    public JavaSlangDeckOfCards deckJavaslang()
+    {
         return new JavaSlangDeckOfCards();
     }
 
     @Benchmark
-    public JavaSlangDeckOfCardsAsImmutableList deckJavaslangImmutable() {
+    public JavaSlangDeckOfCardsAsImmutableList deckJavaslangImmutable()
+    {
         return new JavaSlangDeckOfCardsAsImmutableList();
     }
 }

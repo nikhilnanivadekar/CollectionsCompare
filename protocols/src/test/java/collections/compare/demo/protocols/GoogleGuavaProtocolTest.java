@@ -22,13 +22,15 @@ import com.google.common.collect.Sets;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GoogleGuavaProtocolTest {
+public class GoogleGuavaProtocolTest
+{
     private List<String> list = Lists.newArrayList("one", "two", "three");
     private Set<String> set = Sets.newHashSet("one", "two", "three");
     private Multiset<String> multiset = HashMultiset.create(Lists.newArrayList("one", "two", "three"));
 
     @Test
-    public void filter() {
+    public void filter()
+    {
         // extends java.util.function.Predicate
         Predicate<String> equals = "one"::equals;
         ImmutableList<String> actualListOne =
@@ -49,7 +51,8 @@ public class GoogleGuavaProtocolTest {
     }
 
     @Test
-    public void groupBy() {
+    public void groupBy()
+    {
         ListMultimap<String, String> groupedList = this.list.stream().collect(
                 Multimaps.toMultimap(
                         String::toUpperCase,

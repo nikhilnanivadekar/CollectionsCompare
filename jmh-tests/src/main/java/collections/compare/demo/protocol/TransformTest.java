@@ -30,9 +30,11 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class TransformTest {
+public class TransformTest
+{
     @State(Scope.Thread)
-    public static class Input {
+    public static class Input
+    {
         public List<Integer> jdkList = new ArrayList<>(Interval.oneTo(100));
         public Set<Integer> jdkSet = new HashSet<>(jdkList);
         public SortedSet<Integer> jdkSortedSet = new TreeSet<>(jdkList);
@@ -57,32 +59,37 @@ public class TransformTest {
     }
 
     @Benchmark
-    public int apacheFluentIterable_List(Input input) {
+    public int apacheFluentIterable_List(Input input)
+    {
         List<Integer> evensList = input.apacheFluentList.transform(integer -> integer * 2).toList();
         return evensList.size();
     }
 
     @Benchmark
-    public int apacheFluentIterable_Set(Input input) {
+    public int apacheFluentIterable_Set(Input input)
+    {
         Set<Integer> evensSet = new HashSet<>();
         input.apacheFluentSet.transform(integer -> integer * 2).copyInto(evensSet);
         return evensSet.size();
     }
 
     @Benchmark
-    public int eclipseCollectionsListEager(Input input) {
+    public int eclipseCollectionsListEager(Input input)
+    {
         List<Integer> evensList = input.ecList.collect(integer -> integer * 2);
         return evensList.size();
     }
 
     @Benchmark
-    public int eclipseCollectionsSetEager(Input input) {
+    public int eclipseCollectionsSetEager(Input input)
+    {
         Set<Integer> evensSet = input.ecSet.collect(integer -> integer * 2);
         return evensSet.size();
     }
 
     @Benchmark
-    public int eclipseCollectionsImmutableSortedSetEager(Input input) {
+    public int eclipseCollectionsImmutableSortedSetEager(Input input)
+    {
         // Purposely using the target collection variant since other frameworks do not return an immutable collection.
         // Creating an immutable collection is a O(n) operation, and we are not trying to test that.
         List<Integer> evensSet = input.ecImmutableSortedSet.collect(integer -> integer * 2, Lists.mutable.empty());
@@ -90,73 +97,85 @@ public class TransformTest {
     }
 
     @Benchmark
-    public int eclipseCollectionsListLazy(Input input) {
+    public int eclipseCollectionsListLazy(Input input)
+    {
         List<Integer> evensList = input.ecList.asLazy().collect(integer -> integer * 2).toList();
         return evensList.size();
     }
 
     @Benchmark
-    public int eclipseCollectionsSetLazy(Input input) {
+    public int eclipseCollectionsSetLazy(Input input)
+    {
         Set<Integer> evensList = input.ecSet.asLazy().collect(integer -> integer * 2).toSet();
         return evensList.size();
     }
 
     @Benchmark
-    public int eclipseCollectionsImmutableSortedSetLazy(Input input) {
+    public int eclipseCollectionsImmutableSortedSetLazy(Input input)
+    {
         List<Integer> evensList = input.ecImmutableSortedSet.asLazy().collect(integer -> integer * 2).toList();
         return evensList.size();
     }
 
     @Benchmark
-    public int guavaFluentIterable_List(Input input) {
+    public int guavaFluentIterable_List(Input input)
+    {
         List<Integer> evensList = input.guavaFluentList.transform((Function<Integer, Integer>) integer -> integer * 2).toList();
         return evensList.size();
     }
 
     @Benchmark
-    public int guavaFluentIterable_Set(Input input) {
+    public int guavaFluentIterable_Set(Input input)
+    {
         Set<Integer> evensSet = input.guavaFluentSet.transform((Function<Integer, Integer>) integer -> integer * 2).toSet();
         return evensSet.size();
     }
 
     @Benchmark
-    public int guavaImmutableSortedSet(Input input) {
+    public int guavaImmutableSortedSet(Input input)
+    {
         List<Integer> evensSet = input.guavaImmutableSortedSet.stream().map((Function<Integer, Integer>) integer -> integer * 2).collect(Collectors.toList());
         return evensSet.size();
     }
 
     @Benchmark
-    public int jdkListLazy(Input input) {
+    public int jdkListLazy(Input input)
+    {
         List<Integer> evensList = input.jdkList.stream().map(integer -> integer * 2).collect(Collectors.toList());
         return evensList.size();
     }
 
     @Benchmark
-    public int jdkSetLazy(Input input) {
+    public int jdkSetLazy(Input input)
+    {
         Set<Integer> evensSet = input.jdkSet.stream().map(integer -> integer * 2).collect(Collectors.toSet());
         return evensSet.size();
     }
 
     @Benchmark
-    public int jdkSortedSetLazy(Input input) {
+    public int jdkSortedSetLazy(Input input)
+    {
         Set<Integer> evensSet = input.jdkSortedSet.stream().map(integer -> integer * 2).collect(Collectors.toSet());
         return evensSet.size();
     }
 
     @Benchmark
-    public int javaSlangList(Input input) {
+    public int javaSlangList(Input input)
+    {
         javaslang.collection.List<Integer> evensList = input.jsList.map(integer -> integer * 2);
         return evensList.size();
     }
 
     @Benchmark
-    public int javaSlangSet(Input input) {
+    public int javaSlangSet(Input input)
+    {
         javaslang.collection.Set<Integer> evensSet = input.jsSet.map(integer -> integer * 2);
         return evensSet.size();
     }
 
     @Benchmark
-    public int javaSlangSortedSet(Input input) {
+    public int javaSlangSortedSet(Input input)
+    {
         javaslang.collection.TreeSet<Integer> evensSet = input.jsSortedSet.map(integer -> integer * 2);
         return evensSet.size();
     }

@@ -4,7 +4,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +13,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class JDK8DeckOfCardsAsList {
+public class JDK8DeckOfCardsAsList
+{
     private List<Card> cards;
     private Map<Suit, List<Card>> cardsBySuit;
 
-    public JDK8DeckOfCardsAsList() {
+    public JDK8DeckOfCardsAsList()
+    {
         this.cards = Card.streamCards()
                 .sorted()
                 .collect(Collectors.collectingAndThen(
@@ -35,7 +36,8 @@ public class JDK8DeckOfCardsAsList {
                         Collections::unmodifiableMap));
     }
 
-    public Deque<Card> shuffle(Random random) {
+    public Deque<Card> shuffle(Random random)
+    {
         List<Card> shuffled = new ArrayList<>(this.cards);
         Collections.shuffle(shuffled, random);
         Collections.shuffle(shuffled, random);
@@ -45,22 +47,26 @@ public class JDK8DeckOfCardsAsList {
         return cards;
     }
 
-    public Set<Card> deal(Deque<Card> deque, int count) {
+    public Set<Card> deal(Deque<Card> deque, int count)
+    {
         Set<Card> hand = new HashSet<>();
         IntStream.range(0, count).forEach(i -> hand.add(deque.pop()));
         return hand;
     }
 
-    public Card dealOneCard(Deque<Card> deque) {
+    public Card dealOneCard(Deque<Card> deque)
+    {
         return deque.pop();
     }
 
-    public List<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
+    public List<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
+    {
         Deque<Card> shuffled = this.shuffle(random);
         return this.dealHands(shuffled, hands, cardsPerHand);
     }
 
-    public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand) {
+    public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand)
+    {
         return IntStream.range(0, hands)
                 .mapToObj(i -> this.deal(shuffled, cardsPerHand))
                 .collect(Collectors.collectingAndThen(
@@ -68,35 +74,43 @@ public class JDK8DeckOfCardsAsList {
                         Collections::unmodifiableList));
     }
 
-    public List<Card> diamonds() {
+    public List<Card> diamonds()
+    {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }
 
-    public List<Card> hearts() {
+    public List<Card> hearts()
+    {
         return this.cardsBySuit.get(Suit.HEARTS);
     }
 
-    public List<Card> spades() {
+    public List<Card> spades()
+    {
         return this.cardsBySuit.get(Suit.SPADES);
     }
 
-    public List<Card> clubs() {
+    public List<Card> clubs()
+    {
         return this.cardsBySuit.get(Suit.CLUBS);
     }
 
-    public Map<Suit, Long> countsBySuit() {
+    public Map<Suit, Long> countsBySuit()
+    {
         return this.cards.stream().collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
     }
 
-    public Map<Rank, Long> countsByRank() {
+    public Map<Rank, Long> countsByRank()
+    {
         return this.cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
     }
 
-    public List<Card> getCards() {
+    public List<Card> getCards()
+    {
         return this.cards;
     }
 
-    public Map<Suit, List<Card>> getCardsBySuit() {
+    public Map<Suit, List<Card>> getCardsBySuit()
+    {
         return this.cardsBySuit;
     }
 }

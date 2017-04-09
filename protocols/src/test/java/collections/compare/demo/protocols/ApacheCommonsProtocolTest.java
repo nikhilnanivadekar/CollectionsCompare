@@ -14,13 +14,15 @@ import org.apache.commons.collections4.multiset.HashMultiSet;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ApacheCommonsProtocolTest {
+public class ApacheCommonsProtocolTest
+{
     private List<String> list = Arrays.asList("one", "two", "three");
     private Set<String> set = new HashSet<>(this.list);
     private Bag<String> bag = new HashBag<>(this.list);
 
     @Test
-    public void filter() {
+    public void filter()
+    {
         // does not extend java.util.function.Predicate
         Predicate<String> equals = "one"::equals;
         List<String> actualListOne =
@@ -41,7 +43,8 @@ public class ApacheCommonsProtocolTest {
     }
 
     @Test
-    public void groupBy() {
+    public void groupBy()
+    {
         // No Protocol Alternative Found
     }
 }

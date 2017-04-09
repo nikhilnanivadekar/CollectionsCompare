@@ -14,7 +14,8 @@ import com.google.common.collect.Multiset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FishUsingGoogleGuava extends Fish {
+public class FishUsingGoogleGuava extends Fish
+{
     private static final Logger LOGGER = LoggerFactory.getLogger(FishUsingGoogleGuava.class);
 
     private final GoogleGuavaDeckOfCards deck = new GoogleGuavaDeckOfCards();
@@ -26,22 +27,27 @@ public class FishUsingGoogleGuava extends Fish {
 
     private Outcome outcome;
 
-    public FishUsingGoogleGuava(int numberOfPlayers, long seed) {
+    public FishUsingGoogleGuava(int numberOfPlayers, long seed)
+    {
         this.numberOfPlayers = numberOfPlayers;
         this.seed = seed;
         this.shuffledCards = this.deck.shuffle(new Random(this.seed));
     }
 
-    public Outcome getOutcome() {
+    public Outcome getOutcome()
+    {
         return this.outcome;
     }
 
     @Override
-    public void deal() {
+    public void deal()
+    {
         int numberOfCardsPerPlayer = this.getNumberOfCardsPerPlayer(this.numberOfPlayers);
 
-        for (int i = 0; i < numberOfCardsPerPlayer; i++) {
-            for (int j = 1; j <= this.numberOfPlayers; j++) {
+        for (int i = 0; i < numberOfCardsPerPlayer; i++)
+        {
+            for (int j = 1; j <= this.numberOfPlayers; j++)
+            {
                 this.cardsPerPlayer.put(j, this.deck.dealOneCard(this.shuffledCards));
             }
         }
@@ -50,7 +56,8 @@ public class FishUsingGoogleGuava extends Fish {
     }
 
     @Override
-    public boolean playTurn(int playerNumber) {
+    public boolean playTurn(int playerNumber)
+    {
         Set<Card> cards = this.cardsPerPlayer.get(playerNumber);
 
         Multiset<Rank> ranks = this.getRanks(cards);
@@ -60,7 +67,8 @@ public class FishUsingGoogleGuava extends Fish {
         int nextPlayer = playerNumber == this.numberOfPlayers ? 1 : playerNumber + 1;
 
         Set<Card> cardsWithNextPlayer = this.cardsPerPlayer.get(nextPlayer);
-        if (cardsWithNextPlayer.isEmpty()) {
+        if (cardsWithNextPlayer.isEmpty())
+        {
             LOGGER.info("Player:{} has no cards left! GAME OVER!!!", nextPlayer);
             this.logCardsPerPlayer();
             this.logCardCountPerPlayer();
@@ -75,9 +83,11 @@ public class FishUsingGoogleGuava extends Fish {
 
         LOGGER.info("Next Player:{} " + (card == null ? "No card for Rank:" + probableBook : "has Card:" + card), nextPlayer);
 
-        if (card == null) {
+        if (card == null)
+        {
             LOGGER.info("Go FISH!");
-            if (this.shuffledCards.isEmpty()) {
+            if (this.shuffledCards.isEmpty())
+            {
                 LOGGER.info("Pond is dry. GAME OVER!!!");
                 this.logCardsPerPlayer();
                 this.logCardCountPerPlayer();
@@ -90,7 +100,9 @@ public class FishUsingGoogleGuava extends Fish {
             this.logCardsPerPlayer();
             this.logCardCountPerPlayer();
             return this.checkIfPlayerWins(playerNumber);
-        } else {
+        }
+        else
+        {
             this.cardsPerPlayer.remove(nextPlayer, card);
             this.cardsPerPlayer.put(playerNumber, card);
             this.logCardsPerPlayer();
@@ -99,18 +111,22 @@ public class FishUsingGoogleGuava extends Fish {
         }
     }
 
-    private void logCardCountPerPlayer() {
-        for (int player : this.cardsPerPlayer.keySet()) {
+    private void logCardCountPerPlayer()
+    {
+        for (int player : this.cardsPerPlayer.keySet())
+        {
             Set<Card> cards = this.cardsPerPlayer.get(player);
             LOGGER.info("Player:{} has {} cards", player, cards.size());
         }
     }
 
-    private boolean checkIfPlayerWins(int playerNumber) {
+    private boolean checkIfPlayerWins(int playerNumber)
+    {
         Multiset<Rank> newRanks = this.getRanks(this.cardsPerPlayer.get(playerNumber));
         Rank probableBook = this.getProbableBook(newRanks);
         int rankCount = newRanks.count(probableBook);
-        if (rankCount == 4) {
+        if (rankCount == 4)
+        {
             LOGGER.info("Player:{} has a BOOK! Player:{} WINS!!!", playerNumber, playerNumber);
             this.outcome = Outcome.WINNER;
             return false;
@@ -119,11 +135,14 @@ public class FishUsingGoogleGuava extends Fish {
         return true;
     }
 
-    private Rank getProbableBook(Multiset<Rank> ranks) {
+    private Rank getProbableBook(Multiset<Rank> ranks)
+    {
         int count = 0;
         Rank topOccurrence = null;
-        for (Rank rank : ranks) {
-            if (ranks.count(rank) > count) {
+        for (Rank rank : ranks)
+        {
+            if (ranks.count(rank) > count)
+            {
                 count = ranks.count(rank);
                 topOccurrence = rank;
             }
@@ -131,14 +150,17 @@ public class FishUsingGoogleGuava extends Fish {
         return topOccurrence;
     }
 
-    private Multiset<Rank> getRanks(Set<Card> cards) {
+    private Multiset<Rank> getRanks(Set<Card> cards)
+    {
         Multiset<Rank> ranks = HashMultiset.create();
         cards.forEach(card -> ranks.add(card.getRank()));
         return ranks;
     }
 
-    private void logCardsPerPlayer() {
-        for (int player : this.cardsPerPlayer.keySet()) {
+    private void logCardsPerPlayer()
+    {
+        for (int player : this.cardsPerPlayer.keySet())
+        {
             Set<Card> cards = this.cardsPerPlayer.get(player);
             LOGGER.info("Player:{}, cards:{}", player, cards.toString());
         }

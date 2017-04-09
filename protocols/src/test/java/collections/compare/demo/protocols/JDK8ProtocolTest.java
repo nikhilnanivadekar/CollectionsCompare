@@ -18,13 +18,15 @@ import org.eclipse.collections.impl.factory.Sets;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class JDK8ProtocolTest {
+public class JDK8ProtocolTest
+{
     private List<String> list = Arrays.asList("one", "two", "three");
     private Set<String> set = new HashSet<>(this.list);
     private MutableBag<String> bag = Bags.mutable.with("one", "two", "three");
 
     @Test
-    public void filter() {
+    public void filter()
+    {
         Predicate<String> equals = "one"::equals;
         List<String> actualListOne =
                 this.list.stream().filter(equals).collect(Collectors.toList());
@@ -44,7 +46,8 @@ public class JDK8ProtocolTest {
     }
 
     @Test
-    public void groupBy() {
+    public void groupBy()
+    {
         Map<String, List<String>> groupedList =
                 this.list.stream().collect(Collectors.groupingBy(String::toUpperCase));
         Assert.assertEquals(Maps.mutable.with(

@@ -25,9 +25,11 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class GroupByTest {
+public class GroupByTest
+{
     @State(Scope.Thread)
-    public static class Deck {
+    public static class Deck
+    {
         public ApacheCommonsDeckOfCards apacheCommonsDeckOfCards = new ApacheCommonsDeckOfCards();
         public ApacheCommonsDeckOfCardsAsList apacheCommonsDeckOfCardsAsList = new ApacheCommonsDeckOfCardsAsList();
         public EclipseCollectionsDeckOfCards eclipseCollectionsDeckOfCards = new EclipseCollectionsDeckOfCards();
@@ -42,14 +44,16 @@ public class GroupByTest {
     }
 
     @Benchmark
-    public int groupByApache(Deck deck) {
+    public int groupByApache(Deck deck)
+    {
         SetValuedMap<Suit, Card> cbs = MultiMapUtils.newSetValuedHashMap();
         deck.apacheCommonsDeckOfCards.getCards().forEach(card -> cbs.put(card.getSuit(), card));
         return cbs.size();
     }
 
     @Benchmark
-    public int groupByApacheUnmodifiable(Deck deck) {
+    public int groupByApacheUnmodifiable(Deck deck)
+    {
         ListValuedMap<Suit, Card> cbs = MultiMapUtils.newListValuedHashMap();
         deck.apacheCommonsDeckOfCardsAsList.getCards()
                 .forEach(card -> cbs.put(card.getSuit(), card));
@@ -57,28 +61,32 @@ public class GroupByTest {
     }
 
     @Benchmark
-    public int groupByEC(Deck deck) {
+    public int groupByEC(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCards.getCards()
                 .groupBy(Card::getSuit)
                 .size();
     }
 
     @Benchmark
-    public int groupByECImmutable(Deck deck) {
+    public int groupByECImmutable(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCardsAsImmutableList.getCards()
                 .groupBy(Card::getSuit)
                 .size();
     }
 
     @Benchmark
-    public int groupByECReadable(Deck deck) {
+    public int groupByECReadable(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCardsAsReadableList.getCards()
                 .groupBy(Card::getSuit)
                 .size();
     }
 
     @Benchmark
-    public int groupByGuava(Deck deck) {
+    public int groupByGuava(Deck deck)
+    {
         ImmutableSetMultimap.Builder<Suit, Card> builder =
                 new ImmutableSetMultimap.Builder<Suit, Card>().orderValuesBy(Comparator.naturalOrder());
         deck.googleGuavaDeckOfCards.getCards()
@@ -87,14 +95,16 @@ public class GroupByTest {
     }
 
     @Benchmark
-    public int groupByGuavaImmutable(Deck deck) {
+    public int groupByGuavaImmutable(Deck deck)
+    {
         return Multimaps.index(deck.googleGuavaDeckOfCardsAsImmutableList.getCards(),
                 (Function<Card, Suit>) Card::getSuit)
                 .size();
     }
 
     @Benchmark
-    public int groupByJDK(Deck deck) {
+    public int groupByJDK(Deck deck)
+    {
         return Collections.unmodifiableMap(
                 deck.jdk8DeckOfCards.getCards()
                         .stream()
@@ -108,7 +118,8 @@ public class GroupByTest {
     }
 
     @Benchmark
-    public int groupByJDKUnmodifiable(Deck deck) {
+    public int groupByJDKUnmodifiable(Deck deck)
+    {
         return deck.jdk8DeckOfCardsAsList.getCards()
                 .stream()
                 .collect(Collectors.collectingAndThen(
@@ -123,12 +134,14 @@ public class GroupByTest {
     }
 
     @Benchmark
-    public int groupByJavaslang(Deck deck) {
+    public int groupByJavaslang(Deck deck)
+    {
         return deck.javaslangDeckOfCards.getCards().groupBy(Card::getSuit).size();
     }
 
     @Benchmark
-    public int groupByJavaslangImmutable(Deck deck) {
+    public int groupByJavaslangImmutable(Deck deck)
+    {
         return deck.javaslangDeckOfCardsAsImmutableList.getCards().groupBy(Card::getSuit).size();
     }
 }

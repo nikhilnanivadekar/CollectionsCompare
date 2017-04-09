@@ -1,6 +1,7 @@
 package collections.compare.demo.cards;
 
-public enum Suit {
+public enum Suit
+{
     SPADES,
     DIAMONDS,
     HEARTS,

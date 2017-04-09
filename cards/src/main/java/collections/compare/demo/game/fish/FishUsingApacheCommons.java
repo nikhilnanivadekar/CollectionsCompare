@@ -16,7 +16,8 @@ import org.apache.commons.collections4.bag.HashBag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FishUsingApacheCommons extends Fish {
+public class FishUsingApacheCommons extends Fish
+{
     private static final Logger LOGGER = LoggerFactory.getLogger(FishUsingApacheCommons.class);
 
     private final ApacheCommonsDeckOfCards deck = new ApacheCommonsDeckOfCards();
@@ -28,22 +29,27 @@ public class FishUsingApacheCommons extends Fish {
 
     private Outcome outcome;
 
-    public FishUsingApacheCommons(int numberOfPlayers, long seed) {
+    public FishUsingApacheCommons(int numberOfPlayers, long seed)
+    {
         this.numberOfPlayers = numberOfPlayers;
         this.seed = seed;
         this.shuffledCards = this.deck.shuffle(new Random(this.seed));
     }
 
-    public Outcome getOutcome() {
+    public Outcome getOutcome()
+    {
         return this.outcome;
     }
 
     @Override
-    public void deal() {
+    public void deal()
+    {
         int numberOfCardsPerPlayer = this.getNumberOfCardsPerPlayer(this.numberOfPlayers);
 
-        for (int i = 0; i < numberOfCardsPerPlayer; i++) {
-            for (int j = 1; j <= this.numberOfPlayers; j++) {
+        for (int i = 0; i < numberOfCardsPerPlayer; i++)
+        {
+            for (int j = 1; j <= this.numberOfPlayers; j++)
+            {
                 this.cardsPerPlayer.put(j, this.deck.dealOneCard(this.shuffledCards));
             }
         }
@@ -52,7 +58,8 @@ public class FishUsingApacheCommons extends Fish {
     }
 
     @Override
-    public boolean playTurn(int playerNumber) {
+    public boolean playTurn(int playerNumber)
+    {
         Set<Card> cards = this.cardsPerPlayer.get(playerNumber);
 
         Bag<Rank> ranks = this.getRanks(cards);
@@ -62,7 +69,8 @@ public class FishUsingApacheCommons extends Fish {
         int nextPlayer = playerNumber == this.numberOfPlayers ? 1 : playerNumber + 1;
 
         Set<Card> cardsWithNextPlayer = this.cardsPerPlayer.get(nextPlayer);
-        if (cardsWithNextPlayer.isEmpty()) {
+        if (cardsWithNextPlayer.isEmpty())
+        {
             LOGGER.info("Player:{} has no cards left! GAME OVER!!!", nextPlayer);
             this.logCardsPerPlayer();
             this.logCardCountPerPlayer();
@@ -76,9 +84,11 @@ public class FishUsingApacheCommons extends Fish {
                 .orElse(null);
         LOGGER.info("Next Player:{} " + (card == null ? "No card for Rank:" + probableBook : "has Card:" + card), nextPlayer);
 
-        if (card == null) {
+        if (card == null)
+        {
             LOGGER.info("Go FISH!");
-            if (this.shuffledCards.isEmpty()) {
+            if (this.shuffledCards.isEmpty())
+            {
                 LOGGER.info("Pond is dry. GAME OVER!!!");
                 this.logCardsPerPlayer();
                 logCardCountPerPlayer();
@@ -91,7 +101,9 @@ public class FishUsingApacheCommons extends Fish {
             this.logCardsPerPlayer();
             this.logCardCountPerPlayer();
             return this.checkIfPlayerWins(playerNumber);
-        } else {
+        }
+        else
+        {
             this.cardsPerPlayer.removeMapping(nextPlayer, card);
             this.cardsPerPlayer.put(playerNumber, card);
             this.logCardsPerPlayer();
@@ -100,18 +112,22 @@ public class FishUsingApacheCommons extends Fish {
         }
     }
 
-    private void logCardCountPerPlayer() {
-        for (int player : this.cardsPerPlayer.keySet()) {
+    private void logCardCountPerPlayer()
+    {
+        for (int player : this.cardsPerPlayer.keySet())
+        {
             Set<Card> cards = this.cardsPerPlayer.get(player);
             LOGGER.info("Player:{} has {} cards", player, cards.size());
         }
     }
 
-    private boolean checkIfPlayerWins(int playerNumber) {
+    private boolean checkIfPlayerWins(int playerNumber)
+    {
         Bag<Rank> newRanks = this.getRanks(this.cardsPerPlayer.get(playerNumber));
         Rank rank = this.getProbableBook(newRanks);
         int rankCount = newRanks.getCount(rank);
-        if (rankCount == 4) {
+        if (rankCount == 4)
+        {
             LOGGER.info("Player:{} has a BOOK! Player:{} WINS!!!", playerNumber, playerNumber);
             this.outcome = Outcome.WINNER;
             return false;
@@ -120,11 +136,14 @@ public class FishUsingApacheCommons extends Fish {
         return true;
     }
 
-    private Rank getProbableBook(Bag<Rank> ranks) {
+    private Rank getProbableBook(Bag<Rank> ranks)
+    {
         int count = 0;
         Rank topOccurrence = null;
-        for (Rank rank : ranks) {
-            if (ranks.getCount(rank) > count) {
+        for (Rank rank : ranks)
+        {
+            if (ranks.getCount(rank) > count)
+            {
                 count = ranks.getCount(rank);
                 topOccurrence = rank;
             }
@@ -132,12 +151,15 @@ public class FishUsingApacheCommons extends Fish {
         return topOccurrence;
     }
 
-    private Bag<Rank> getRanks(Set<Card> cards) {
+    private Bag<Rank> getRanks(Set<Card> cards)
+    {
         return cards.stream().map(Card::getRank).collect(Collectors.toCollection(HashBag::new));
     }
 
-    private void logCardsPerPlayer() {
-        for (int player : this.cardsPerPlayer.keySet()) {
+    private void logCardsPerPlayer()
+    {
+        for (int player : this.cardsPerPlayer.keySet())
+        {
             Set<Card> cards = this.cardsPerPlayer.get(player);
             LOGGER.info("Player:{}, cards:{}", player, cards.toString());
         }

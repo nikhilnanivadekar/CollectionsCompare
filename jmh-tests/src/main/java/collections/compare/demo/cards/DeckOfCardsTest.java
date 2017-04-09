@@ -18,37 +18,43 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class DeckOfCardsTest {
+public class DeckOfCardsTest
+{
     @Benchmark
-    public int dealJDK() {
+    public int dealJDK()
+    {
         JDK8DeckOfCards deck = new JDK8DeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands.size();
     }
 
     @Benchmark
-    public int dealEC() {
+    public int dealEC()
+    {
         EclipseCollectionsDeckOfCards deck = new EclipseCollectionsDeckOfCards();
         ImmutableList<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands.size();
     }
 
     @Benchmark
-    public int dealGuava() {
+    public int dealGuava()
+    {
         GoogleGuavaDeckOfCards deck = new GoogleGuavaDeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands.size();
     }
 
     @Benchmark
-    public int dealApache() {
+    public int dealApache()
+    {
         ApacheCommonsDeckOfCards deck = new ApacheCommonsDeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands.size();
     }
 
     @Benchmark
-    public int dealJavaslang() {
+    public int dealJavaslang()
+    {
         JavaSlangDeckOfCards deck = new JavaSlangDeckOfCards();
         javaslang.collection.List<javaslang.collection.Set<Card>> hands =
                 deck.shuffleAndDeal(new Random(1), 5, 5);

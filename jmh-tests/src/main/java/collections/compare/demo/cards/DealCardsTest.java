@@ -20,9 +20,11 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class DealCardsTest {
+public class DealCardsTest
+{
     @State(Scope.Thread)
-    public static class Deck {
+    public static class Deck
+    {
         public ApacheCommonsDeckOfCards apacheCommonsDeckOfCards;
         public ApacheCommonsDeckOfCardsAsList apacheCommonsDeckOfCardsAsList;
         public EclipseCollectionsDeckOfCards eclipseCollectionsDeckOfCards;
@@ -48,7 +50,8 @@ public class DealCardsTest {
         public Stack<Card> shuffledJavaslangDeckOfCardsAsImmutableList;
 
         @Setup(Level.Invocation)
-        public void setup() {
+        public void setup()
+        {
             apacheCommonsDeckOfCards = new ApacheCommonsDeckOfCards();
             apacheCommonsDeckOfCardsAsList = new ApacheCommonsDeckOfCardsAsList();
             eclipseCollectionsDeckOfCards = new EclipseCollectionsDeckOfCards();
@@ -76,67 +79,78 @@ public class DealCardsTest {
     }
 
     @Benchmark
-    public int dealApache(Deck deck) {
+    public int dealApache(Deck deck)
+    {
         return deck.apacheCommonsDeckOfCards.dealHands(deck.shuffledApacheCommonsDeckOfCards, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealApacheUnmodifiable(Deck deck) {
+    public int dealApacheUnmodifiable(Deck deck)
+    {
         return deck.apacheCommonsDeckOfCardsAsList.dealHands(deck.shuffledApachedCommonsDeckOfCardsAsList, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealEC(Deck deck) {
+    public int dealEC(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCards.dealHands(deck.shuffledEclipseCollectionsDeckOfCards, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealECImmutable(Deck deck) {
+    public int dealECImmutable(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCardsAsImmutableList.dealHands(deck.shuffledEclipseCollectionsDeckOfCardsAsImmutableList, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealECReadable(Deck deck) {
+    public int dealECReadable(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCardsAsReadableList.dealHands(deck.shuffledEclipseCollectionsDeckOfCardsAsReadableList, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealGuava(Deck deck) {
+    public int dealGuava(Deck deck)
+    {
         return deck.googleGuavaDeckOfCards.dealHands(deck.shuffledGoogleGuavaDeckOfCards, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealGuavaImmutable(Deck deck) {
+    public int dealGuavaImmutable(Deck deck)
+    {
         return deck.googleGuavaDeckOfCardsAsImmutableList.dealHands(deck.shuffledGoogleGuavaDeckOfCardsAsImmutableList, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealJDK(Deck deck) {
+    public int dealJDK(Deck deck)
+    {
         return deck.jdk8DeckOfCards.dealHands(deck.shuffledJdk8DeckOfCards, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealJDKUnmodifiable(Deck deck) {
+    public int dealJDKUnmodifiable(Deck deck)
+    {
         return deck.jdk8DeckOfCardsAsList.dealHands(deck.shuffledJdk8DeckOfCardsAsList, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealJavaslang(Deck deck) {
+    public int dealJavaslang(Deck deck)
+    {
         return deck.javaslangDeckOfCards.dealHands(deck.shuffledJavaslangDeckOfCards, 5, 5)
                 .size();
     }
 
     @Benchmark
-    public int dealJavaslangImmutable(Deck deck) {
+    public int dealJavaslangImmutable(Deck deck)
+    {
         return deck.javaslangDeckOfCardsAsImmutableList.dealHands(deck.shuffledJavaslangDeckOfCardsAsImmutableList, 5, 5)
                 .size();
     }

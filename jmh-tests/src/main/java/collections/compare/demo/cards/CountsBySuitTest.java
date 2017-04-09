@@ -14,9 +14,11 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(2)
-public class CountsBySuitTest {
+public class CountsBySuitTest
+{
     @State(Scope.Thread)
-    public static class Deck {
+    public static class Deck
+    {
         public ApacheCommonsDeckOfCards apacheCommonsDeckOfCards = new ApacheCommonsDeckOfCards();
         public ApacheCommonsDeckOfCardsAsList apacheCommonsDeckOfCardsAsList = new ApacheCommonsDeckOfCardsAsList();
         public EclipseCollectionsDeckOfCards eclipseCollectionsDeckOfCards = new EclipseCollectionsDeckOfCards();
@@ -31,67 +33,78 @@ public class CountsBySuitTest {
     }
 
     @Benchmark
-    public int countsBySuitApache(Deck deck) {
+    public int countsBySuitApache(Deck deck)
+    {
         return deck.apacheCommonsDeckOfCards.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitApacheUnmodifiable(Deck deck) {
+    public int countsBySuitApacheUnmodifiable(Deck deck)
+    {
         return deck.apacheCommonsDeckOfCardsAsList.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitEC(Deck deck) {
+    public int countsBySuitEC(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCards.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitECImmutable(Deck deck) {
+    public int countsBySuitECImmutable(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCardsAsImmutableList.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitECReadable(Deck deck) {
+    public int countsBySuitECReadable(Deck deck)
+    {
         return deck.eclipseCollectionsDeckOfCardsAsReadableList.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitGuava(Deck deck) {
+    public int countsBySuitGuava(Deck deck)
+    {
         return deck.googleGuavaDeckOfCards.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitGuavaImmutable(Deck deck) {
+    public int countsBySuitGuavaImmutable(Deck deck)
+    {
         return deck.googleGuavaDeckOfCardsAsImmutableList.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitJDK(Deck deck) {
+    public int countsBySuitJDK(Deck deck)
+    {
         return deck.jdk8DeckOfCards.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitJDKUnmodifiable(Deck deck) {
+    public int countsBySuitJDKUnmodifiable(Deck deck)
+    {
         return deck.jdk8DeckOfCardsAsList.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitJavaslang(Deck deck) {
+    public int countsBySuitJavaslang(Deck deck)
+    {
         return deck.javaslangDeckOfCards.countsBySuit()
                 .size();
     }
 
     @Benchmark
-    public int countsBySuitJavaslangImmutable(Deck deck) {
+    public int countsBySuitJavaslangImmutable(Deck deck)
+    {
         return deck.javaslangDeckOfCardsAsImmutableList.countsBySuit()
                 .size();
     }

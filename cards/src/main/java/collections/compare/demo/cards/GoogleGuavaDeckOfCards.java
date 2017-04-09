@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -19,11 +18,13 @@ import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Multiset;
 
-public class GoogleGuavaDeckOfCards {
+public class GoogleGuavaDeckOfCards
+{
     private ImmutableSortedSet<Card> cards;
     private ImmutableSetMultimap<Suit, Card> cardsBySuit;
 
-    public GoogleGuavaDeckOfCards() {
+    public GoogleGuavaDeckOfCards()
+    {
         this.cards = Card.streamCards()
                 .collect(ImmutableSortedSet.toImmutableSortedSet(Comparator.naturalOrder()));
         ImmutableSetMultimap.Builder<Suit, Card> builder =
@@ -32,7 +33,8 @@ public class GoogleGuavaDeckOfCards {
         this.cardsBySuit = builder.build();
     }
 
-    public Deque<Card> shuffle(Random random) {
+    public Deque<Card> shuffle(Random random)
+    {
         List<Card> shuffled = new ArrayList<>(this.cards);
         Collections.shuffle(shuffled, random);
         Collections.shuffle(shuffled, random);
@@ -42,17 +44,20 @@ public class GoogleGuavaDeckOfCards {
         return cards;
     }
 
-    public Set<Card> deal(Deque<Card> deque, int count) {
+    public Set<Card> deal(Deque<Card> deque, int count)
+    {
         Set<Card> hand = new HashSet<>();
         IntStream.range(0, count).forEach(i -> hand.add(deque.pop()));
         return hand;
     }
 
-    public Card dealOneCard(Deque<Card> deque) {
+    public Card dealOneCard(Deque<Card> deque)
+    {
         return deque.pop();
     }
 
-    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand) {
+    public ImmutableList<Set<Card>> shuffleAndDeal(Random random, int hands, int cardsPerHand)
+    {
         Deque<Card> shuffled = this.shuffle(random);
         return this.dealHands(shuffled, hands, cardsPerHand);
     }
@@ -60,45 +65,54 @@ public class GoogleGuavaDeckOfCards {
     public ImmutableList<Set<Card>> dealHands(
             Deque<Card> shuffled,
             int hands,
-            int cardsPerHand) {
+            int cardsPerHand)
+    {
         return IntStream.range(0, hands)
                 .mapToObj(i -> this.deal(shuffled, cardsPerHand))
                 .collect(ImmutableList.toImmutableList());
     }
 
-    public Set<Card> diamonds() {
+    public Set<Card> diamonds()
+    {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }
 
-    public Set<Card> hearts() {
+    public Set<Card> hearts()
+    {
         return this.cardsBySuit.get(Suit.HEARTS);
     }
 
-    public Set<Card> spades() {
+    public Set<Card> spades()
+    {
         return this.cardsBySuit.get(Suit.SPADES);
     }
 
-    public Set<Card> clubs() {
+    public Set<Card> clubs()
+    {
         return this.cardsBySuit.get(Suit.CLUBS);
     }
 
-    public Multiset<Suit> countsBySuit() {
+    public Multiset<Suit> countsBySuit()
+    {
         return this.cards.stream()
                 .map(Card::getSuit)
                 .collect(Collectors.toCollection(HashMultiset::create));
     }
 
-    public Multiset<Rank> countsByRank() {
+    public Multiset<Rank> countsByRank()
+    {
         return this.cards.stream()
                 .map(Card::getRank)
                 .collect(Collectors.toCollection(HashMultiset::create));
     }
 
-    public ImmutableSortedSet<Card> getCards() {
+    public ImmutableSortedSet<Card> getCards()
+    {
         return this.cards;
     }
 
-    public ImmutableSetMultimap<Suit, Card> getCardsBySuit() {
+    public ImmutableSetMultimap<Suit, Card> getCardsBySuit()
+    {
         return this.cardsBySuit;
     }
 }
