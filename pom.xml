@@ -14,13 +14,14 @@
     <modules>
         <module>cards</module>
         <module>jmh-tests</module>
-        <module>maps</module>
+        <!--<module>maps</module>-->
         <module>protocols</module>
+        <module>memory-tests</module>
     </modules>
 
     <properties>
         <apache-collections.version>4.1</apache-collections.version>
-        <eclipse-collections.version>8.1.0-RC</eclipse-collections.version>
+        <eclipse-collections.version>8.1.0</eclipse-collections.version>
         <guava.version>21.0</guava.version>
         <junit.version>4.12</junit.version>
         <slf4j.version>1.7.14</slf4j.version>
