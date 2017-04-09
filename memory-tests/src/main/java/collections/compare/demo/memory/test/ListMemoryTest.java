@@ -72,11 +72,11 @@ public final class ListMemoryTest
         javaslang.collection.List<Integer> javaSlangList = javaslang.collection.List.empty();
         MemoryTestUtils.printMemoryUtilization("Integer", javaSlangList, javaSlangList.size());
 
-        for (int i = 0; i < 1_000_000; i++)
+        for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                javaSlangList = javaslang.collection.List.ofAll(Interval.fromTo(0, i));
+                javaSlangList = javaslang.collection.List.ofAll(Interval.fromTo(0, i - 1));
                 MemoryTestUtils.printMemoryUtilization("Integer", javaSlangList, javaSlangList.size());
             }
         }
@@ -87,11 +87,11 @@ public final class ListMemoryTest
         com.google.common.collect.ImmutableList<Integer> guavaImmutableList = com.google.common.collect.ImmutableList.<Integer>builder().build();
         MemoryTestUtils.printMemoryUtilization("Integer", guavaImmutableList, guavaImmutableList.size());
 
-        for (int i = 0; i < 1_000_000; i++)
+        for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                guavaImmutableList = com.google.common.collect.ImmutableList.<Integer>builder().addAll(Interval.fromTo(0, i)).build();
+                guavaImmutableList = com.google.common.collect.ImmutableList.<Integer>builder().addAll(Interval.fromTo(0, i - 1)).build();
                 MemoryTestUtils.printMemoryUtilization("Integer", guavaImmutableList, guavaImmutableList.size());
             }
         }
@@ -102,11 +102,11 @@ public final class ListMemoryTest
         ImmutableList<Integer> ecImmutableList = Lists.immutable.empty();
         MemoryTestUtils.printMemoryUtilization("Integer", ecImmutableList, ecImmutableList.size());
 
-        for (int i = 0; i < 1_000_000; i++)
+        for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                ecImmutableList = Lists.immutable.withAll(Interval.fromTo(0, i));
+                ecImmutableList = Lists.immutable.withAll(Interval.fromTo(0, i - 1));
                 MemoryTestUtils.printMemoryUtilization("Integer", ecImmutableList, ecImmutableList.size());
             }
         }
@@ -117,11 +117,11 @@ public final class ListMemoryTest
         MutableList<Integer> ecUnmodifiableList = Lists.mutable.<Integer>empty().asUnmodifiable();
         MemoryTestUtils.printMemoryUtilization("Integer", ecUnmodifiableList, ecUnmodifiableList.size());
 
-        for (int i = 0; i < 1_000_000; i++)
+        for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                ecUnmodifiableList = Lists.mutable.withAll(Interval.fromTo(0, i)).asUnmodifiable();
+                ecUnmodifiableList = Lists.mutable.withAll(Interval.fromTo(0, i - 1)).asUnmodifiable();
                 MemoryTestUtils.printMemoryUtilization("Integer", ecUnmodifiableList, ecUnmodifiableList.size());
             }
         }
@@ -132,11 +132,11 @@ public final class ListMemoryTest
         List<Integer> jdkUnmodifiableList = Collections.unmodifiableList(new ArrayList<>());
         MemoryTestUtils.printMemoryUtilization("Integer", jdkUnmodifiableList, jdkUnmodifiableList.size());
 
-        for (int i = 0; i < 1_000_000; i++)
+        for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                jdkUnmodifiableList = Collections.unmodifiableList(Arrays.asList(Interval.fromTo(0, i).toArray()));
+                jdkUnmodifiableList = Collections.unmodifiableList(Arrays.asList(Interval.fromTo(0, i - 1).toArray()));
                 MemoryTestUtils.printMemoryUtilization("Integer", jdkUnmodifiableList, jdkUnmodifiableList.size());
             }
         }
