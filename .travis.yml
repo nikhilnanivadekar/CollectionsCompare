@@ -3,7 +3,7 @@ sudo: false
 
 before_install: echo "MAVEN_OPTS='-Dmaven.repo.local=$HOME/.m2/repository -Xmx1g -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS'" > ~/.mavenrc
 
-script: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: mvn install -DskipTests=true -Dmaven.javadoc.skip=true '!memory-tests' -B -V
 
 jdk:
 - oraclejdk8
