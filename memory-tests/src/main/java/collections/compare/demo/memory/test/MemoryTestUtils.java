@@ -39,15 +39,18 @@ public final class MemoryTestUtils
         return Interval.fromTo(0, size - 1).collect(String::valueOf).toList();
     }
 
-    public static MutableMap<Integer, Integer> getIntegerMap(int i)
+    public static MutableMap<Integer, Integer> getIntegerMap(int size)
     {
-        MutableMap<Integer, Integer> map = Maps.mutable.withInitialCapacity(i);
-        Interval.fromTo(0, i - 1).each(each -> map.put(each, each));
+        MutableMap<Integer, Integer> map = Maps.mutable.withInitialCapacity(size);
+        Interval.fromTo(0, size - 1).each(each -> map.put(each, -each));
         return map;
     }
 
     public static MutableMap<String, String> getStringMap(int size)
     {
-        return Interval.fromTo(0, size - 1).toMap(String::valueOf, String::valueOf);
+        MutableMap<String, String> map = Maps.mutable.withInitialCapacity(size);
+        Interval.fromTo(0, size - 1).each(each -> map.put(String.valueOf(each), String.valueOf(-each)));
+        return map;
     }
+
 }

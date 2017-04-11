@@ -1,16 +1,12 @@
 package collections.compare.demo.memory.test;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MutableMap;
-import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.Maps;
 import org.eclipse.collections.impl.map.mutable.UnifiedMap;
 
@@ -37,9 +33,9 @@ public final class MapMemoryTest
         MapMemoryTest.memoryBenchIntegerEcUnmodifiableMap();
         MapMemoryTest.memoryBenchIntegerJdkUnmodifiableMap();
 
-        MapMemoryTest.memoryBenchString(Lists.mutable.empty());
-        MapMemoryTest.memoryBenchString(new ArrayList<>());
-        MapMemoryTest.memoryBenchString(new LinkedList<>());
+        MapMemoryTest.memoryBenchString(Maps.mutable.empty());
+        MapMemoryTest.memoryBenchString(new HashMap<>());
+        MapMemoryTest.memoryBenchString(new LinkedHashMap<>());
         MapMemoryTest.memoryBenchStringJavaSlangMap();
         MapMemoryTest.memoryBenchStringGuavaImmutableMap();
         MapMemoryTest.memoryBenchStringEcImmutableMap();
@@ -53,19 +49,19 @@ public final class MapMemoryTest
 
         for (int i = 0; i < 1_000_000; i++)
         {
-            map.put(i, i);
+            map.put(i, -i);
             MemoryTestUtils.printMemoryUtilization("Integer", map, map.size());
         }
     }
 
-    private static void memoryBenchString(Collection<String> collection)
+    private static void memoryBenchString(Map<String, String> map)
     {
-        MemoryTestUtils.printMemoryUtilization("String", collection, collection.size());
+        MemoryTestUtils.printMemoryUtilization("String", map, map.size());
 
         for (int i = 0; i < 1_000_000; i++)
         {
-            collection.add(String.valueOf(i));
-            MemoryTestUtils.printMemoryUtilization("String", collection, collection.size());
+            map.put(String.valueOf(i), String.valueOf(-i));
+            MemoryTestUtils.printMemoryUtilization("String", map, map.size());
         }
     }
 
