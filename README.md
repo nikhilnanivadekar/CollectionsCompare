@@ -6,7 +6,9 @@ Collections are a staple in any programming language: the need to collect, sort 
 
 # This talk will be presented at:
 * [DevoxxUS](http://cfp.devoxx.us/2017/talk/PEV-2089/Collections.compare(JDK,_Eclipse,_Guava,_Apache...);)
+  - [SlideShare](https://www.slideshare.net/NikhilNanivadekar/collectionscomparejdk-eclipse-guava-apache-devoxxus-2017)
 * [Great Indian Developer Summit](http://www.developermarch.com/developersummit/session.html?insert=Nikhil)
+  - [SlideShare](https://www.slideshare.net/NikhilNanivadekar/collectionscomparejdk-eclipse-guava-apache-gids-2017)
 
 # Authors
 (in alphabetical order, surname)
