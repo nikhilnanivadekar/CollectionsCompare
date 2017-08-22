@@ -1,5 +1,6 @@
 package collections.compare.demo.cards;
 
+import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.collector.Collectors2;
+import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.factory.SortedSets;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
 
@@ -21,11 +23,9 @@ public class EclipseCollectionsDeckOfCards
 
     public EclipseCollectionsDeckOfCards()
     {
-//        this.cards = SortedSets.immutable.with(
-//                Card.streamCards()
-//                        .toArray(Card[]::new));
-        this.cards =
-                Card.streamCards().collect(Collectors2.toImmutableSortedSet());
+        this.cards = Card.lazyCards().toSortedSet().toImmutable();
+//        this.cards =
+//                Card.streamCards().collect(Collectors2.toImmutableSortedSet());
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 

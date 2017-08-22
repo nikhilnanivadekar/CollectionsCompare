@@ -1,5 +1,6 @@
 package collections.compare.demo.cards;
 
+import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import org.eclipse.collections.api.multimap.list.ListMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
 
 public class EclipseCollectionsDeckOfCardsAsReadableList
@@ -19,11 +21,9 @@ public class EclipseCollectionsDeckOfCardsAsReadableList
 
     public EclipseCollectionsDeckOfCardsAsReadableList()
     {
-        this.cards = Lists.mutable.with(
-                Card.streamCards()
-                        .toArray(Card[]::new))
-                .sortThis()
-                .asUnmodifiable();
+        this.cards = Card.lazyCards().toSortedList().asUnmodifiable();
+//        this.cards =
+//                Card.streamCards().collect(Collectors2.toSortedList()).asUnmodifiable();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 

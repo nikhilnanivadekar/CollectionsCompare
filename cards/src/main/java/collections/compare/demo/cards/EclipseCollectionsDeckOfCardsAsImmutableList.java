@@ -8,7 +8,6 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.stack.MutableStack;
-import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
 
 public class EclipseCollectionsDeckOfCardsAsImmutableList
@@ -18,10 +17,9 @@ public class EclipseCollectionsDeckOfCardsAsImmutableList
 
     public EclipseCollectionsDeckOfCardsAsImmutableList()
     {
-        this.cards = Lists.mutable.with(
-                Card.streamCards()
-                        .toArray(Card[]::new))
-                .sortThis().toImmutable();
+        this.cards = Card.lazyCards().toSortedList().toImmutable();
+//        this.cards =
+//                Card.streamCards().collect(Collectors2.toImmutableSortedList());
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
