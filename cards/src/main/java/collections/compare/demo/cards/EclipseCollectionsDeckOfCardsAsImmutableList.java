@@ -74,12 +74,12 @@ public class EclipseCollectionsDeckOfCardsAsImmutableList
 
     public Bag<Suit> countsBySuit()
     {
-        return this.cards.asLazy().collect(Card::getSuit).toBag();
+        return this.cards.countBy(Card::getSuit);
     }
 
     public Bag<Rank> countsByRank()
     {
-        return this.cards.asLazy().collect(Card::getRank).toBag();
+        return this.cards.countBy(Card::getRank);
     }
 
     public ImmutableList<Card> getCards()

@@ -55,10 +55,8 @@ public class EclipseCollectionsDeckOfCardsAsReadableList
 
     public ListIterable<Set<Card>> dealHands(MutableStack<Card> shuffled, int hands, int cardsPerHand)
     {
-        MutableList<Set<Card>> result = Lists.mutable.empty();
-        IntInterval.oneTo(hands)
-                .forEach(i -> result.add(this.deal(shuffled, cardsPerHand)));
-        return result.asUnmodifiable();
+        return IntInterval.oneTo(hands)
+                .collect(i -> this.deal(shuffled, cardsPerHand), Lists.mutable.<Set<Card>>empty()).asUnmodifiable();
     }
 
     public ListIterable<Card> diamonds()
@@ -83,12 +81,12 @@ public class EclipseCollectionsDeckOfCardsAsReadableList
 
     public Bag<Suit> countsBySuit()
     {
-        return this.cards.asLazy().collect(Card::getSuit).toBag();
+        return this.cards.countBy(Card::getSuit).toBag();
     }
 
     public Bag<Rank> countsByRank()
     {
-        return this.cards.asLazy().collect(Card::getRank).toBag();
+        return this.cards.countBy(Card::getRank).toBag();
     }
 
     public ListIterable<Card> getCards()
