@@ -22,7 +22,10 @@ public class Card implements Comparable<Card>
 
     public static LazyIterable<Card> lazyCards()
     {
-        return Sets.cartesianProduct(EnumSet.allOf(Rank.class), EnumSet.allOf(Suit.class), Card::new);
+        return Sets.cartesianProduct(
+                EnumSet.allOf(Rank.class),
+                EnumSet.allOf(Suit.class),
+                Card::new);
     }
 
     public static Stream<Card> streamCards()
