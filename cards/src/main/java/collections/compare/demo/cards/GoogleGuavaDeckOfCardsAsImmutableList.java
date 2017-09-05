@@ -27,11 +27,9 @@ public class GoogleGuavaDeckOfCardsAsImmutableList
     {
         this.cards = Card.streamCards()
                 .sorted()
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        ImmutableList::copyOf));
+                .collect(ImmutableList.toImmutableList());
         //noinspection RedundantCast
-        this.cardsBySuit = Multimaps.index(this.cards, (Function<Card, Suit>) Card::getSuit);
+        this.cardsBySuit = Multimaps.index(this.cards, Card::getSuit);
     }
 
     public Deque<Card> shuffle(Random random)
