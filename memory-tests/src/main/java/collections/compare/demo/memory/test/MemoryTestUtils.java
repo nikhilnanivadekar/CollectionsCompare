@@ -2,6 +2,7 @@ package collections.compare.demo.memory.test;
 
 import java.util.List;
 
+import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import objectexplorer.MemoryMeasurer;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.impl.factory.Maps;
@@ -31,7 +32,7 @@ public final class MemoryTestUtils
 
     public static long measureKbs(Object object)
     {
-        return MemoryMeasurer.measureBytes(object) / 1024;
+        return ObjectSizeCalculator.getObjectSize(object) / 1024;
     }
 
     public static List<String> getStringList(int size)
