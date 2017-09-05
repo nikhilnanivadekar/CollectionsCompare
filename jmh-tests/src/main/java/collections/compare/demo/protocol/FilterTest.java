@@ -52,9 +52,9 @@ public class FilterTest
         public MutableSet<Integer> ecSet = ecList.toSet();
         public ImmutableSortedSet<Integer> ecImmutableSortedSet = SortedSets.immutable.ofAll(jdkSortedSet);
 
-        public javaslang.collection.List<Integer> jsList = javaslang.collection.List.ofAll(Interval.oneTo(100));
-        public javaslang.collection.Set<Integer> jsSet = jsList.toSet();
-        public javaslang.collection.TreeSet<Integer> jsSortedSet = javaslang.collection.TreeSet.ofAll(jsSet);
+        public io.vavr.collection.List<Integer> jsList = io.vavr.collection.List.ofAll(Interval.oneTo(100));
+        public io.vavr.collection.Set<Integer> jsSet = jsList.toSet();
+        public io.vavr.collection.TreeSet<Integer> jsSortedSet = io.vavr.collection.TreeSet.ofAll(jsSet);
     }
 
     @Benchmark
@@ -161,21 +161,21 @@ public class FilterTest
     @Benchmark
     public int javaSlangList(Input input)
     {
-        javaslang.collection.List<Integer> evensList = input.jsList.filter(integer -> integer % 2 == 0);
+        io.vavr.collection.List<Integer> evensList = input.jsList.filter(integer -> integer % 2 == 0);
         return evensList.size();
     }
 
     @Benchmark
     public int javaSlangSet(Input input)
     {
-        javaslang.collection.Set<Integer> evensSet = input.jsSet.filter(integer -> integer % 2 == 0);
+        io.vavr.collection.Set<Integer> evensSet = input.jsSet.filter(integer -> integer % 2 == 0);
         return evensSet.size();
     }
 
     @Benchmark
     public int javaSlangSortedSet(Input input)
     {
-        javaslang.collection.TreeSet<Integer> evensSet = input.jsSortedSet.filter(integer -> integer % 2 == 0);
+        io.vavr.collection.TreeSet<Integer> evensSet = input.jsSortedSet.filter(integer -> integer % 2 == 0);
         return evensSet.size();
     }
 }

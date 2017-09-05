@@ -4,7 +4,6 @@ import java.util.Deque;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import javaslang.collection.Stack;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -34,8 +33,8 @@ public class DealCardsTest
         public GoogleGuavaDeckOfCardsAsImmutableList googleGuavaDeckOfCardsAsImmutableList;
         public JDK8DeckOfCards jdk8DeckOfCards;
         public JDK8DeckOfCardsAsList jdk8DeckOfCardsAsList;
-        public JavaSlangDeckOfCards javaslangDeckOfCards;
-        public JavaSlangDeckOfCardsAsImmutableList javaslangDeckOfCardsAsImmutableList;
+        public VavrDeckOfCards vavrDeckOfCards;
+        public VavrDeckOfCardsAsImmutableList vavrDeckOfCardsAsImmutableList;
 
         public Deque<Card> shuffledApacheCommonsDeckOfCards;
         public Deque<Card> shuffledApachedCommonsDeckOfCardsAsList;
@@ -46,8 +45,8 @@ public class DealCardsTest
         public Deque<Card> shuffledGoogleGuavaDeckOfCardsAsImmutableList;
         public Deque<Card> shuffledJdk8DeckOfCards;
         public Deque<Card> shuffledJdk8DeckOfCardsAsList;
-        public Stack<Card> shuffledJavaslangDeckOfCards;
-        public Stack<Card> shuffledJavaslangDeckOfCardsAsImmutableList;
+        public io.vavr.collection.List<Card> shuffledJavaslangDeckOfCards;
+        public io.vavr.collection.List<Card> shuffledJavaslangDeckOfCardsAsImmutableList;
 
         @Setup(Level.Invocation)
         public void setup()
@@ -61,8 +60,8 @@ public class DealCardsTest
             googleGuavaDeckOfCardsAsImmutableList = new GoogleGuavaDeckOfCardsAsImmutableList();
             jdk8DeckOfCards = new JDK8DeckOfCards();
             jdk8DeckOfCardsAsList = new JDK8DeckOfCardsAsList();
-            javaslangDeckOfCards = new JavaSlangDeckOfCards();
-            javaslangDeckOfCardsAsImmutableList = new JavaSlangDeckOfCardsAsImmutableList();
+            vavrDeckOfCards = new VavrDeckOfCards();
+            vavrDeckOfCardsAsImmutableList = new VavrDeckOfCardsAsImmutableList();
 
             shuffledApacheCommonsDeckOfCards = apacheCommonsDeckOfCards.shuffle(new Random(123456789L));
             shuffledApachedCommonsDeckOfCardsAsList = apacheCommonsDeckOfCardsAsList.shuffle(new Random(123456789L));
@@ -73,8 +72,8 @@ public class DealCardsTest
             shuffledGoogleGuavaDeckOfCardsAsImmutableList = googleGuavaDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
             shuffledJdk8DeckOfCards = jdk8DeckOfCards.shuffle(new Random(123456789L));
             shuffledJdk8DeckOfCardsAsList = jdk8DeckOfCardsAsList.shuffle(new Random(123456789L));
-            shuffledJavaslangDeckOfCards = javaslangDeckOfCards.shuffle(new Random(123456789L));
-            shuffledJavaslangDeckOfCardsAsImmutableList = javaslangDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
+            shuffledJavaslangDeckOfCards = vavrDeckOfCards.shuffle(new Random(123456789L));
+            shuffledJavaslangDeckOfCardsAsImmutableList = vavrDeckOfCardsAsImmutableList.shuffle(new Random(123456789L));
         }
     }
 
@@ -144,14 +143,14 @@ public class DealCardsTest
     @Benchmark
     public int dealJavaslang(Deck deck)
     {
-        return deck.javaslangDeckOfCards.dealHands(deck.shuffledJavaslangDeckOfCards, 5, 5)
+        return deck.vavrDeckOfCards.dealHands(deck.shuffledJavaslangDeckOfCards, 5, 5)
                 .size();
     }
 
     @Benchmark
     public int dealJavaslangImmutable(Deck deck)
     {
-        return deck.javaslangDeckOfCardsAsImmutableList.dealHands(deck.shuffledJavaslangDeckOfCardsAsImmutableList, 5, 5)
+        return deck.vavrDeckOfCardsAsImmutableList.dealHands(deck.shuffledJavaslangDeckOfCardsAsImmutableList, 5, 5)
                 .size();
     }
 }

@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import javaslang.collection.Stack;
 import org.eclipse.collections.api.block.predicate.Predicate;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
@@ -29,7 +28,7 @@ public class DeckOfCardsAsListTest
     private JDK8DeckOfCardsAsList jdkDeck = new JDK8DeckOfCardsAsList();
     private GoogleGuavaDeckOfCardsAsImmutableList ggDeck = new GoogleGuavaDeckOfCardsAsImmutableList();
     private ApacheCommonsDeckOfCardsAsList acDeck = new ApacheCommonsDeckOfCardsAsList();
-    private JavaSlangDeckOfCardsAsImmutableList jsDeck = new JavaSlangDeckOfCardsAsImmutableList();
+    private VavrDeckOfCardsAsImmutableList vavrDeck = new VavrDeckOfCardsAsImmutableList();
 
     @Test
     public void allCards()
@@ -38,7 +37,7 @@ public class DeckOfCardsAsListTest
         Assert.assertEquals(this.jdkDeck.getCards(), this.ggDeck.getCards());
         Assert.assertEquals(this.ggDeck.getCards(), this.ecDeck1.getCards());
         Assert.assertEquals(this.ecDeck1.getCards(), this.acDeck.getCards());
-        Assert.assertEquals(this.acDeck.getCards(), this.jsDeck.getCards().toJavaList());
+        Assert.assertEquals(this.acDeck.getCards(), this.vavrDeck.getCards().toJavaList());
         Assert.assertEquals(this.ecDeck2.getCards(), this.ecDeck1.getCards());
     }
 
@@ -49,7 +48,7 @@ public class DeckOfCardsAsListTest
         Assert.assertEquals(this.jdkDeck.diamonds(), this.ggDeck.diamonds());
         Assert.assertEquals(this.ggDeck.diamonds(), this.ecDeck1.diamonds());
         Assert.assertEquals(this.ecDeck1.diamonds(), this.acDeck.diamonds());
-        Assert.assertEquals(this.acDeck.diamonds(), this.jsDeck.diamonds().toJavaList());
+        Assert.assertEquals(this.acDeck.diamonds(), this.vavrDeck.diamonds().toJavaList());
         Assert.assertEquals(this.ecDeck2.diamonds(), this.ecDeck1.diamonds());
     }
 
@@ -60,7 +59,7 @@ public class DeckOfCardsAsListTest
         Assert.assertEquals(this.jdkDeck.hearts(), this.ggDeck.hearts());
         Assert.assertEquals(this.ggDeck.hearts(), this.ecDeck1.hearts());
         Assert.assertEquals(this.ecDeck1.hearts(), this.acDeck.hearts());
-        Assert.assertEquals(this.acDeck.hearts(), this.jsDeck.hearts().toJavaList());
+        Assert.assertEquals(this.acDeck.hearts(), this.vavrDeck.hearts().toJavaList());
         Assert.assertEquals(this.ecDeck2.hearts(), this.ecDeck1.hearts());
     }
 
@@ -71,7 +70,7 @@ public class DeckOfCardsAsListTest
         Assert.assertEquals(this.jdkDeck.spades(), this.ggDeck.spades());
         Assert.assertEquals(this.ggDeck.spades(), this.ecDeck1.spades());
         Assert.assertEquals(this.ecDeck1.spades(), this.acDeck.spades());
-        Assert.assertEquals(this.acDeck.spades(), this.jsDeck.spades().toJavaList());
+        Assert.assertEquals(this.acDeck.spades(), this.vavrDeck.spades().toJavaList());
         Assert.assertEquals(this.ecDeck2.spades(), this.ecDeck1.spades());
     }
 
@@ -82,7 +81,7 @@ public class DeckOfCardsAsListTest
         Assert.assertEquals(this.jdkDeck.clubs(), this.ggDeck.clubs());
         Assert.assertEquals(this.ggDeck.clubs(), this.ecDeck1.clubs());
         Assert.assertEquals(this.ecDeck1.clubs(), this.acDeck.clubs());
-        Assert.assertEquals(this.acDeck.clubs(), this.jsDeck.clubs().toJavaList());
+        Assert.assertEquals(this.acDeck.clubs(), this.vavrDeck.clubs().toJavaList());
         Assert.assertEquals(this.ecDeck2.clubs(), this.ecDeck1.clubs());
     }
 
@@ -94,14 +93,14 @@ public class DeckOfCardsAsListTest
         Deque<Card> jdkShuffle = this.jdkDeck.shuffle(new Random(1));
         Deque<Card> ggShuffle = this.ggDeck.shuffle(new Random(1));
         Deque<Card> acShuffle = this.acDeck.shuffle(new Random(1));
-        Stack<Card> jsShuffle = this.jsDeck.shuffle(new Random(1));
+        io.vavr.collection.List<Card> jsShuffle = this.vavrDeck.shuffle(new Random(1));
 
         MutableSet<Card> ec1Hand = this.ecDeck1.deal(ec1Shuffle, 5);
         MutableSet<Card> ec2Hand = this.ecDeck2.deal(ec2Shuffle, 5);
         Set<Card> jdkHand = this.jdkDeck.deal(jdkShuffle, 5);
         Set<Card> ggHand = this.ggDeck.deal(ggShuffle, 5);
         Set<Card> acHand = this.acDeck.deal(acShuffle, 5);
-        Set<Card> jsHand = this.jsDeck.deal(jsShuffle, 5)._1().toJavaSet();
+        Set<Card> jsHand = this.vavrDeck.deal(jsShuffle, 5)._1().toJavaSet();
         Assert.assertEquals(ec1Hand, jdkHand);
         Assert.assertEquals(jdkHand, ggHand);
         Assert.assertEquals(ggHand, ec1Hand);
@@ -117,8 +116,8 @@ public class DeckOfCardsAsListTest
         List<Set<Card>> jdkHands = this.jdkDeck.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> ggHands = this.ggDeck.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> acHands = this.acDeck.shuffleAndDeal(new Random(1), 5, 5);
-        javaslang.collection.List<javaslang.collection.Set<Card>> jsHands =
-                this.jsDeck.shuffleAndDeal(new Random(1), 5, 5);
+        io.vavr.collection.List<io.vavr.collection.Set<Card>> jsHands =
+                this.vavrDeck.shuffleAndDeal(new Random(1), 5, 5);
         Assert.assertEquals(ec1Hands, jdkHands);
         Assert.assertEquals(jdkHands, ggHands);
         Assert.assertEquals(ggHands, ec1Hands);
@@ -137,13 +136,13 @@ public class DeckOfCardsAsListTest
         Deque<Card> jdkShuffled = this.jdkDeck.shuffle(new Random(1));
         Deque<Card> ggShuffled = this.ggDeck.shuffle(new Random(1));
         Deque<Card> acShuffled = this.acDeck.shuffle(new Random(1));
-        Stack<Card> jsShuffled = this.jsDeck.shuffle(new Random(1));
+        io.vavr.collection.List<Card> vavrShuffled = this.vavrDeck.shuffle(new Random(1));
         ImmutableList<Set<Card>> ec1Hands = this.ecDeck1.dealHands(ecShuffled, 5, 5);
         List<Set<Card>> jdkHands = this.jdkDeck.dealHands(jdkShuffled, 5, 5);
         List<Set<Card>> ggHands = this.ggDeck.dealHands(ggShuffled, 5, 5);
         List<Set<Card>> acHands = this.acDeck.dealHands(acShuffled, 5, 5);
-        javaslang.collection.List<javaslang.collection.Set<Card>> jsHands =
-                this.jsDeck.dealHands(jsShuffled, 5, 5);
+        io.vavr.collection.List<io.vavr.collection.Set<Card>> jsHands =
+                this.vavrDeck.dealHands(vavrShuffled, 5, 5);
         Assert.assertEquals(ec1Hands, jdkHands);
         Assert.assertEquals(jdkHands, ggHands);
         Assert.assertEquals(ggHands, ec1Hands);
@@ -161,8 +160,8 @@ public class DeckOfCardsAsListTest
         ImmutableListMultimap<Suit, Card> ecCardsBySuit = this.ecDeck1.getCardsBySuit();
         Map<Suit, List<Card>> jdkCardsBySuit = this.jdkDeck.getCardsBySuit();
         com.google.common.collect.ImmutableListMultimap<Suit, Card> ggCardsBySuit = this.ggDeck.getCardsBySuit();
-        javaslang.collection.Map<Suit, ? extends javaslang.collection.List<Card>> jsCardsBySuit =
-                this.jsDeck.getCardsBySuit();
+        io.vavr.collection.Map<Suit, ? extends io.vavr.collection.List<Card>> jsCardsBySuit =
+                this.vavrDeck.getCardsBySuit();
         Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), jdkCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(jdkCardsBySuit.get(Suit.CLUBS), ggCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(ggCardsBySuit.get(Suit.CLUBS), ecCardsBySuit.get(Suit.CLUBS));
@@ -176,7 +175,7 @@ public class DeckOfCardsAsListTest
         Assert.assertEquals(13, this.acDeck.countsBySuit().getCount(Suit.CLUBS));
         Assert.assertEquals(13, this.ggDeck.countsBySuit().count(Suit.CLUBS));
         Assert.assertEquals(Long.valueOf(13), this.jdkDeck.countsBySuit().get(Suit.CLUBS));
-        Assert.assertEquals(Long.valueOf(13), this.jsDeck.countsBySuit().get(Suit.CLUBS));
+        Assert.assertEquals(Long.valueOf(13), this.vavrDeck.countsBySuit().get(Suit.CLUBS));
     }
 
     @Test
@@ -186,7 +185,7 @@ public class DeckOfCardsAsListTest
         Assert.assertEquals(4, this.acDeck.countsByRank().getCount(Rank.EIGHT));
         Assert.assertEquals(4, this.ggDeck.countsByRank().count(Rank.NINE));
         Assert.assertEquals(Long.valueOf(4), this.jdkDeck.countsByRank().get(Rank.TEN));
-        Assert.assertEquals(Long.valueOf(4), this.jsDeck.countsByRank().get(Rank.TEN));
+        Assert.assertEquals(Long.valueOf(4), this.vavrDeck.countsByRank().get(Rank.TEN));
     }
 
     @Test

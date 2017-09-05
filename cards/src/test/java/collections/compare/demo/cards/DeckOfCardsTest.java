@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableSetMultimap;
-import javaslang.collection.Stack;
 import org.eclipse.collections.api.block.predicate.Predicate;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
@@ -30,7 +29,7 @@ public class DeckOfCardsTest
     private JDK8DeckOfCards jdkDeck = new JDK8DeckOfCards();
     private GoogleGuavaDeckOfCards ggDeck = new GoogleGuavaDeckOfCards();
     private ApacheCommonsDeckOfCards acDeck = new ApacheCommonsDeckOfCards();
-    private JavaSlangDeckOfCards jsDeck = new JavaSlangDeckOfCards();
+    private VavrDeckOfCards jsDeck = new VavrDeckOfCards();
 
     @Test
     public void allCards()
@@ -89,7 +88,7 @@ public class DeckOfCardsTest
         Deque<Card> jdkShuffle = this.jdkDeck.shuffle(new Random(1));
         Deque<Card> ggShuffle = this.ggDeck.shuffle(new Random(1));
         Deque<Card> acShuffle = this.acDeck.shuffle(new Random(1));
-        Stack<Card> jsShuffle = this.jsDeck.shuffle(new Random(1));
+        io.vavr.collection.List<Card> jsShuffle = this.jsDeck.shuffle(new Random(1));
 
         MutableSet<Card> ecHand = this.ecDeck.deal(ecShuffle, 5);
         Set<Card> jdkHand = this.jdkDeck.deal(jdkShuffle, 5);
@@ -110,7 +109,7 @@ public class DeckOfCardsTest
         List<Set<Card>> jdkHands = this.jdkDeck.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> ggHands = this.ggDeck.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> acHands = this.acDeck.shuffleAndDeal(new Random(1), 5, 5);
-        javaslang.collection.List<javaslang.collection.Set<Card>> jsHands =
+        io.vavr.collection.List<io.vavr.collection.Set<Card>> jsHands =
                 this.jsDeck.shuffleAndDeal(new Random(1), 5, 5);
         Assert.assertEquals(ecHands, jdkHands);
         Assert.assertEquals(jdkHands, ggHands);
@@ -130,12 +129,12 @@ public class DeckOfCardsTest
         Deque<Card> jdkShuffled = this.jdkDeck.shuffle(new Random(1));
         Deque<Card> ggShuffled = this.ggDeck.shuffle(new Random(1));
         Deque<Card> acShuffled = this.acDeck.shuffle(new Random(1));
-        Stack<Card> jsShuffled = this.jsDeck.shuffle(new Random(1));
+        io.vavr.collection.List<Card> jsShuffled = this.jsDeck.shuffle(new Random(1));
         ImmutableList<Set<Card>> ecHands = this.ecDeck.dealHands(ecShuffled, 5, 5);
         List<Set<Card>> jdkHands = this.jdkDeck.dealHands(jdkShuffled, 5, 5);
         List<Set<Card>> ggHands = this.ggDeck.dealHands(ggShuffled, 5, 5);
         List<Set<Card>> acHands = this.acDeck.dealHands(acShuffled, 5, 5);
-        javaslang.collection.List<javaslang.collection.Set<Card>> jsHands =
+        io.vavr.collection.List<io.vavr.collection.Set<Card>> jsHands =
                 this.jsDeck.dealHands(jsShuffled, 5, 5);
         Assert.assertEquals(ecHands, jdkHands);
         Assert.assertEquals(jdkHands, ggHands);
@@ -154,7 +153,7 @@ public class DeckOfCardsTest
         ImmutableSortedSetMultimap<Suit, Card> ecCardsBySuit = this.ecDeck.getCardsBySuit();
         Map<Suit, SortedSet<Card>> jdkCardsBySuit = this.jdkDeck.getCardsBySuit();
         ImmutableSetMultimap<Suit, Card> ggCardsBySuit = this.ggDeck.getCardsBySuit();
-        javaslang.collection.Map<Suit, ? extends javaslang.collection.SortedSet<Card>> jsCardsBySuit =
+        io.vavr.collection.Map<Suit, ? extends io.vavr.collection.SortedSet<Card>> jsCardsBySuit =
                 this.jsDeck.getCardsBySuit();
         Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), jdkCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(jdkCardsBySuit.get(Suit.CLUBS), ggCardsBySuit.get(Suit.CLUBS));

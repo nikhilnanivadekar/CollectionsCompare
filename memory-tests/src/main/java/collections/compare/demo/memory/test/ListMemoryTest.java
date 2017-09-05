@@ -69,14 +69,14 @@ public final class ListMemoryTest
 
     private static void memoryBenchIntegerJavaSlangList()
     {
-        javaslang.collection.List<Integer> javaSlangList = javaslang.collection.List.empty();
+        io.vavr.collection.List<Integer> javaSlangList = io.vavr.collection.List.empty();
         MemoryTestUtils.printMemoryUtilization("Integer", javaSlangList, javaSlangList.size());
 
         for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                javaSlangList = javaslang.collection.List.ofAll(Interval.fromTo(0, i - 1));
+                javaSlangList = io.vavr.collection.List.ofAll(Interval.fromTo(0, i - 1));
                 MemoryTestUtils.printMemoryUtilization("Integer", javaSlangList, javaSlangList.size());
             }
         }
@@ -144,14 +144,14 @@ public final class ListMemoryTest
 
     private static void memoryBenchStringJavaSlangList()
     {
-        javaslang.collection.List<String> javaSlangList = javaslang.collection.List.empty();
+        io.vavr.collection.List<String> javaSlangList = io.vavr.collection.List.empty();
         MemoryTestUtils.printMemoryUtilization("String", javaSlangList, javaSlangList.size());
 
         for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                javaSlangList = javaslang.collection.List.ofAll(MemoryTestUtils.getStringList(i));
+                javaSlangList = io.vavr.collection.List.ofAll(MemoryTestUtils.getStringList(i));
                 MemoryTestUtils.printMemoryUtilization("String", javaSlangList, javaSlangList.size());
             }
         }

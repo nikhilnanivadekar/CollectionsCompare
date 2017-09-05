@@ -46,10 +46,10 @@ public class DeckOfCardsAsListTest
     }
 
     @Benchmark
-    public javaslang.collection.List<javaslang.collection.Set<Card>> dealJavaslang()
+    public io.vavr.collection.List<io.vavr.collection.Set<Card>> dealJavaslang()
     {
-        JavaSlangDeckOfCardsAsImmutableList deck = new JavaSlangDeckOfCardsAsImmutableList();
-        javaslang.collection.List<javaslang.collection.Set<Card>> hands =
+        VavrDeckOfCardsAsImmutableList deck = new VavrDeckOfCardsAsImmutableList();
+        io.vavr.collection.List<io.vavr.collection.Set<Card>> hands =
                 deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands;
     }

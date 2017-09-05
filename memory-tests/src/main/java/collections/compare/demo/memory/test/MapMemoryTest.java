@@ -67,14 +67,14 @@ public final class MapMemoryTest
 
     private static void memoryBenchIntegerJavaSlangMap()
     {
-        javaslang.collection.HashMap<Integer, Integer> javaSlangMap = javaslang.collection.HashMap.empty();
+        io.vavr.collection.HashMap<Integer, Integer> javaSlangMap = io.vavr.collection.HashMap.empty();
         MemoryTestUtils.printMemoryUtilization("Integer", javaSlangMap, javaSlangMap.size());
 
         for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                javaSlangMap = javaslang.collection.HashMap.ofAll(MemoryTestUtils.getIntegerMap(i));
+                javaSlangMap = io.vavr.collection.HashMap.ofAll(MemoryTestUtils.getIntegerMap(i));
                 MemoryTestUtils.printMemoryUtilization("Integer", javaSlangMap, javaSlangMap.size());
             }
         }
@@ -144,14 +144,14 @@ public final class MapMemoryTest
 
     private static void memoryBenchStringJavaSlangMap()
     {
-        javaslang.collection.HashMap<String, String> javaSlangMap = javaslang.collection.HashMap.empty();
+        io.vavr.collection.HashMap<String, String> javaSlangMap = io.vavr.collection.HashMap.empty();
         MemoryTestUtils.printMemoryUtilization("String", javaSlangMap, javaSlangMap.size());
 
         for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                javaSlangMap = javaslang.collection.HashMap.ofAll(MemoryTestUtils.getStringMap(i));
+                javaSlangMap = io.vavr.collection.HashMap.ofAll(MemoryTestUtils.getStringMap(i));
                 MemoryTestUtils.printMemoryUtilization("String", javaSlangMap, javaSlangMap.size());
             }
         }

@@ -3,7 +3,6 @@ package collections.compare.demo.memory.test;
 import java.util.List;
 
 import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
-import objectexplorer.MemoryMeasurer;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.impl.factory.Maps;
 import org.eclipse.collections.impl.list.Interval;

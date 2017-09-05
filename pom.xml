@@ -22,10 +22,10 @@
     <properties>
         <apache-collections.version>4.1</apache-collections.version>
         <eclipse-collections.version>9.0.0.M2</eclipse-collections.version>
-        <guava.version>21.0</guava.version>
+        <guava.version>23.0</guava.version>
         <junit.version>4.12</junit.version>
-        <slf4j.version>1.7.14</slf4j.version>
-        <jmh.version>1.18</jmh.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <jmh.version>1.19</jmh.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -58,9 +58,9 @@
             </dependency>
 
             <dependency>
-                <groupId>io.javaslang</groupId>
-                <artifactId>javaslang</artifactId>
-                <version>2.1.0-alpha</version>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>0.9.0</version>
             </dependency>
 
             <dependency>

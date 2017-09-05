@@ -71,14 +71,14 @@ public class DeckCreationTest
     }
 
     @Benchmark
-    public JavaSlangDeckOfCards deckJavaslang()
+    public VavrDeckOfCards deckJavaslang()
     {
-        return new JavaSlangDeckOfCards();
+        return new VavrDeckOfCards();
     }
 
     @Benchmark
-    public JavaSlangDeckOfCardsAsImmutableList deckJavaslangImmutable()
+    public VavrDeckOfCardsAsImmutableList deckJavaslangImmutable()
     {
-        return new JavaSlangDeckOfCardsAsImmutableList();
+        return new VavrDeckOfCardsAsImmutableList();
     }
 }

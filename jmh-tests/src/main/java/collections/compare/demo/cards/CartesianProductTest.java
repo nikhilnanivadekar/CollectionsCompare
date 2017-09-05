@@ -8,7 +8,7 @@ import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import javaslang.collection.List;
+import io.vavr.collection.List;
 import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.impl.collector.Collectors2;
 import org.eclipse.collections.impl.factory.Sets;
@@ -91,7 +91,7 @@ public class CartesianProductTest
     @Benchmark
     public int cartesianProductJavaslang()
     {
-        javaslang.collection.TreeSet<Card> set = javaslang.collection.TreeSet.ofAll(suits)
+        io.vavr.collection.TreeSet<Card> set = io.vavr.collection.TreeSet.ofAll(suits)
                 .flatMap(suit -> List.ofAll(ranks).map(rank -> new Card(rank, suit)));
         return set.size();
     }

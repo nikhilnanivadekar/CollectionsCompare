@@ -55,8 +55,8 @@ public class DeckOfCardsTest
     @Benchmark
     public int dealJavaslang()
     {
-        JavaSlangDeckOfCards deck = new JavaSlangDeckOfCards();
-        javaslang.collection.List<javaslang.collection.Set<Card>> hands =
+        VavrDeckOfCards deck = new VavrDeckOfCards();
+        io.vavr.collection.List<io.vavr.collection.Set<Card>> hands =
                 deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands.size();
     }

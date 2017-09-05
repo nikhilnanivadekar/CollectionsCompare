@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.function.Predicate;
 
-import javaslang.collection.List;
-import javaslang.collection.Map;
-import javaslang.collection.Set;
+import io.vavr.collection.List;
+import io.vavr.collection.Map;
+import io.vavr.collection.Set;
 import org.eclipse.collections.impl.factory.Maps;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class JavaSlangProtocolTest
+public class VavrProtocolTest
 {
     private List<String> list = List.of("one", "two", "three");
     private Set<String> set = list.toSet();

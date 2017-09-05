@@ -71,14 +71,14 @@ public final class SetMemoryTest
 
     private static void memoryBenchIntegerJavaSlangSet()
     {
-        javaslang.collection.HashSet<Integer> javaSlangSet = javaslang.collection.HashSet.empty();
+        io.vavr.collection.HashSet<Integer> javaSlangSet = io.vavr.collection.HashSet.empty();
         MemoryTestUtils.printMemoryUtilization("Integer", javaSlangSet, javaSlangSet.size());
 
         for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                javaSlangSet = javaslang.collection.HashSet.ofAll(Interval.fromTo(0, i - 1));
+                javaSlangSet = io.vavr.collection.HashSet.ofAll(Interval.fromTo(0, i - 1));
                 MemoryTestUtils.printMemoryUtilization("Integer", javaSlangSet, javaSlangSet.size());
             }
         }
@@ -148,14 +148,14 @@ public final class SetMemoryTest
 
     private static void memoryBenchStringJavaSlangSet()
     {
-        javaslang.collection.HashSet<String> javaSlangSet = javaslang.collection.HashSet.empty();
+        io.vavr.collection.HashSet<String> javaSlangSet = io.vavr.collection.HashSet.empty();
         MemoryTestUtils.printMemoryUtilization("String", javaSlangSet, javaSlangSet.size());
 
         for (int i = 0; i < 1_000_001; i++)
         {
             if (i % 10_000 == 0)
             {
-                javaSlangSet = javaslang.collection.HashSet.ofAll(MemoryTestUtils.getStringList(i));
+                javaSlangSet = io.vavr.collection.HashSet.ofAll(MemoryTestUtils.getStringList(i));
                 MemoryTestUtils.printMemoryUtilization("String", javaSlangSet, javaSlangSet.size());
             }
         }

@@ -39,8 +39,8 @@ public class GroupByTest
         public GoogleGuavaDeckOfCardsAsImmutableList googleGuavaDeckOfCardsAsImmutableList = new GoogleGuavaDeckOfCardsAsImmutableList();
         public JDK8DeckOfCards jdk8DeckOfCards = new JDK8DeckOfCards();
         public JDK8DeckOfCardsAsList jdk8DeckOfCardsAsList = new JDK8DeckOfCardsAsList();
-        public JavaSlangDeckOfCards javaslangDeckOfCards = new JavaSlangDeckOfCards();
-        public JavaSlangDeckOfCardsAsImmutableList javaslangDeckOfCardsAsImmutableList = new JavaSlangDeckOfCardsAsImmutableList();
+        public VavrDeckOfCards javaslangDeckOfCards = new VavrDeckOfCards();
+        public VavrDeckOfCardsAsImmutableList javaslangDeckOfCardsAsImmutableList = new VavrDeckOfCardsAsImmutableList();
     }
 
     @Benchmark
