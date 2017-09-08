@@ -3,7 +3,7 @@ package collections.compare.demo.game.fish;
 import java.util.Random;
 
 import collections.compare.demo.cards.Card;
-import collections.compare.demo.cards.EclipseCollectionsDeckOfCards;
+import collections.compare.demo.cards.sortedset.EclipseCollectionsDeckOfCards;
 import collections.compare.demo.cards.Rank;
 import collections.compare.demo.game.Outcome;
 import org.eclipse.collections.api.bag.MutableBag;

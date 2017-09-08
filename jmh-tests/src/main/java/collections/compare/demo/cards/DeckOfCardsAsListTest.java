@@ -5,6 +5,12 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import collections.compare.demo.cards.list.ApacheCommonsDeckOfCards;
+import collections.compare.demo.cards.list.EclipseCollectionsDeckOfCards;
+import collections.compare.demo.cards.list.EclipseCollectionsDeckOfCardsAsReadableList;
+import collections.compare.demo.cards.list.GoogleGuavaDeckOfCards;
+import collections.compare.demo.cards.list.JDK8DeckOfCards;
+import collections.compare.demo.cards.list.VavrDeckOfCards;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -24,7 +30,7 @@ public class DeckOfCardsAsListTest
     @Benchmark
     public List<Set<Card>> dealJDKUnmodifiable()
     {
-        JDK8DeckOfCardsAsList deck = new JDK8DeckOfCardsAsList();
+        JDK8DeckOfCards deck = new JDK8DeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands;
     }
@@ -32,7 +38,7 @@ public class DeckOfCardsAsListTest
     @Benchmark
     public List<Set<Card>> dealGuavaImmutable()
     {
-        GoogleGuavaDeckOfCardsAsImmutableList deck = new GoogleGuavaDeckOfCardsAsImmutableList();
+        GoogleGuavaDeckOfCards deck = new GoogleGuavaDeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands;
     }
@@ -40,7 +46,7 @@ public class DeckOfCardsAsListTest
     @Benchmark
     public List<Set<Card>> dealApacheUnmodifiable()
     {
-        ApacheCommonsDeckOfCardsAsList deck = new ApacheCommonsDeckOfCardsAsList();
+        ApacheCommonsDeckOfCards deck = new ApacheCommonsDeckOfCards();
         List<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands;
     }
@@ -48,7 +54,7 @@ public class DeckOfCardsAsListTest
     @Benchmark
     public io.vavr.collection.List<io.vavr.collection.Set<Card>> dealJavaslang()
     {
-        VavrDeckOfCardsAsImmutableList deck = new VavrDeckOfCardsAsImmutableList();
+        VavrDeckOfCards deck = new VavrDeckOfCards();
         io.vavr.collection.List<io.vavr.collection.Set<Card>> hands =
                 deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands;
@@ -57,7 +63,7 @@ public class DeckOfCardsAsListTest
     @Benchmark
     public ImmutableList<Set<Card>> dealECImmutable()
     {
-        EclipseCollectionsDeckOfCardsAsImmutableList deck = new EclipseCollectionsDeckOfCardsAsImmutableList();
+        EclipseCollectionsDeckOfCards deck = new EclipseCollectionsDeckOfCards();
         ImmutableList<Set<Card>> hands = deck.shuffleAndDeal(new Random(1), 5, 5);
         return hands;
     }

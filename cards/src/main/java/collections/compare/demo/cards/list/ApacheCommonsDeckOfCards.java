@@ -1,4 +1,4 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.list;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -6,33 +6,35 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class JDK8DeckOfCardsAsList
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
+import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.MultiMapUtils;
+import org.apache.commons.collections4.MultiSet;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.bag.HashBag;
+import org.apache.commons.collections4.multiset.HashMultiSet;
+
+public class ApacheCommonsDeckOfCards
 {
     private List<Card> cards;
-    private Map<Suit, List<Card>> cardsBySuit;
+    private MultiValuedMap<Suit, Card> cardsBySuit;
 
-    public JDK8DeckOfCardsAsList()
+    public ApacheCommonsDeckOfCards()
     {
-        this.cards = Collections.unmodifiableList(
-                Card.streamCards()
-                        .sorted()
-                        .collect(Collectors.toList()));
-        this.cardsBySuit =
-                this.cards.stream().collect(Collectors.collectingAndThen(
-                        Collectors.groupingBy(
-                                Card::getSuit,
-                                Collectors.mapping(Function.identity(),
-                                        Collectors.collectingAndThen(
-                                                Collectors.toList(),
-                                                Collections::unmodifiableList))),
-                        Collections::unmodifiableMap));
+        this.cards = ListUtils.unmodifiableList(
+                Card.streamCards().sorted().collect(Collectors.toList()));
+        ListValuedMap<Suit, Card> cbs = MultiMapUtils.newListValuedHashMap();
+        this.cards.forEach(card -> cbs.put(card.getSuit(), card));
+        this.cardsBySuit = MultiMapUtils.unmodifiableMultiValuedMap(cbs);
     }
 
     public Deque<Card> shuffle(Random random)
@@ -66,7 +68,7 @@ public class JDK8DeckOfCardsAsList
 
     public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand)
     {
-        return Collections.unmodifiableList(
+        return ListUtils.unmodifiableList(
                 IntStream.range(0, hands)
                         .mapToObj(i -> this.deal(shuffled, cardsPerHand))
                         .collect(Collectors.toList()));
@@ -74,32 +76,32 @@ public class JDK8DeckOfCardsAsList
 
     public List<Card> diamonds()
     {
-        return this.cardsBySuit.get(Suit.DIAMONDS);
+        return MultiMapUtils.getValuesAsList(this.cardsBySuit, Suit.DIAMONDS);
     }
 
     public List<Card> hearts()
     {
-        return this.cardsBySuit.get(Suit.HEARTS);
+        return MultiMapUtils.getValuesAsList(this.cardsBySuit, Suit.HEARTS);
     }
 
     public List<Card> spades()
     {
-        return this.cardsBySuit.get(Suit.SPADES);
+        return MultiMapUtils.getValuesAsList(this.cardsBySuit, Suit.SPADES);
     }
 
     public List<Card> clubs()
     {
-        return this.cardsBySuit.get(Suit.CLUBS);
+        return MultiMapUtils.getValuesAsList(this.cardsBySuit, Suit.CLUBS);
     }
 
-    public Map<Suit, Long> countsBySuit()
+    public Bag<Suit> countsBySuit()
     {
-        return this.cards.stream().collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
+        return this.cards.stream().map(Card::getSuit).collect(Collectors.toCollection(HashBag::new));
     }
 
-    public Map<Rank, Long> countsByRank()
+    public MultiSet<Rank> countsByRank()
     {
-        return this.cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
+        return this.cards.stream().map(Card::getRank).collect(Collectors.toCollection(HashMultiSet::new));
     }
 
     public List<Card> getCards()
@@ -107,7 +109,7 @@ public class JDK8DeckOfCardsAsList
         return this.cards;
     }
 
-    public Map<Suit, List<Card>> getCardsBySuit()
+    public MultiValuedMap<Suit, Card> getCardsBySuit()
     {
         return this.cardsBySuit;
     }

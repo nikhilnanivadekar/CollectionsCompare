@@ -1,17 +1,17 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.list;
 
-import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
 
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
 import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.list.ListIterable;
-import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.list.ListMultimap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.factory.Lists;
-import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
 
 public class EclipseCollectionsDeckOfCardsAsReadableList
@@ -22,8 +22,6 @@ public class EclipseCollectionsDeckOfCardsAsReadableList
     public EclipseCollectionsDeckOfCardsAsReadableList()
     {
         this.cards = Card.lazyCards().toSortedList().asUnmodifiable();
-//        this.cards =
-//                Card.streamCards().collect(Collectors2.toSortedList()).asUnmodifiable();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
@@ -81,12 +79,12 @@ public class EclipseCollectionsDeckOfCardsAsReadableList
 
     public Bag<Suit> countsBySuit()
     {
-        return this.cards.countBy(Card::getSuit).toBag();
+        return this.cards.countBy(Card::getSuit);
     }
 
     public Bag<Rank> countsByRank()
     {
-        return this.cards.countBy(Card::getRank).toBag();
+        return this.cards.countBy(Card::getRank);
     }
 
     public ListIterable<Card> getCards()

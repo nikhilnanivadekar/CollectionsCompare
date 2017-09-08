@@ -1,4 +1,4 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.sortedset;
 
 import java.util.Deque;
 import java.util.List;
@@ -9,6 +9,9 @@ import java.util.SortedSet;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.eclipse.collections.api.block.predicate.Predicate;
 import org.eclipse.collections.api.list.ImmutableList;

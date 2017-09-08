@@ -4,6 +4,12 @@ import java.util.Deque;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import collections.compare.demo.cards.list.ApacheCommonsDeckOfCards;
+import collections.compare.demo.cards.list.EclipseCollectionsDeckOfCards;
+import collections.compare.demo.cards.list.EclipseCollectionsDeckOfCardsAsReadableList;
+import collections.compare.demo.cards.list.GoogleGuavaDeckOfCards;
+import collections.compare.demo.cards.list.JDK8DeckOfCards;
+import collections.compare.demo.cards.list.VavrDeckOfCards;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -24,17 +30,17 @@ public class DealCardsTest
     @State(Scope.Thread)
     public static class Deck
     {
-        public ApacheCommonsDeckOfCards apacheCommonsDeckOfCards;
-        public ApacheCommonsDeckOfCardsAsList apacheCommonsDeckOfCardsAsList;
-        public EclipseCollectionsDeckOfCards eclipseCollectionsDeckOfCards;
-        public EclipseCollectionsDeckOfCardsAsImmutableList eclipseCollectionsDeckOfCardsAsImmutableList;
+        public collections.compare.demo.cards.sortedset.ApacheCommonsDeckOfCards apacheCommonsDeckOfCards;
+        public ApacheCommonsDeckOfCards apacheCommonsDeckOfCardsAsList;
+        public collections.compare.demo.cards.sortedset.EclipseCollectionsDeckOfCards eclipseCollectionsDeckOfCards;
+        public EclipseCollectionsDeckOfCards eclipseCollectionsDeckOfCardsAsImmutableList;
         public EclipseCollectionsDeckOfCardsAsReadableList eclipseCollectionsDeckOfCardsAsReadableList;
-        public GoogleGuavaDeckOfCards googleGuavaDeckOfCards;
-        public GoogleGuavaDeckOfCardsAsImmutableList googleGuavaDeckOfCardsAsImmutableList;
-        public JDK8DeckOfCards jdk8DeckOfCards;
-        public JDK8DeckOfCardsAsList jdk8DeckOfCardsAsList;
-        public VavrDeckOfCards vavrDeckOfCards;
-        public VavrDeckOfCardsAsImmutableList vavrDeckOfCardsAsImmutableList;
+        public collections.compare.demo.cards.sortedset.GoogleGuavaDeckOfCards googleGuavaDeckOfCards;
+        public GoogleGuavaDeckOfCards googleGuavaDeckOfCardsAsImmutableList;
+        public collections.compare.demo.cards.sortedset.JDK8DeckOfCards jdk8DeckOfCards;
+        public JDK8DeckOfCards jdk8DeckOfCardsAsList;
+        public collections.compare.demo.cards.sortedset.VavrDeckOfCards vavrDeckOfCards;
+        public VavrDeckOfCards vavrDeckOfCardsAsImmutableList;
 
         public Deque<Card> shuffledApacheCommonsDeckOfCards;
         public Deque<Card> shuffledApachedCommonsDeckOfCardsAsList;
@@ -51,17 +57,17 @@ public class DealCardsTest
         @Setup(Level.Invocation)
         public void setup()
         {
-            apacheCommonsDeckOfCards = new ApacheCommonsDeckOfCards();
-            apacheCommonsDeckOfCardsAsList = new ApacheCommonsDeckOfCardsAsList();
-            eclipseCollectionsDeckOfCards = new EclipseCollectionsDeckOfCards();
-            eclipseCollectionsDeckOfCardsAsImmutableList = new EclipseCollectionsDeckOfCardsAsImmutableList();
+            apacheCommonsDeckOfCards = new collections.compare.demo.cards.sortedset.ApacheCommonsDeckOfCards();
+            apacheCommonsDeckOfCardsAsList = new ApacheCommonsDeckOfCards();
+            eclipseCollectionsDeckOfCards = new collections.compare.demo.cards.sortedset.EclipseCollectionsDeckOfCards();
+            eclipseCollectionsDeckOfCardsAsImmutableList = new EclipseCollectionsDeckOfCards();
             eclipseCollectionsDeckOfCardsAsReadableList = new EclipseCollectionsDeckOfCardsAsReadableList();
-            googleGuavaDeckOfCards = new GoogleGuavaDeckOfCards();
-            googleGuavaDeckOfCardsAsImmutableList = new GoogleGuavaDeckOfCardsAsImmutableList();
-            jdk8DeckOfCards = new JDK8DeckOfCards();
-            jdk8DeckOfCardsAsList = new JDK8DeckOfCardsAsList();
-            vavrDeckOfCards = new VavrDeckOfCards();
-            vavrDeckOfCardsAsImmutableList = new VavrDeckOfCardsAsImmutableList();
+            googleGuavaDeckOfCards = new collections.compare.demo.cards.sortedset.GoogleGuavaDeckOfCards();
+            googleGuavaDeckOfCardsAsImmutableList = new GoogleGuavaDeckOfCards();
+            jdk8DeckOfCards = new collections.compare.demo.cards.sortedset.JDK8DeckOfCards();
+            jdk8DeckOfCardsAsList = new JDK8DeckOfCards();
+            vavrDeckOfCards = new collections.compare.demo.cards.sortedset.VavrDeckOfCards();
+            vavrDeckOfCardsAsImmutableList = new VavrDeckOfCards();
 
             shuffledApacheCommonsDeckOfCards = apacheCommonsDeckOfCards.shuffle(new Random(123456789L));
             shuffledApachedCommonsDeckOfCardsAsList = apacheCommonsDeckOfCardsAsList.shuffle(new Random(123456789L));

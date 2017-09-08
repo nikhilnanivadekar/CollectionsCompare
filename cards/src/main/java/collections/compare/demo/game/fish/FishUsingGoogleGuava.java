@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Set;
 
 import collections.compare.demo.cards.Card;
-import collections.compare.demo.cards.GoogleGuavaDeckOfCards;
+import collections.compare.demo.cards.sortedset.GoogleGuavaDeckOfCards;
 import collections.compare.demo.cards.Rank;
 import collections.compare.demo.game.Outcome;
 import com.google.common.collect.HashMultimap;

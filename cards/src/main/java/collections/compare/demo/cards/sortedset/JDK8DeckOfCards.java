@@ -1,4 +1,4 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.sortedset;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -14,6 +14,10 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
 
 public class JDK8DeckOfCards
 {

@@ -1,38 +1,32 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.list;
 
 import java.util.Collections;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.HashSet;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import io.vavr.collection.Set;
-import io.vavr.collection.SortedSet;
-import io.vavr.collection.TreeSet;
 
 public class VavrDeckOfCards
 {
-    private SortedSet<Card> cards;
-    private Map<Suit, ? extends SortedSet<Card>> cardsBySuit;
+    private List<Card> cards;
+    private Map<Suit, ? extends List<Card>> cardsBySuit;
 
     public VavrDeckOfCards()
     {
-        this.cards = Card.streamCards()
-                .collect(TreeSet.collector());
+        this.cards = Card.streamCards().sorted().collect(List.collector());
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
     public List<Card> shuffle(Random random)
     {
-        // Unfortunately shuffle does not take Random as a parameter
-        // so can't be easily tested
-        //        return this.cards.toList()
-        //                .shuffle()
-        //                .shuffle()
-        //                .shuffle().toStack();
         java.util.List<Card> shuffled = this.cards.toJavaList();
         Collections.shuffle(shuffled, random);
         Collections.shuffle(shuffled, random);
@@ -65,10 +59,7 @@ public class VavrDeckOfCards
         return this.dealHands(shuffled, hands, cardsPerHand);
     }
 
-    public List<Set<Card>> dealHands(
-            List<Card> shuffled,
-            int hands,
-            int cardsPerHand)
+    public List<Set<Card>> dealHands(List<Card> shuffled, int hands, int cardsPerHand)
     {
         List<Set<Card>> list = List.empty();
         for (int i = 0; i < hands; i++)
@@ -81,48 +72,42 @@ public class VavrDeckOfCards
         return list;
     }
 
-    public SortedSet<Card> diamonds()
+    public List<Card> diamonds()
     {
         return this.cardsBySuit.get(Suit.DIAMONDS).get();
     }
 
-    public SortedSet<Card> hearts()
+    public List<Card> hearts()
     {
         return this.cardsBySuit.get(Suit.HEARTS).get();
     }
 
-    public SortedSet<Card> spades()
+    public List<Card> spades()
     {
         return this.cardsBySuit.get(Suit.SPADES).get();
     }
 
-    public SortedSet<Card> clubs()
+    public List<Card> clubs()
     {
         return this.cardsBySuit.get(Suit.CLUBS).get();
     }
 
     public java.util.Map<Suit, Long> countsBySuit()
     {
-        return this.cards.collect(
-                Collectors.groupingBy(
-                        Card::getSuit,
-                        Collectors.counting()));
+        return this.cards.toJavaStream().collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
     }
 
     public java.util.Map<Rank, Long> countsByRank()
     {
-        return this.cards.collect(
-                Collectors.groupingBy(
-                        Card::getRank,
-                        Collectors.counting()));
+        return this.cards.toJavaStream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
     }
 
-    public SortedSet<Card> getCards()
+    public List<Card> getCards()
     {
         return this.cards;
     }
 
-    public Map<Suit, ? extends SortedSet<Card>> getCardsBySuit()
+    public Map<Suit, ? extends List<Card>> getCardsBySuit()
     {
         return this.cardsBySuit;
     }

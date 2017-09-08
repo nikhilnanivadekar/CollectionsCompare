@@ -2,6 +2,12 @@ package collections.compare.demo.cards;
 
 import java.util.concurrent.TimeUnit;
 
+import collections.compare.demo.cards.list.ApacheCommonsDeckOfCards;
+import collections.compare.demo.cards.list.EclipseCollectionsDeckOfCards;
+import collections.compare.demo.cards.list.EclipseCollectionsDeckOfCardsAsReadableList;
+import collections.compare.demo.cards.list.GoogleGuavaDeckOfCards;
+import collections.compare.demo.cards.list.JDK8DeckOfCards;
+import collections.compare.demo.cards.list.VavrDeckOfCards;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -17,27 +23,27 @@ import org.openjdk.jmh.annotations.State;
 public class DeckCreationTest
 {
     @Benchmark
-    public ApacheCommonsDeckOfCards deckApache()
+    public collections.compare.demo.cards.sortedset.ApacheCommonsDeckOfCards deckApache()
+    {
+        return new collections.compare.demo.cards.sortedset.ApacheCommonsDeckOfCards();
+    }
+
+    @Benchmark
+    public ApacheCommonsDeckOfCards deckApacheUnmodifiable()
     {
         return new ApacheCommonsDeckOfCards();
     }
 
     @Benchmark
-    public ApacheCommonsDeckOfCardsAsList deckApacheUnmodifiable()
+    public collections.compare.demo.cards.sortedset.EclipseCollectionsDeckOfCards deckEC()
     {
-        return new ApacheCommonsDeckOfCardsAsList();
+        return new collections.compare.demo.cards.sortedset.EclipseCollectionsDeckOfCards();
     }
 
     @Benchmark
-    public EclipseCollectionsDeckOfCards deckEC()
+    public EclipseCollectionsDeckOfCards deckECImmutable()
     {
         return new EclipseCollectionsDeckOfCards();
-    }
-
-    @Benchmark
-    public EclipseCollectionsDeckOfCardsAsImmutableList deckECImmutable()
-    {
-        return new EclipseCollectionsDeckOfCardsAsImmutableList();
     }
 
     @Benchmark
@@ -47,38 +53,38 @@ public class DeckCreationTest
     }
 
     @Benchmark
-    public GoogleGuavaDeckOfCards deckGuava()
+    public collections.compare.demo.cards.sortedset.GoogleGuavaDeckOfCards deckGuava()
+    {
+        return new collections.compare.demo.cards.sortedset.GoogleGuavaDeckOfCards();
+    }
+
+    @Benchmark
+    public GoogleGuavaDeckOfCards deckGuavaImmutable()
     {
         return new GoogleGuavaDeckOfCards();
     }
 
     @Benchmark
-    public GoogleGuavaDeckOfCardsAsImmutableList deckGuavaImmutable()
+    public collections.compare.demo.cards.sortedset.JDK8DeckOfCards deckJDK()
     {
-        return new GoogleGuavaDeckOfCardsAsImmutableList();
+        return new collections.compare.demo.cards.sortedset.JDK8DeckOfCards();
     }
 
     @Benchmark
-    public JDK8DeckOfCards deckJDK()
+    public JDK8DeckOfCards deckJDKUnmodifiable()
     {
         return new JDK8DeckOfCards();
     }
 
     @Benchmark
-    public JDK8DeckOfCardsAsList deckJDKUnmodifiable()
+    public collections.compare.demo.cards.sortedset.VavrDeckOfCards deckJavaslang()
     {
-        return new JDK8DeckOfCardsAsList();
+        return new collections.compare.demo.cards.sortedset.VavrDeckOfCards();
     }
 
     @Benchmark
-    public VavrDeckOfCards deckJavaslang()
+    public VavrDeckOfCards deckJavaslangImmutable()
     {
         return new VavrDeckOfCards();
-    }
-
-    @Benchmark
-    public VavrDeckOfCardsAsImmutableList deckJavaslangImmutable()
-    {
-        return new VavrDeckOfCardsAsImmutableList();
     }
 }

@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import collections.compare.demo.cards.ApacheCommonsDeckOfCards;
+import collections.compare.demo.cards.sortedset.ApacheCommonsDeckOfCards;
 import collections.compare.demo.cards.Card;
 import collections.compare.demo.cards.Rank;
 import collections.compare.demo.game.Outcome;

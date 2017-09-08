@@ -1,4 +1,4 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.list;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
 import com.google.common.base.Function;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
@@ -18,16 +21,14 @@ import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Multiset;
 
-public class GoogleGuavaDeckOfCardsAsImmutableList
+public class GoogleGuavaDeckOfCards
 {
     private ImmutableList<Card> cards;
     private ImmutableListMultimap<Suit, Card> cardsBySuit;
 
-    public GoogleGuavaDeckOfCardsAsImmutableList()
+    public GoogleGuavaDeckOfCards()
     {
-        this.cards = Card.streamCards()
-                .sorted()
-                .collect(ImmutableList.toImmutableList());
+        this.cards = Card.streamCards().sorted().collect(ImmutableList.toImmutableList());
         //noinspection RedundantCast
         this.cardsBySuit = Multimaps.index(this.cards, Card::getSuit);
     }

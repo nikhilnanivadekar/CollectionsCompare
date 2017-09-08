@@ -5,6 +5,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import collections.compare.demo.cards.sortedset.ApacheCommonsDeckOfCards;
+import collections.compare.demo.cards.sortedset.EclipseCollectionsDeckOfCards;
+import collections.compare.demo.cards.sortedset.GoogleGuavaDeckOfCards;
+import collections.compare.demo.cards.sortedset.JDK8DeckOfCards;
+import collections.compare.demo.cards.sortedset.VavrDeckOfCards;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;

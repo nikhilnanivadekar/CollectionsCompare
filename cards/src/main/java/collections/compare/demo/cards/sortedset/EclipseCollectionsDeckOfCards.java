@@ -1,25 +1,27 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.sortedset;
 
 import java.util.Random;
 import java.util.Set;
 
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
 import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
+import org.eclipse.collections.api.multimap.sortedset.ImmutableSortedSetMultimap;
 import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.api.set.sorted.ImmutableSortedSet;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.list.primitive.IntInterval;
 
-public class EclipseCollectionsDeckOfCardsAsImmutableList
+public class EclipseCollectionsDeckOfCards
 {
-    private ImmutableList<Card> cards;
-    private ImmutableListMultimap<Suit, Card> cardsBySuit;
+    private ImmutableSortedSet<Card> cards;
+    private ImmutableSortedSetMultimap<Suit, Card> cardsBySuit;
 
-    public EclipseCollectionsDeckOfCardsAsImmutableList()
+    public EclipseCollectionsDeckOfCards()
     {
-        this.cards = Card.lazyCards().toSortedList().toImmutable();
-//        this.cards =
-//                Card.streamCards().collect(Collectors2.toImmutableSortedList());
+        this.cards = Card.lazyCards().toSortedSet().toImmutable();
         this.cardsBySuit = this.cards.groupBy(Card::getSuit);
     }
 
@@ -47,27 +49,31 @@ public class EclipseCollectionsDeckOfCardsAsImmutableList
         return this.dealHands(shuffled, hands, cardsPerHand);
     }
 
-    public ImmutableList<Set<Card>> dealHands(MutableStack<Card> shuffled, int hands, int cardsPerHand)
+    public ImmutableList<Set<Card>> dealHands(
+            MutableStack<Card> shuffled,
+            int hands,
+            int cardsPerHand)
     {
-        return IntInterval.oneTo(hands).collect(i -> this.deal(shuffled, cardsPerHand));
+        return IntInterval.oneTo(hands)
+                .collect(i -> this.deal(shuffled, cardsPerHand));
     }
 
-    public ImmutableList<Card> diamonds()
+    public ImmutableSortedSet<Card> diamonds()
     {
         return this.cardsBySuit.get(Suit.DIAMONDS);
     }
 
-    public ImmutableList<Card> hearts()
+    public ImmutableSortedSet<Card> hearts()
     {
         return this.cardsBySuit.get(Suit.HEARTS);
     }
 
-    public ImmutableList<Card> spades()
+    public ImmutableSortedSet<Card> spades()
     {
         return this.cardsBySuit.get(Suit.SPADES);
     }
 
-    public ImmutableList<Card> clubs()
+    public ImmutableSortedSet<Card> clubs()
     {
         return this.cardsBySuit.get(Suit.CLUBS);
     }
@@ -82,12 +88,12 @@ public class EclipseCollectionsDeckOfCardsAsImmutableList
         return this.cards.countBy(Card::getRank);
     }
 
-    public ImmutableList<Card> getCards()
+    public ImmutableSortedSet<Card> getCards()
     {
         return this.cards;
     }
 
-    public ImmutableListMultimap<Suit, Card> getCardsBySuit()
+    public ImmutableSortedSetMultimap<Suit, Card> getCardsBySuit()
     {
         return this.cardsBySuit;
     }

@@ -1,4 +1,4 @@
-package collections.compare.demo.cards;
+package collections.compare.demo.cards.list;
 
 import java.util.Deque;
 import java.util.List;
@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import collections.compare.demo.cards.Card;
+import collections.compare.demo.cards.Rank;
+import collections.compare.demo.cards.Suit;
 import org.eclipse.collections.api.block.predicate.Predicate;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
@@ -19,16 +22,16 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DeckOfCardsAsListTest
+public class DeckOfCardsTest
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DeckOfCardsAsListTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeckOfCardsTest.class);
 
-    private EclipseCollectionsDeckOfCardsAsImmutableList ecDeck1 = new EclipseCollectionsDeckOfCardsAsImmutableList();
+    private EclipseCollectionsDeckOfCards ecDeck1 = new EclipseCollectionsDeckOfCards();
     private EclipseCollectionsDeckOfCardsAsReadableList ecDeck2 = new EclipseCollectionsDeckOfCardsAsReadableList();
-    private JDK8DeckOfCardsAsList jdkDeck = new JDK8DeckOfCardsAsList();
-    private GoogleGuavaDeckOfCardsAsImmutableList ggDeck = new GoogleGuavaDeckOfCardsAsImmutableList();
-    private ApacheCommonsDeckOfCardsAsList acDeck = new ApacheCommonsDeckOfCardsAsList();
-    private VavrDeckOfCardsAsImmutableList vavrDeck = new VavrDeckOfCardsAsImmutableList();
+    private JDK8DeckOfCards jdkDeck = new JDK8DeckOfCards();
+    private GoogleGuavaDeckOfCards ggDeck = new GoogleGuavaDeckOfCards();
+    private ApacheCommonsDeckOfCards acDeck = new ApacheCommonsDeckOfCards();
+    private VavrDeckOfCards vavrDeck = new VavrDeckOfCards();
 
     @Test
     public void allCards()
