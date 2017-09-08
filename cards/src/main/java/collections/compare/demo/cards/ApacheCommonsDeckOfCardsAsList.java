@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiMapUtils;
 import org.apache.commons.collections4.MultiSet;
@@ -26,11 +27,10 @@ public class ApacheCommonsDeckOfCardsAsList
 
     public ApacheCommonsDeckOfCardsAsList()
     {
-        this.cards = Card.streamCards()
-                .sorted()
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        Collections::unmodifiableList));
+        this.cards = ListUtils.unmodifiableList(
+                Card.streamCards()
+                        .sorted()
+                        .collect(Collectors.toList()));
         ListValuedMap<Suit, Card> cbs = MultiMapUtils.newListValuedHashMap();
         this.cards.forEach(card -> cbs.put(card.getSuit(), card));
         this.cardsBySuit = MultiMapUtils.unmodifiableMultiValuedMap(cbs);
@@ -67,31 +67,30 @@ public class ApacheCommonsDeckOfCardsAsList
 
     public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand)
     {
-        return IntStream.range(0, hands)
-                .mapToObj(i -> this.deal(shuffled, cardsPerHand))
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        Collections::unmodifiableList));
+        return ListUtils.unmodifiableList(
+                IntStream.range(0, hands)
+                        .mapToObj(i -> this.deal(shuffled, cardsPerHand))
+                        .collect(Collectors.toList()));
     }
 
     public List<Card> diamonds()
     {
-        return this.cardsBySuit.get(Suit.DIAMONDS).stream().collect(Collectors.toList());
+        return MultiMapUtils.getValuesAsList(this.cardsBySuit, Suit.DIAMONDS);
     }
 
     public List<Card> hearts()
     {
-        return this.cardsBySuit.get(Suit.HEARTS).stream().collect(Collectors.toList());
+        return MultiMapUtils.getValuesAsList(this.cardsBySuit, Suit.HEARTS);
     }
 
     public List<Card> spades()
     {
-        return this.cardsBySuit.get(Suit.SPADES).stream().collect(Collectors.toList());
+        return MultiMapUtils.getValuesAsList(this.cardsBySuit, Suit.SPADES);
     }
 
     public List<Card> clubs()
     {
-        return this.cardsBySuit.get(Suit.CLUBS).stream().collect(Collectors.toList());
+        return MultiMapUtils.getValuesAsList(this.cardsBySuit, Suit.CLUBS);
     }
 
     public Bag<Suit> countsBySuit()

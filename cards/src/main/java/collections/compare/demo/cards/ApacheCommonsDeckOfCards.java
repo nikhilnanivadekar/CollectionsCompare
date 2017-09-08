@@ -14,9 +14,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.MultiMapUtils;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.collections4.SetValuedMap;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.multiset.HashMultiSet;
@@ -28,10 +30,8 @@ public class ApacheCommonsDeckOfCards
 
     public ApacheCommonsDeckOfCards()
     {
-        this.cards = Card.streamCards()
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toCollection(TreeSet::new),
-                        Collections::unmodifiableSortedSet));
+        this.cards = SetUtils.unmodifiableSortedSet(
+                Card.streamCards().collect(Collectors.toCollection(TreeSet::new)));
         SetValuedMap<Suit, Card> cbs = MultiMapUtils.newSetValuedHashMap();
         this.cards.forEach(card -> cbs.put(card.getSuit(), card));
         this.cardsBySuit = MultiMapUtils.unmodifiableMultiValuedMap(cbs);
@@ -71,11 +71,10 @@ public class ApacheCommonsDeckOfCards
             int hands,
             int cardsPerHand)
     {
-        return IntStream.range(0, hands)
-                .mapToObj(i -> this.deal(shuffled, cardsPerHand))
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        Collections::unmodifiableList));
+        return ListUtils.unmodifiableList(
+                IntStream.range(0, hands)
+                        .mapToObj(i -> this.deal(shuffled, cardsPerHand))
+                        .collect(Collectors.toList()));
     }
 
     public SortedSet<Card> diamonds()

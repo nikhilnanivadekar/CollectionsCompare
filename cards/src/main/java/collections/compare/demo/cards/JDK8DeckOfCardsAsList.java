@@ -20,11 +20,10 @@ public class JDK8DeckOfCardsAsList
 
     public JDK8DeckOfCardsAsList()
     {
-        this.cards = Card.streamCards()
-                .sorted()
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        Collections::unmodifiableList));
+        this.cards = Collections.unmodifiableList(
+                Card.streamCards()
+                        .sorted()
+                        .collect(Collectors.toList()));
         this.cardsBySuit =
                 this.cards.stream().collect(Collectors.collectingAndThen(
                         Collectors.groupingBy(
@@ -67,11 +66,10 @@ public class JDK8DeckOfCardsAsList
 
     public List<Set<Card>> dealHands(Deque<Card> shuffled, int hands, int cardsPerHand)
     {
-        return IntStream.range(0, hands)
-                .mapToObj(i -> this.deal(shuffled, cardsPerHand))
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        Collections::unmodifiableList));
+        return Collections.unmodifiableList(
+                IntStream.range(0, hands)
+                        .mapToObj(i -> this.deal(shuffled, cardsPerHand))
+                        .collect(Collectors.toList()));
     }
 
     public List<Card> diamonds()
