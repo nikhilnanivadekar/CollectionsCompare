@@ -8,18 +8,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import collections.compare.demo.cards.Card;
 import collections.compare.demo.cards.Rank;
 import collections.compare.demo.cards.Suit;
-import com.google.common.base.Function;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Multisets;
 
 public class GoogleGuavaDeckOfCards
 {
@@ -29,7 +28,6 @@ public class GoogleGuavaDeckOfCards
     public GoogleGuavaDeckOfCards()
     {
         this.cards = Card.streamCards().sorted().collect(ImmutableList.toImmutableList());
-        //noinspection RedundantCast
         this.cardsBySuit = Multimaps.index(this.cards, Card::getSuit);
     }
 
@@ -91,12 +89,12 @@ public class GoogleGuavaDeckOfCards
 
     public Multiset<Suit> countsBySuit()
     {
-        return this.cards.stream().map(Card::getSuit).collect(Collectors.toCollection(HashMultiset::create));
+        return this.cards.stream().collect(Multisets.toMultiset(Card::getSuit, e -> 1, HashMultiset::create));
     }
 
     public Multiset<Rank> countsByRank()
     {
-        return this.cards.stream().map(Card::getRank).collect(Collectors.toCollection(HashMultiset::create));
+        return this.cards.stream().collect(Multisets.toMultiset(Card::getRank, e -> 1, HashMultiset::create));
     }
 
     public ImmutableList<Card> getCards()
