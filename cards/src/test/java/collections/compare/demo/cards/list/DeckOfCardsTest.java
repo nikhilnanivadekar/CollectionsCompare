@@ -59,7 +59,7 @@ public class DeckOfCardsTest
         System.out.println("JDK  (Cards): "+ ObjectSizeCalculator.getObjectSize(this.jdkDeck.getCards()));
         System.out.println("GG   (Cards): "+ ObjectSizeCalculator.getObjectSize(this.ggDeck.getCards()));
         System.out.println("AC   (Cards): "+ ObjectSizeCalculator.getObjectSize(this.acDeck.getCards()));
-        System.out.println("VAVR (Cards): "+ ObjectSizeCalculator.getObjectSize(this.ecDeck2.getCards()));
+        System.out.println("VAVR (Cards): "+ ObjectSizeCalculator.getObjectSize(this.vavrDeck.getCards()));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class DeckOfCardsTest
         Set<Card> jdkHand = this.jdkDeck.deal(jdkShuffle, 5);
         Set<Card> ggHand = this.ggDeck.deal(ggShuffle, 5);
         Set<Card> acHand = this.acDeck.deal(acShuffle, 5);
-        Tuple2<io.vavr.collection.Set<Card>, ? extends io.vavr.collection.List<Card>> vavrHand = this.vavrDeck.deal(vavrShuffle, 5);
+        Tuple2<io.vavr.collection.Set<Card>, io.vavr.collection.List<Card>> vavrHand = this.vavrDeck.deal(vavrShuffle, 5);
         Set<Card> jsHand = vavrHand._1().toJavaSet();
         Assert.assertEquals(ec1Hand, jdkHand);
         Assert.assertEquals(jdkHand, ggHand);
@@ -150,23 +150,23 @@ public class DeckOfCardsTest
         List<Set<Card>> jdkHands = this.jdkDeck.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> ggHands = this.ggDeck.shuffleAndDeal(new Random(1), 5, 5);
         List<Set<Card>> acHands = this.acDeck.shuffleAndDeal(new Random(1), 5, 5);
-        io.vavr.collection.List<io.vavr.collection.Set<Card>> jsHands =
+        io.vavr.collection.List<io.vavr.collection.Set<Card>> vavrHands =
                 this.vavrDeck.shuffleAndDeal(new Random(1), 5, 5);
         Assert.assertEquals(ec1Hands, jdkHands);
         Assert.assertEquals(jdkHands, ggHands);
         Assert.assertEquals(ggHands, ec1Hands);
         Assert.assertEquals(ec1Hands, acHands);
-        Assert.assertEquals(acHands.get(0), jsHands.get(0).toJavaSet());
-        Assert.assertEquals(acHands.get(1), jsHands.get(1).toJavaSet());
-        Assert.assertEquals(acHands.get(2), jsHands.get(2).toJavaSet());
-        Assert.assertEquals(acHands.get(3), jsHands.get(3).toJavaSet());
-        Assert.assertEquals(acHands.get(4), jsHands.get(4).toJavaSet());
+        Assert.assertEquals(acHands.get(0), vavrHands.get(0).toJavaSet());
+        Assert.assertEquals(acHands.get(1), vavrHands.get(1).toJavaSet());
+        Assert.assertEquals(acHands.get(2), vavrHands.get(2).toJavaSet());
+        Assert.assertEquals(acHands.get(3), vavrHands.get(3).toJavaSet());
+        Assert.assertEquals(acHands.get(4), vavrHands.get(4).toJavaSet());
 
         System.out.println("EC   (Shuffled Hands): "+ ObjectSizeCalculator.getObjectSize(ec1Hands));
         System.out.println("JDK  (Shuffled Hands): "+ ObjectSizeCalculator.getObjectSize(jdkHands));
         System.out.println("GG   (Shuffled Hands): "+ ObjectSizeCalculator.getObjectSize(ggHands));
         System.out.println("AC   (Shuffled Hands): "+ ObjectSizeCalculator.getObjectSize(acHands));
-        System.out.println("VAVR (Shuffled Hands): "+ ObjectSizeCalculator.getObjectSize(jsHands));
+        System.out.println("VAVR (Shuffled Hands): "+ ObjectSizeCalculator.getObjectSize(vavrHands));
     }
 
     @Test
@@ -181,17 +181,17 @@ public class DeckOfCardsTest
         List<Set<Card>> jdkHands = this.jdkDeck.dealHands(jdkShuffled, 5, 5);
         List<Set<Card>> ggHands = this.ggDeck.dealHands(ggShuffled, 5, 5);
         List<Set<Card>> acHands = this.acDeck.dealHands(acShuffled, 5, 5);
-        io.vavr.collection.List<io.vavr.collection.Set<Card>> jsHands =
+        io.vavr.collection.List<io.vavr.collection.Set<Card>> vavrHands =
                 this.vavrDeck.dealHands(vavrShuffled, 5, 5);
         Assert.assertEquals(ec1Hands, jdkHands);
         Assert.assertEquals(jdkHands, ggHands);
         Assert.assertEquals(ggHands, ec1Hands);
         Assert.assertEquals(ec1Hands, acHands);
-        Assert.assertEquals(acHands.get(0), jsHands.get(0).toJavaSet());
-        Assert.assertEquals(acHands.get(1), jsHands.get(1).toJavaSet());
-        Assert.assertEquals(acHands.get(2), jsHands.get(2).toJavaSet());
-        Assert.assertEquals(acHands.get(3), jsHands.get(3).toJavaSet());
-        Assert.assertEquals(acHands.get(4), jsHands.get(4).toJavaSet());
+        Assert.assertEquals(acHands.get(0), vavrHands.get(0).toJavaSet());
+        Assert.assertEquals(acHands.get(1), vavrHands.get(1).toJavaSet());
+        Assert.assertEquals(acHands.get(2), vavrHands.get(2).toJavaSet());
+        Assert.assertEquals(acHands.get(3), vavrHands.get(3).toJavaSet());
+        Assert.assertEquals(acHands.get(4), vavrHands.get(4).toJavaSet());
 
 
     }
@@ -202,18 +202,18 @@ public class DeckOfCardsTest
         ImmutableListMultimap<Suit, Card> ecCardsBySuit = this.ecDeck1.getCardsBySuit();
         Map<Suit, List<Card>> jdkCardsBySuit = this.jdkDeck.getCardsBySuit();
         com.google.common.collect.ImmutableListMultimap<Suit, Card> ggCardsBySuit = this.ggDeck.getCardsBySuit();
-        io.vavr.collection.Map<Suit, ? extends io.vavr.collection.List<Card>> jsCardsBySuit =
+        io.vavr.collection.Map<Suit, ? extends io.vavr.collection.List<Card>> vavrCardsBySuit =
                 this.vavrDeck.getCardsBySuit();
         Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), jdkCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(jdkCardsBySuit.get(Suit.CLUBS), ggCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(ggCardsBySuit.get(Suit.CLUBS), ecCardsBySuit.get(Suit.CLUBS));
-        Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), jsCardsBySuit.get(Suit.CLUBS).get().toJavaList());
+        Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), vavrCardsBySuit.get(Suit.CLUBS).get().toJavaList());
 
         System.out.println("EC   (cardsBySuit): "+ ObjectSizeCalculator.getObjectSize(ecCardsBySuit));
         System.out.println("JDK  (cardsBySuit): "+ ObjectSizeCalculator.getObjectSize(jdkCardsBySuit));
         System.out.println("GG   (cardsBySuit): "+ ObjectSizeCalculator.getObjectSize(ggCardsBySuit));
         System.out.println("AC   (cardsBySuit): "+ ObjectSizeCalculator.getObjectSize(jdkCardsBySuit));
-        System.out.println("VAVR (cardsBySuit): "+ ObjectSizeCalculator.getObjectSize(jsCardsBySuit));
+        System.out.println("VAVR (cardsBySuit): "+ ObjectSizeCalculator.getObjectSize(vavrCardsBySuit));
     }
 
     @Test
