@@ -202,7 +202,7 @@ public class DeckOfCardsTest
         ImmutableListMultimap<Suit, Card> ecCardsBySuit = this.ecDeck1.getCardsBySuit();
         Map<Suit, List<Card>> jdkCardsBySuit = this.jdkDeck.getCardsBySuit();
         com.google.common.collect.ImmutableListMultimap<Suit, Card> ggCardsBySuit = this.ggDeck.getCardsBySuit();
-        io.vavr.collection.Map<Suit, ? extends io.vavr.collection.List<Card>> vavrCardsBySuit =
+        io.vavr.collection.Map<Suit, io.vavr.collection.List<Card>> vavrCardsBySuit =
                 this.vavrDeck.getCardsBySuit();
         Assert.assertEquals(ecCardsBySuit.get(Suit.CLUBS), jdkCardsBySuit.get(Suit.CLUBS));
         Assert.assertEquals(jdkCardsBySuit.get(Suit.CLUBS), ggCardsBySuit.get(Suit.CLUBS));
