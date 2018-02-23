@@ -26,15 +26,15 @@ public class JDK8DeckOfCards
     {
         this.cards = Collections.unmodifiableList(
                 Card.streamCards().sorted().collect(Collectors.toList()));
+
         this.cardsBySuit =
-                this.cards.stream().collect(Collectors.collectingAndThen(
-                        Collectors.groupingBy(
+                Collections.unmodifiableMap(this.cards.stream()
+                        .collect(Collectors.groupingBy(
                                 Card::getSuit,
-                                Collectors.mapping(Function.identity(),
-                                        Collectors.collectingAndThen(
-                                                Collectors.toList(),
-                                                Collections::unmodifiableList))),
-                        Collections::unmodifiableMap));
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        Collections::unmodifiableList))
+                        ));
     }
 
     public Deque<Card> shuffle(Random random)
